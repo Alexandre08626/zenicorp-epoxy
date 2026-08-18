@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="container-zenicorp flex items-center justify-between h-16">
             <Link href="/" className="flex items-center gap-2">
               <div className="w-9 h-9 bg-zenicorp-gold flex items-center justify-center">
-                <span className="font-heading font-bold text-zenicorp-black text-xl">Z</span>
+                <span className="font-heading font-bold text-white text-xl">Z</span>
               </div>
               <div className="leading-tight">
                 <span className="font-heading font-bold text-lg tracking-wide">ZENICORP</span>
@@ -51,7 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 bg-zenicorp-gold flex items-center justify-center">
-                  <span className="font-heading font-bold text-zenicorp-black text-lg">Z</span>
+                  <span className="font-heading font-bold text-white text-lg">Z</span>
                 </div>
                 <span className="font-heading font-bold text-lg">ZENICORP</span>
               </div>

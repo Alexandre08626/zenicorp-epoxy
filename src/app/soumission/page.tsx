@@ -32,7 +32,7 @@ export default function SoumissionPage() {
         {steps.map((s, i) => (
           <div key={s} className="flex items-center">
             <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
-              i === 0 ? 'bg-zenicorp-gold text-zenicorp-black' : 'bg-zenicorp-lightGray text-zenicorp-mediumGray'
+              i === 0 ? 'bg-zenicorp-gold text-white' : 'bg-zenicorp-lightGray text-zenicorp-mediumGray'
             }`}>{i + 1}</div>
             {i < steps.length - 1 && <div className="w-4 h-0.5 bg-zenicorp-border mx-1" />}
           </div>
