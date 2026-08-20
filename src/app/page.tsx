@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
   Shield, Clock, Award, Phone, CheckCircle2, Home, Building2, Factory,
-  Star, Droplets, Sparkles, ArrowRight, Calculator
+  Star, Droplets, Sparkles, ArrowRight, Calculator, Images
 } from 'lucide-react';
 
 const Counter = ({ end, suffix = '' }: { end: number; suffix?: string }) => {
@@ -45,7 +45,17 @@ const realisations = [
   { title: 'Garage TR', desc: 'Noir + sécurité', value: '3,900 $', color: 'bg-blue-100' },
 ];
 
-export default function EpoxyPale() {
+// GALERIE PHOTOS ÉPOXY
+const galleryPhotos = [
+  { url: 'https://images.pexels.com/photos/2306171/pexels-photo-2306171.jpeg?auto=compress&cs=tinysrgb&w=800', title: 'Garage gris métallique' },
+  { url: 'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=800', title: 'Showroom moderne' },
+  { url: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=800', title: 'Fini miroir' },
+  { url: 'https://images.pexels.com/photos/209315/pexels-photo-209315.jpeg?auto=compress&cs=tinysrgb&w=800', title: 'Commercial industriel' },
+  { url: 'https://images.pexels.com/photos/2635038/pexels-photo-2635038.jpeg?auto=compress&cs=tinysrgb&w=800', title: 'Garage résidentiel' },
+  { url: 'https://images.pexels.com/photos/584399/pexels-photo-584399.jpeg?auto=compress&cs=tinysrgb&w=800', title: 'Époxy design' },
+];
+
+export default function EpoxyLuxe() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
   if (!mounted) return null;
@@ -59,32 +69,20 @@ export default function EpoxyPale() {
         <div className="absolute bottom-20 left-10 w-96 h-96 bg-purple-200/30 rounded-full blur-3xl" />
       </div>
 
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-indigo-100">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-4">
-              {/* GROS LOGO */}
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center shadow-xl shadow-indigo-400/30 ring-4 ring-indigo-100">
-                <Sparkles className="w-9 h-9 text-white" />
-              </div>
-              <div>
-                <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">ZENICORP</span>
-                <span className="block text-xs text-indigo-500 tracking-widest uppercase">Époxy Luxe</span>
-              </div>
-            </Link>
-            <a href="/soumission" className="px-8 py-3 bg-gradient-to-r from-indigo-400 to-purple-500 text-white font-bold rounded-full shadow-xl shadow-indigo-400/30 hover:shadow-2xl transition-all">
-              Devis gratuit
-            </a>
-          </div>
-        </div>
-      </nav>
-
       {/* Hero */}
-      <section className="relative pt-32 pb-20">
+      <section className="relative pt-20 pb-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
+              {/* LOGO DANS HERO */}
+              <div className="flex items-center gap-4 mb-6">
+                <img src="/logo.png" alt="ZeniCorp" className="h-20 w-auto" />
+                <div>
+                  <span className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">ZENICORP</span>
+                  <span className="block text-sm text-indigo-500 tracking-widest uppercase">Époxy Luxe</span>
+                </div>
+              </div>
+
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-100 border border-indigo-200">
                 <Shield className="w-4 h-4 text-indigo-500" />
                 <span className="text-sm text-indigo-600 font-medium">Garantie 5 ans incluse</span>
@@ -110,7 +108,6 @@ export default function EpoxyPale() {
             </div>
 
             <div className="relative">
-              {/* PHOTO PLUS GROSSE */}
               <div className="rounded-3xl overflow-hidden shadow-2xl shadow-indigo-200/50 ring-4 ring-white">
                 <img src="https://images.pexels.com/photos/2306171/pexels-photo-2306171.jpeg?auto=compress&cs=tinysrgb&w=1920" alt="Époxy" className="w-full h-[700px] object-cover" />
               </div>
@@ -148,6 +145,32 @@ export default function EpoxyPale() {
         </div>
       </section>
 
+      {/* GALERIE PHOTOS */}
+      <section className="py-20 bg-white/50">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 mb-4">
+              <Images className="w-4 h-4 text-purple-500" />
+              <span className="text-sm text-purple-600 font-medium">Nos réalisations</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-6">Galerie <span className="text-indigo-500">Photos</span></h2>
+            <p className="text-lg text-slate-600">Découvrez nos plus beaux planchers époxy</p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {galleryPhotos.map((photo, idx) => (
+              <div key={idx} className="group relative rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all">
+                <img src={photo.url} alt={photo.title} className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 text-white translate-y-full group-hover:translate-y-0 transition-transform">
+                  <p className="font-semibold">{photo.title}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Services */}
       <section className="py-20 bg-white/50">
         <div className="max-w-7xl mx-auto px-6">
@@ -177,6 +200,32 @@ export default function EpoxyPale() {
                 </ul>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Plus de Photos - Avant/Après */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-slate-800 mb-6">Plus de <span className="text-purple-500">photos</span></h2>
+            <p className="text-lg text-slate-600">Transformations réelles</p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="rounded-3xl overflow-hidden shadow-2xl shadow-indigo-200/50 ring-4 ring-white">
+              <img src="https://images.pexels.com/photos/2635038/pexels-photo-2635038.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Garage époxy" className="w-full h-[400px] object-cover hover:scale-105 transition-transform duration-700" />
+              <div className="p-6 bg-white">
+                <p className="font-bold text-slate-800">Garage résidentiel complet</p>
+                <p className="text-slate-500">Fini gris métallique avec paillettes</p>
+              </div>
+            </div>
+            <div className="rounded-3xl overflow-hidden shadow-2xl shadow-purple-200/50 ring-4 ring-white">
+              <img src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Showroom époxy" className="w-full h-[400px] object-cover hover:scale-105 transition-transform duration-700" />
+              <div className="p-6 bg-white">
+                <p className="font-bold text-slate-800">Showroom commercial</p>
+                <p className="text-slate-500">Fini miroir haute brillance</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
