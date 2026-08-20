@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import {
   Shield,
@@ -9,201 +12,275 @@ import {
   Home,
   CheckCircle2,
   Phone,
-  FileText,
   Star,
   Droplets,
   Zap,
   Wrench,
   Paintbrush,
+  Sparkles,
+  ArrowRight,
+  Calculator,
+  Users,
+  Menu,
+  X,
 } from 'lucide-react';
 
-const px = (id: number, w = 800) =>
-  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`;
+const AnimatedCounter = ({ end, suffix = '' }: { end: number; suffix?: string }) => {
+  const [count, setCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLSpanElement>(null);
 
-const HERO_IMG = px(2306171, 1920);
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) setIsVisible(true);
+    }, { threshold: 0.1 });
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+    let start: number;
+    const animate = (now: number) => {
+      if (!start) start = now;
+      const p = Math.min((now - start) / 2000, 1);
+      setCount(Math.floor((1 - Math.pow(1 - p, 4)) * end));
+      if (p < 1) requestAnimationFrame(animate);
+    };
+    requestAnimationFrame(animate);
+  }, [isVisible, end]);
+
+  return <span ref={ref}>{count}{suffix}</span>;
+};
+
+const MouseGlow = ({ color = 'rgba(99,102,241,0.3)' }: { color?: string }) => {
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  useEffect(() => {
+    const h = (e: MouseEvent) => setPos({ x: e.clientX, y: e.clientY });
+    window.addEventListener('mousemove', h);
+    return () => window.removeEventListener('mousemove', h);
+  }, []);
+  return <div className="fixed w-[500px] h-[500px] rounded-full pointer-events-none z-50 opacity-20 blur-[100px]" style={{ background: `radial-gradient(circle, ${color} 0%, transparent 70%)`, left: pos.x - 250, top: pos.y - 250 }} />;
+};
 
 const services = [
-  {
-    icon: Home,
-    title: 'Garage résidentiel',
-    desc: 'Revêtement époxy 100% solide pour votre garage. Fini lustré, antidérapant et résistant aux produits chimiques.',
-    features: ['Préparation complète', 'Époxy 100% solide', 'Paillettes décoratives', 'Finis antidérapants'],
-    img: px(7256845),
-  },
-  {
-    icon: Building2,
-    title: 'Commercial',
-    desc: 'Sols commerciaux durables pour commerces, showrooms, ateliers et espaces publics à fort achalandage.',
-    features: ['Résistance élevée', 'Entretien minimal', 'Installation hors heures', 'Normes municipales'],
-    img: px(18920421),
-  },
-  {
-    icon: Factory,
-    title: 'Industriel',
-    desc: 'Revêtements haute performance pour usines, entrepôts et espaces de production. Résiste aux charges lourdes.',
-    features: ['Systèmes polyuréthane', 'Résistance chimique', 'Finition antidérapante', 'Durée de vie prolongée'],
-    img: px(32048370),
-  },
+  { icon: Home, title: 'Garage Résidentiel', desc: 'Fini lustré premium', price: 'À partir 3,900$', features: ['Préparation 5 étapes', 'Époxy 100% solide', 'Paillettes décoratives', 'Antidérapant'] },
+  { icon: Building2, title: 'Commercial', desc: 'Showrooms, commerces', price: 'Sur devis', features: ['Haute résistance', 'Entretien minimal', 'Hors heures', 'Normes'] },
+  { icon: Factory, title: 'Industriel', desc: 'Usines, entrepôts', price: 'Sur devis', features: ['Polyuréthane', 'Résistance chimique', 'Charges lourdes', 'Longue durée'] },
 ];
 
 const realisations = [
-  { title: 'Garage double - Québec', desc: 'Époxy gris métallique + paillettes argent', value: '4 800 $', img: px(2824173, 600) },
-  { title: 'Atelier mécanique - Lévis', desc: 'Système industriel résistant aux huiles', value: '12 500 $', img: px(1323712, 600) },
-  { title: 'Showroom auto - Montréal', desc: 'Fini brillant haute réflexion', value: '18 000 $', img: px(3379129, 600) },
-  { title: 'Garage - Trois-Rivières', desc: 'Époxy noir + bandes de sécurité', value: '3 900 $', img: px(32056068, 600) },
+  { title: 'Garage double Québec', desc: 'Gris métallique + paillettes', value: '4,800 $', img: 'https://images.pexels.com/photos/2824173/pexels-photo-2824173.jpeg?auto=compress&w=800' },
+  { title: 'Atelier mécanique Lévis', desc: 'Résistant aux huiles', value: '12,500 $', img: 'https://images.pexels.com/photos/1323712/pexels-photo-1323712.jpeg?auto=compress&w=800' },
+  { title: 'Showroom auto Montréal', desc: 'Fini miroir haute réflexion', value: '18,000 $', img: 'https://images.pexels.com/photos/3379129/pexels-photo-3379129.jpeg?auto=compress&w=800' },
+  { title: 'Garage Trois-Rivières', desc: 'Noir + bandes sécurité', value: '3,900 $', img: 'https://images.pexels.com/photos/32056068/pexels-photo-32056068.jpeg?auto=compress&w=800' },
 ];
 
 const faqs = [
-  {
-    q: 'Combien de temps prend l\'installation ?',
-    a: 'Généralement 2-3 jours pour un garage standard (préparation + application + séchage). Un plancher est utilisable après 24-48h.',
-  },
-  {
-    q: 'Est-ce que c\'est glissant ?',
-    a: 'Non. Nous ajoutons des additifs antidérapants selon l\'usage : plus agressif pour un garage, plus doux pour un intérieur.',
-  },
-  {
-    q: 'Quelle est la garantie ?',
-    a: 'Tous nos revêtements sont garantis 5 ans contre le décollement, l\'écaillage et les défauts d\'application.',
-  },
-  {
-    q: 'Peut-on le faire en hiver ?',
-    a: 'Oui. Nos équipes travaillent à l\'année dans des espaces chauffés. Le résultat est identique.',
-  },
+  { q: 'Durée installation ?', a: '2-3 jours (préparation + application + séchage). Utilisable après 24-48h.' },
+  { q: 'C\'est glissant ?', a: 'Non ! Additifs antidérapants selon usage. Plus agressif pour garage.' },
+  { q: 'Garantie ?', a: '5 ans écrite contre décollement, écaillage et défauts d\'application.' },
+  { q: 'En hiver ?', a: 'Oui ! Nos équipes travaillent à l\'année dans espaces chauffés.' },
 ];
 
-export default function EpoxyPage() {
+export default function EpoxyMega() {
+  const [mounted, setMounted] = useState(false);
+  const [mobileMenu, setMobileMenu] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    setMounted(true);
+    const h = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', h, { passive: true });
+    return () => window.removeEventListener('scroll', h);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
-    <>
-      {/* HERO */}
-      <section className="relative bg-zenicorp-black text-white">
-        <img src={HERO_IMG} alt="Plancher de garage revêtu d'époxy gris métallique" className="absolute inset-0 w-full h-full object-cover opacity-40" />
-        <div className="absolute inset-0 bg-gradient-to-r from-zenicorp-black via-zenicorp-black/80 to-zenicorp-black/30"></div>
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #1E40AF 0px, #1E40AF 1px, transparent 1px, transparent 60px)' }}></div>
-        <div className="container-zenicorp relative py-20 lg:py-28">
-          <div className="max-w-3xl animate-slide-up">
-            <div className="inline-flex items-center gap-2 bg-zenicorp-gold/10 border border-zenicorp-gold/40 px-4 py-1.5 mb-6">
-              <Shield className="w-4 h-4 text-zenicorp-gold" />
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-zenicorp-gold">Division Époxy de ZeniCorp</span>
+    <div className="min-h-screen bg-[#030303] text-white overflow-x-hidden">
+      <MouseGlow color="rgba(99,102,241,0.3)" />
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] bg-indigo-500/5 rounded-full blur-[150px]" />
+        <div className="absolute bottom-1/4 left-1/4 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-[150px]" />
+        <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+      </div>
+
+      <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${scrollY > 50 ? 'bg-[#030303]/80 backdrop-blur-xl border-b border-white/5' : ''}`}>
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-3 group">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                <Sparkles className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <span className="text-xl font-bold">ZENI<span className="text-indigo-400">CORP</span></span>
+                <span className="block text-[10px] text-white/40 tracking-[0.3em] uppercase">Époxy Luxe</span>
+              </div>
+            </Link>
+
+            <div className="hidden md:flex items-center gap-8">
+              {['Services', 'Réalisations', 'Garantie', 'FAQ'].map((item) => (
+                <a key={item} href={`#${item.toLowerCase()}`} className="text-sm text-white/60 hover:text-white transition-colors relative group">
+                  {item}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-400 group-hover:w-full transition-all" />
+                </a>
+              ))}
             </div>
-            <h1 className="heading-1 text-white !text-4xl sm:!text-5xl lg:!text-6xl mb-6">
-              Des planchers d&apos;exception.
-              <span className="block text-zenicorp-gold">Sans compromis.</span>
-            </h1>
-            <p className="text-lg text-zenicorp-silver mb-8 max-w-2xl">
-              Revêtements de sol en époxy 100% solide pour garages résidentiels, espaces commerciaux et industries.
-              Préparation minutieuse, matériaux haut de gamme, fini impeccable.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <a href="/soumission" className="btn-gold">Obtenir une soumission gratuite</a>
-              <a href="tel:18009364267" className="btn-secondary !border-white !text-white hover:!bg-white hover:!text-zenicorp-black">
-                <Phone className="w-4 h-4 mr-2" /> 1-800-ZENICORP
-              </a>
-            </div>
-            <div className="flex flex-wrap gap-8 mt-12">
-              <div className="flex items-center gap-2 text-sm text-zenicorp-silver">
-                <CheckCircle2 className="w-5 h-5 text-zenicorp-gold" /> Garantie 5 ans
-              </div>
-              <div className="flex items-center gap-2 text-sm text-zenicorp-silver">
-                <CheckCircle2 className="w-5 h-5 text-zenicorp-gold" /> Soumission sous 24h
-              </div>
-              <div className="flex items-center gap-2 text-sm text-zenicorp-silver">
-                <CheckCircle2 className="w-5 h-5 text-zenicorp-gold" /> Équipes certifiées RBQ
-              </div>
+
+            <div className="flex items-center gap-4">
+              <a href="tel:18009364267" className="hidden sm:block text-sm text-white/60">1-800-ZENICORP</a>
+              <a href="/soumission" className="px-6 py-2.5 bg-indigo-500 text-white text-sm font-bold rounded-full hover:bg-indigo-400 transition-all shadow-lg shadow-indigo-500/25">Soumission</a>
+              <button onClick={() => setMobileMenu(!mobileMenu)} className="md:hidden p-2">{mobileMenu ? <X /> : <Menu />}</button>
             </div>
           </div>
         </div>
-      </section>
+      </nav>
 
-      {/* BANDEAU AVANTAGES */}
-      <section className="bg-white border-b border-zenicorp-border">
-        <div className="container-zenicorp py-8 grid grid-cols-2 md:grid-cols-4 gap-6">
-          <div className="flex items-center gap-3">
-            <Award className="w-8 h-8 text-zenicorp-gold flex-shrink-0" />
-            <div>
-              <p className="font-semibold text-sm">Garantie 5 ans</p>
-              <p className="text-xs text-zenicorp-mediumGray">Écrite, incluse</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <Clock className="w-8 h-8 text-zenicorp-gold flex-shrink-0" />
-            <div>
-              <p className="font-semibold text-sm">Installation rapide</p>
-              <p className="text-xs text-zenicorp-mediumGray">2-3 jours typiques</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <Droplets className="w-8 h-8 text-zenicorp-gold flex-shrink-0" />
-            <div>
-              <p className="font-semibold text-sm">Époxy 100% solide</p>
-              <p className="text-xs text-zenicorp-mediumGray">Zéro eau, zéro odeur</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <Shield className="w-8 h-8 text-zenicorp-gold flex-shrink-0" />
-            <div>
-              <p className="font-semibold text-sm">Antidérapant</p>
-              <p className="text-xs text-zenicorp-mediumGray">Additifs selon usage</p>
-            </div>
-          </div>
+      {mobileMenu && (
+        <div className="fixed inset-0 z-50 bg-[#030303]/95 backdrop-blur-xl pt-24 px-6 md:hidden">
+          {['Services', 'Réalisations', 'Garantie', 'FAQ'].map((item) => (
+            <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMobileMenu(false)} className="block text-2xl font-medium py-4 border-b border-white/10">{item}</a>
+          ))}
         </div>
-      </section>
+      )}
 
-      {/* SERVICES */}
-      <section id="services" className="section-padding bg-zenicorp-lightGray">
-        <div className="container-zenicorp">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <p className="text-zenicorp-gold font-semibold uppercase tracking-[0.2em] text-xs mb-3">Nos services</p>
-            <h2 className="heading-2">Un revêtement pour chaque besoin</h2>
-            <p className="body-base mt-4">Du garage résidentiel à l&apos;usine de production, nos systèmes sont conçus pour durer.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {services.map((service) => (
-              <div key={service.title} className="card overflow-hidden p-0 group">
-                <div className="relative h-44 overflow-hidden">
-                  <img src={service.img} alt={service.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                  <div className="absolute bottom-3 left-4 flex items-center gap-3">
-                    <div className="w-10 h-10 bg-zenicorp-gold flex items-center justify-center">
-                      <service.icon className="w-5 h-5 text-zenicorp-black" />
+      {/* Hero */}
+      <section className="relative min-h-screen flex items-center pt-20">
+        <div className="max-w-7xl mx-auto px-6 py-20 w-full">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-8">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20">
+                <Shield className="w-4 h-4 text-indigo-400" />
+                <span className="text-sm text-indigo-300">Garantie 5 ans incluse</span>
+              </div>
+
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1]">
+                Planchers
+                <span className="block text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text">d'Exception</span>
+              </h1>
+
+              <p className="text-lg text-white/60 max-w-xl">Époxy 100% solide pour garages, commerces et industries. Fini miroir, antidérapant, résistant aux produits chimiques.</p>
+
+              <div className="flex flex-wrap gap-4">
+                <a href="/soumission" className="inline-flex items-center gap-3 px-8 py-4 bg-indigo-500 text-white font-bold rounded-full hover:bg-indigo-400 transition-all shadow-lg shadow-indigo-500/30 hover:scale-105">
+                  <Calculator className="w-5 h-5" />
+                  Devis gratuit
+                </a>
+                <a href="tel:18009364267" className="inline-flex items-center gap-3 px-8 py-4 border border-white/20 rounded-full hover:bg-white/5 transition-all">
+                  <Phone className="w-5 h-5" />
+                  1-800-ZENICORP
+                </a>
+              </div>
+
+              <div className="flex items-center gap-6 pt-4">
+                <div className="flex -space-x-3">
+                  {[1,2,3,4].map((i) => (
+                    <div key={i} className="w-10 h-10 rounded-full border-2 border-[#030303] bg-indigo-500/20 flex items-center justify-center">
+                      <Star className="w-4 h-4 text-indigo-400" />
                     </div>
-                    <h3 className="text-white font-semibold drop-shadow">{service.title}</h3>
+                  ))}
+                </div>
+                <div>
+                  <div className="flex gap-1">
+                    {[1,2,3,4,5].map((i) => <Star key={i} className="w-4 h-4 fill-indigo-400 text-indigo-400" />)}
+                  </div>
+                  <p className="text-sm text-white/50 mt-1">4.9/5 - 250+ projets</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="rounded-3xl overflow-hidden">
+                <img src="https://images.pexels.com/photos/2306171/pexels-photo-2306171.jpeg?auto=compress&w=1200" alt="Époxy" className="w-full h-[500px] object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-transparent" />
+              </div>
+              <div className="absolute bottom-6 left-6 right-6 p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10">
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  <div><p className="text-2xl font-bold text-indigo-400">100%</p><p className="text-xs text-white/50">Solide</p></div>
+                  <div><p className="text-2xl font-bold text-indigo-400">5</p><p className="text-xs text-white/50">Ans garantie</p></div>
+                  <div><p className="text-2xl font-bold text-indigo-400">24-48h</p><p className="text-xs text-white/50">Séchage</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats */}
+      <section className="py-20 border-y border-white/5">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {[
+              { value: 250, suffix: '+', label: 'Projets', icon: Home },
+              { value: 5, suffix: ' ans', label: 'Garantie', icon: Award },
+              { value: 100, suffix: '%', label: 'Solide', icon: Droplets },
+              { value: 48, suffix: 'h', label: 'Séchage', icon: Clock },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center group">
+                <div className="inline-flex p-4 rounded-2xl bg-indigo-500/10 mb-4 group-hover:bg-indigo-500/20 transition-colors">
+                  <stat.icon className="w-8 h-8 text-indigo-400" />
+                </div>
+                <p className="text-4xl font-bold"><AnimatedCounter end={stat.value} suffix={stat.suffix} /></p>
+                <p className="text-sm text-white/50 mt-2">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services */}
+      <section id="services" className="py-32">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="inline-block px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-sm text-indigo-300 mb-6">Prestige</span>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">Nos <span className="text-indigo-400">services</span></h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {services.map((service) => (
+              <div key={service.title} className="group p-8 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-indigo-500/30 transition-all duration-500 hover:-translate-y-2">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="p-4 rounded-2xl bg-indigo-500/20 group-hover:scale-110 transition-transform">
+                    <service.icon className="w-8 h-8 text-indigo-400" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold">{service.title}</h3>
+                    <p className="text-white/50">{service.desc}</p>
                   </div>
                 </div>
-                <div className="p-6">
-                  <p className="body-base text-sm mb-4">{service.desc}</p>
-                  <ul className="space-y-2">
-                    {service.features.map((f) => (
-                      <li key={f} className="flex items-center gap-2 text-sm text-zenicorp-mediumGray">
-                        <CheckCircle2 className="w-4 h-4 text-zenicorp-gold" /> {f}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <div className="px-4 py-2 rounded-full bg-indigo-500 text-white font-bold text-sm inline-block mb-4">{service.price}</div>
+                <ul className="space-y-2">
+                  {service.features.map((f) => (
+                    <li key={f} className="flex items-center gap-2 text-sm text-white/60">
+                      <CheckCircle2 className="w-4 h-4 text-indigo-400 flex-shrink-0" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* RÉALISATIONS */}
-      <section id="realisations" className="section-padding bg-white">
-        <div className="container-zenicorp">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <p className="text-zenicorp-gold font-semibold uppercase tracking-[0.2em] text-xs mb-3">Réalisations</p>
-            <h2 className="heading-2">Des projets récents</h2>
+      {/* Réalisations */}
+      <section id="realisations" className="py-32 border-y border-white/5">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-6">Réalisations <span className="text-indigo-400">prestige</span></h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {realisations.map((r) => (
-              <div key={r.title} className="card overflow-hidden p-0 group">
-                <div className="relative h-40 overflow-hidden">
-                  <img src={r.img} alt={r.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <span className="absolute top-3 right-3 bg-zenicorp-gold text-zenicorp-black text-xs font-bold px-2 py-1">{r.value}</span>
+              <div key={r.title} className="group rounded-3xl overflow-hidden bg-white/[0.02] border border-white/5 hover:border-indigo-500/30 transition-all">
+                <div className="relative h-48 overflow-hidden">
+                  <img src={r.img} alt={r.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#030303] to-transparent" />
+                  <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-indigo-500 text-white font-bold text-sm">{r.value}</div>
                 </div>
-                <div className="p-5">
-                  <h3 className="font-semibold text-sm">{r.title}</h3>
-                  <p className="text-xs text-zenicorp-mediumGray mt-1">{r.desc}</p>
+                <div className="p-6">
+                  <h3 className="font-bold">{r.title}</h3>
+                  <p className="text-sm text-white/50">{r.desc}</p>
                 </div>
               </div>
             ))}
@@ -211,102 +288,62 @@ export default function EpoxyPage() {
         </div>
       </section>
 
-      {/* PROCESSUS */}
-      <section className="section-padding bg-zenicorp-black text-white">
-        <div className="container-zenicorp">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <p className="text-zenicorp-gold font-semibold uppercase tracking-[0.2em] text-xs mb-3">Comment ça marche</p>
-            <h2 className="heading-2 text-white">3 étapes simples</h2>
+      {/* Process */}
+      <section className="py-32">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-6">Notre <span className="text-indigo-400">processus</span></h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-8">
             {[
-              { n: '01', t: 'Soumission', d: 'Remplissez notre formulaire en 2 minutes. Réponse sous 24h avec prix détaillé.' },
-              { n: '02', t: 'Inspection & préparation', d: 'Inspection gratuite de votre plancher. Préparation complète incluse : ponçage, fissures, nettoyage.' },
-              { n: '03', t: 'Application', d: 'Application par nos équipes certifiées. Fini impeccable, garantie 5 ans.' },
-            ].map((s) => (
-              <div key={s.n} className="border border-zenicorp-mediumGray p-6 hover:border-zenicorp-gold/60 transition-colors">
-                <span className="font-heading text-5xl text-zenicorp-gold font-bold">{s.n}</span>
-                <h3 className="text-xl font-semibold mt-4 mb-2">{s.t}</h3>
-                <p className="text-sm text-zenicorp-silver">{s.d}</p>
+              { n: '01', title: 'Soumission', desc: 'Devis détaillé sous 24h.' },
+              { n: '02', title: 'Préparation', desc: 'Ponçage, réparation, nettoyage complet.' },
+              { n: '03', title: 'Application', desc: '2 couches époxy. Finition impeccable.' },
+            ].map((step) => (
+              <div key={step.n} className="p-8 rounded-3xl bg-white/[0.02] border border-white/5 text-center group hover:border-indigo-500/30 transition-all">
+                <span className="text-6xl font-bold text-indigo-400/20">{step.n}</span>
+                <h3 className="text-xl font-bold mt-4 mb-2">{step.title}</h3>
+                <p className="text-white/50">{step.desc}</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* GARANTIE */}
-      <section id="garantie" className="section-padding bg-white">
-        <div className="container-zenicorp">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <p className="text-zenicorp-gold font-semibold uppercase tracking-[0.2em] text-xs mb-3">Notre garantie</p>
-              <h2 className="heading-2 mb-6">Garantie 5 ans écrite</h2>
-              <p className="body-base mb-6">
-                Tous nos revêtements de sol sont garantis par écrit 5 ans contre le décollement, l&apos;écaillage,
-                les bulles et les défauts d&apos;application. Notre préparation de surface en 5 étapes est la clé
-                d&apos;un plancher qui dure.
-              </p>
-              <ul className="space-y-3 mb-8">
-                {['Nettoyage haute pression & dégraissage', 'Meulage complet de la surface', 'Réparation des fissures', 'Primaire d\'adhérence', 'Application 2 couches d\'époxy'].map((s) => (
-                  <li key={s} className="flex items-center gap-3 text-sm">
-                    <CheckCircle2 className="w-5 h-5 text-zenicorp-gold flex-shrink-0" /> {s}
-                  </li>
-                ))}
-              </ul>
-              <a href="/soumission" className="btn-primary">Planifier une soumission</a>
-            </div>
-            <div className="relative overflow-hidden">
-              <img src={px(172289, 900)} alt="" aria-hidden="true" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-white/95"></div>
-              <div className="relative p-8 border border-zenicorp-border">
-                <div className="flex items-center gap-2 mb-4">
-                  <Star className="w-5 h-5 text-zenicorp-gold fill-zenicorp-gold" />
-                  <span className="font-semibold">4.9/5 - 250+ clients satisfaits</span>
-                </div>
-                <blockquote className="body-base italic mb-4">
-                  « Plancher refait en 2 jours, résultat impeccable. Le suivi a été exceptionnel du début à la fin. »
-                </blockquote>
-                <p className="text-sm font-semibold">Marc T., Québec</p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="section-padding bg-zenicorp-lightGray">
-        <div className="container-zenicorp max-w-3xl">
-          <div className="text-center mb-12">
-            <p className="text-zenicorp-gold font-semibold uppercase tracking-[0.2em] text-xs mb-3">FAQ</p>
-            <h2 className="heading-2">Questions fréquentes</h2>
+      <section id="faq" className="py-32 border-y border-white/5">
+        <div className="max-w-3xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-6">FAQ <span className="text-indigo-400">Époxy</span></h2>
           </div>
           <div className="space-y-4">
-            {faqs.map((f) => (
-              <details key={f.q} className="card p-6 group">
-                <summary className="flex items-center justify-between cursor-pointer font-semibold">
-                  {f.q}
-                  <span className="text-zenicorp-gold text-xl group-open:rotate-45 transition-transform">+</span>
+            {faqs.map((faq, i) => (
+              <details key={i} className="group p-6 rounded-2xl bg-white/[0.02] border border-white/5 cursor-pointer">
+                <summary className="flex items-center justify-between font-semibold text-lg group-hover:text-indigo-400 transition-colors">
+                  {faq.q}
+                  <span className="text-indigo-400 text-2xl group-open:rotate-45 transition-transform">+</span>
                 </summary>
-                <p className="body-base text-sm mt-4">{f.a}</p>
+                <p className="mt-4 text-white/60">{faq.a}</p>
               </details>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA FINAL */}
-      <section className="bg-zenicorp-black text-white">
-        <div className="container-zenicorp py-16 text-center">
-          <h2 className="heading-2 text-white mb-4">Prêt à transformer votre plancher ?</h2>
-          <p className="text-zenicorp-silver mb-8">Soumission gratuite sous 24h. Aucun engagement.</p>
+      {/* CTA */}
+      <section className="py-32 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-500/10 rounded-full blur-[150px]" />
+        </div>
+        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+          <h2 className="text-4xl md:text-6xl font-bold mb-6">Transformez votre <span className="text-indigo-400">plancher</span></h2>
+          <p className="text-xl text-white/60 mb-10">Soumission gratuite sous 24h. Sans engagement.</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="/soumission" className="btn-gold">Obtenir ma soumission gratuite</a>
-            <a href="tel:18009364267" className="btn-secondary !border-white !text-white hover:!bg-white hover:!text-zenicorp-black">
-              <Phone className="w-4 h-4 mr-2" /> 1-800-ZENICORP
-            </a>
+            <a href="/soumission" className="inline-flex items-center gap-3 px-8 py-4 bg-indigo-500 text-white font-bold rounded-full hover:bg-indigo-400 transition-all shadow-lg shadow-indigo-500/30 hover:scale-105">Devis gratuit</a>
+            <a href="tel:18009364267" className="inline-flex items-center gap-3 px-8 py-4 border border-white/20 rounded-full hover:bg-white/5 transition-all">1-800-ZENICORP</a>
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
