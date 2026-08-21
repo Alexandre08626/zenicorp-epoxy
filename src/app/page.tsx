@@ -1,249 +1,265 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { useEffect, useState, useRef } from 'react';
 import {
-  Shield, Clock, Award, Phone, CheckCircle2, Home, Building2, Factory,
-  Star, Droplets, Sparkles, ShoppingCart, ArrowRight, Calculator,
-  Palette, Gem, Layers, Package, Paintbrush, Check
+  Phone, Check, Gem, Sparkles, Layers, ShoppingCart,
+  ArrowRight, Star, X, ChevronRight
 } from 'lucide-react';
 
-const Counter = ({ end, suffix = '' }: { end: number; suffix?: string }) => {
-  const [count, setCount] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
+/* ─── Animated Counter ─── */
+const CountUp = ({ end, suffix = '' }: { end: number; suffix?: string }) => {
+  const [val, setVal] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) setIsVisible(true); }, { threshold: 0.1 });
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
+    const obs = new IntersectionObserver(([e]) => e.isIntersecting && animate(), { threshold: 0.3 });
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
   }, []);
-  useEffect(() => {
-    if (!isVisible) return;
+  const animate = () => {
     let start: number;
-    const animate = (now: number) => {
-      if (!start) start = now;
-      const p = Math.min((now - start) / 2000, 1);
-      setCount(Math.floor((1 - Math.pow(1 - p, 4)) * end));
-      if (p < 1) requestAnimationFrame(animate);
+    const step = (t: number) => {
+      if (!start) start = t;
+      const p = Math.min((t - start) / 2000, 1);
+      setVal(Math.floor((1 - Math.pow(1 - p, 3)) * end));
+      if (p < 1) requestAnimationFrame(step);
     };
-    requestAnimationFrame(animate);
-  }, [isVisible, end]);
-  return <span ref={ref}>{count}{suffix}</span>;
+    requestAnimationFrame(step);
+  };
+  return <span ref={ref}>{val}{suffix}</span>;
 };
 
-import { useRef } from 'react';
-
-// ============ VRAIES PHOTOS ÉPOXY ============
-const epoxyPhotos = {
-  metallic: [
-    { url: 'https://images.pexels.com/photos/2306171/pexels-photo-2306171.jpeg?auto=compress&cs=tinysrgb&w=800', title: 'Gris Métallique Luxe', desc: 'Fini miroir haute brillance' },
-    { url: 'https://images.pexels.com/photos/2635038/pexels-photo-2635038.jpeg?auto=compress&cs=tinysrgb&w=800', title: 'Bleu Nuit Métallique', desc: 'Profondeur 3D' },
-    { url: 'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=800', title: 'Cuivre Rose Gold', desc: 'Effet marbré premium' },
-    { url: 'https://images.pexels.com/photos/209315/pexels-photo-209315.jpeg?auto=compress&cs=tinysrgb&w=800', title: 'Argent Poli', desc: 'Style industriel chic' },
-  ],
-  flakes: [
-    { url: 'https://images.pexels.com/photos/584399/pexels-photo-584399.jpeg?auto=compress&cs=tinysrgb&w=800', title: 'Flocons Blends Gris', desc: 'Antidérapant discret' },
-    { url: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=800', title: 'Full Flake Tan', desc: 'Texture complète' },
-    { url: 'https://images.pexels.com/photos/259962/pexels-photo-259962.jpeg?auto=compress&cs=tinysrgb&w=800', title: 'Flocons Bleu Glacier', desc: 'Design moderne' },
-    { url: 'https://images.pexels.com/photos/2724749/pexels-photo-2724749.jpeg?auto=compress&cs=tinysrgb&w=800', title: 'Blends Noir/Argent', desc: 'Garage haut de gamme' },
-  ],
-  naturel: [
-    { url: 'https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=800', title: 'Béton Poli Naturel', desc: 'Look brut industriel' },
-    { url: 'https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg?auto=compress&cs=tinysrgb&w=800', title: 'Gris Ciment Lisse', desc: 'Minimaliste élégant' },
-    { url: 'https://images.pexels.com/photos/1358900/pexels-photo-1358900.jpeg?auto=compress&cs=tinysrgb&w=800', title: 'Stone Wash', desc: 'Effet pierre naturelle' },
-    { url: 'https://images.pexels.com/photos/1648771/pexels-photo-1648771.jpeg?auto=compress&cs=tinysrgb&w=800', title: 'Sable Poli', desc: 'Chaleur organique' },
-  ],
+/* ─── Data ─── */
+const finishes = {
+  metallic: {
+    label: 'Métallique',
+    icon: Gem,
+    accent: '#8b5cf6',
+    images: [
+      { src: 'https://images.pexels.com/photos/2306171/pexels-photo-2306171.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Liquid Mercury', desc: 'Gris chrome profond, reflets miroir' },
+      { src: 'https://images.pexels.com/photos/2635038/pexels-photo-2635038.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Midnight Ocean', desc: 'Bleu nuit aux nuances violetées' },
+      { src: 'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Rose Gold Flow', desc: 'Cuivre chaud, effet marbré organique' },
+      { src: 'https://images.pexels.com/photos/209315/pexels-photo-209315.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Platinum Vein', desc: 'Argent poli avec veines dynamiques' },
+    ]
+  },
+  flakes: {
+    label: 'Flocons',
+    icon: Sparkles,
+    accent: '#f59e0b',
+    images: [
+      { src: 'https://images.pexels.com/photos/584399/pexels-photo-584399.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Granite Storm', desc: 'Blends gris anthracite, texture riche' },
+      { src: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Desert Sand', desc: 'Tan chaud, fini naturel antidérapant' },
+      { src: 'https://images.pexels.com/photos/259962/pexels-photo-259962.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Glacier Blue', desc: 'Bleu arctique avec reflets blancs' },
+      { src: 'https://images.pexels.com/photos/2724749/pexels-photo-2724749.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Carbon Black', desc: 'Noir profond, particules argentées' },
+    ]
+  },
+  naturel: {
+    label: 'Naturel',
+    icon: Layers,
+    accent: '#10b981',
+    images: [
+      { src: 'https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Raw Concrete', desc: 'Béton brut poli, esthétique loft' },
+      { src: 'https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Cement Grey', desc: 'Gris ciment lisse et minimaliste' },
+      { src: 'https://images.pexels.com/photos/1358900/pexels-photo-1358900.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Stone Washed', desc: 'Effet pierre vieillie, tons terreux' },
+      { src: 'https://images.pexels.com/photos/1648771/pexels-photo-1648771.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Warm Sand', desc: 'Sable chaud, atmosphère organique' },
+    ]
+  },
 };
 
-// ============ PRODUITS À VENDRE ============
 const products = [
-  {
-    name: 'Résine Époxy 100% Solide',
-    subtitle: 'Kit 15 m² - Clear',
-    price: '289 $',
-    oldPrice: '349 $',
-    image: 'https://images.pexels.com/photos/406831/pexels-photo-406831.jpeg?auto=compress&cs=tinysrgb&w=400',
-    badge: 'Best-seller',
-    features: ['15 m² couverture', 'Séchage 24h', 'Sans odeur', 'UV stable'],
-  },
-  {
-    name: 'Résine Époxy Métallique',
-    subtitle: 'Kit 10 m² + Pigments',
-    price: '399 $',
-    oldPrice: '459 $',
-    image: 'https://images.pexels.com/photos/6044266/pexels-photo-6044266.jpeg?auto=compress&cs=tinysrgb&w=400',
-    badge: 'Premium',
-    features: ['Effet 3D', 'Pigments inclus', '10 m²', 'Garantie 5 ans'],
-  },
-  {
-    name: 'Flocons Décoratifs',
-    subtitle: 'Sac 5 lbs - 20 couleurs',
-    price: '89 $',
-    oldPrice: '119 $',
-    image: 'https://images.pexels.com/photos/268460/pexels-photo-268460.jpeg?auto=compress&cs=tinysrgb&w=400',
-    badge: 'Populaire',
-    features: ['5 lbs', '20 coloris', 'Antidérapant', 'UV résistant'],
-  },
-  {
-    name: 'Primaire d\'Accrochage',
-    subtitle: 'Bidon 3.78L',
-    price: '79 $',
-    oldPrice: '99 $',
-    image: 'https://images.pexels.com/photos/5797998/pexels-photo-5797998.jpeg?auto=compress&cs=tinysrgb&w=400',
-    badge: 'Essentiel',
-    features: ['3.78L', 'Béton & bois', 'Séchage 4h', 'Sans solvant'],
-  },
-  {
-    name: 'Kit Outils Pro',
-    subtitle: 'Rouleau + raclette + pics',
-    price: '129 $',
-    oldPrice: '169 $',
-    image: 'https://images.pexels.com/photos/221027/pexels-photo-221027.jpeg?auto=compress&cs=tinysrgb&w=400',
-    badge: 'Nouveau',
-    features: ['Rouleau 18"', 'Raclette dentée', 'Pics à bulles', 'Gants'],
-  },
-  {
-    name: 'Vernis Polyuréthane',
-    subtitle: 'Top coat UV - 3.78L',
-    price: '149 $',
-    oldPrice: '189 $',
-    image: 'https://images.pexels.com/photos/3062948/pexels-photo-3062948.jpeg?auto=compress&cs=tinysrgb&w=400',
-    badge: 'Protection',
-    features: ['UV shield', 'Antirayures', 'Brillant/Satin', '5 ans'],
-  },
+  { name: 'Époxy Clear Pro', sub: 'Kit 15 m² · 100% solide', price: '289 $', old: '349 $', img: 'https://images.pexels.com/photos/406831/pexels-photo-406831.jpeg?auto=compress&cs=tinysrgb&w=600', tags: ['15 m²', '24h', 'Inodore'] },
+  { name: 'Kit Métallique 3D', sub: '10 m² + pigments', price: '399 $', old: '459 $', img: 'https://images.pexels.com/photos/6044266/pexels-photo-6044266.jpeg?auto=compress&cs=tinysrgb&w=600', tags: ['3D', 'Pigments', 'Premium'] },
+  { name: 'Flocons Déco 5 lbs', sub: '20 coloris au choix', price: '89 $', old: '119 $', img: 'https://images.pexels.com/photos/268460/pexels-photo-268460.jpeg?auto=compress&cs=tinysrgb&w=600', tags: ['5 lbs', 'UV', 'Antidérapant'] },
+  { name: 'Primaire Pro 3.78L', sub: 'Accrochage béton/bois', price: '79 $', old: '99 $', img: 'https://images.pexels.com/photos/5797998/pexels-photo-5797998.jpeg?auto=compress&cs=tinysrgb&w=600', tags: ['3.78L', '4h', 'Sans solvant'] },
+  { name: 'Outils Époxy Pro', sub: 'Rouleau + raclette + pics', price: '129 $', old: '169 $', img: 'https://images.pexels.com/photos/221027/pexels-photo-221027.jpeg?auto=compress&cs=tinysrgb&w=600', tags: ['Complet', '18"', 'Pro'] },
+  { name: 'Vernis UV Shield', sub: 'Top coat 3.78L', price: '149 $', old: '189 $', img: 'https://images.pexels.com/photos/3062948/pexels-photo-3062948.jpeg?auto=compress&cs=tinysrgb&w=600', tags: ['UV', 'Anti-rayures', '5 ans'] },
 ];
 
-const services = [
-  { icon: Home, title: 'Garage Résidentiel', desc: 'Fini lustré premium', price: '3,900$', features: ['Préparation 5 étapes', 'Époxy 100% solide', 'Paillettes décoratives', 'Antidérapant'], color: 'from-indigo-300 to-blue-300' },
-  { icon: Building2, title: 'Commercial', desc: 'Showrooms, commerces', price: 'Sur devis', features: ['Haute résistance', 'Entretien minimal', 'Hors heures', 'Normes'], color: 'from-purple-300 to-violet-300' },
-  { icon: Factory, title: 'Industriel', desc: 'Usines, entrepôts', price: 'Sur devis', features: ['Polyuréthane', 'Résistance chimique', 'Charges lourdes', 'Longue durée'], color: 'from-pink-300 to-rose-300' },
-];
-
-export default function EpoxyShop() {
-  const [mounted, setMounted] = useState(false);
+/* ─── Main ─── */
+export default function EpoxyPremium() {
+  const [tab, setTab] = useState<'metallic' | 'flakes' | 'naturel'>('metallic');
   const [cart, setCart] = useState<string[]>([]);
-  const [activeTab, setActiveTab] = useState<'metallic' | 'flakes' | 'naturel'>('metallic');
-  const [showCart, setShowCart] = useState(false);
+  const [toast, setToast] = useState(false);
+  const [lightbox, setLightbox] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { setMounted(true); }, []);
-  if (!mounted) return null;
 
-  const addToCart = (product: string) => {
-    setCart([...cart, product]);
-    setShowCart(true);
-    setTimeout(() => setShowCart(false), 2000);
+  /* Parallax hero */
+  useEffect(() => {
+    const onScroll = () => {
+      if (!heroRef.current) return;
+      const y = window.scrollY;
+      const img = heroRef.current.querySelector('img') as HTMLImageElement;
+      if (img) img.style.transform = `translateY(${y * 0.4}px) scale(1.1)`;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const addCart = (name: string) => {
+    setCart(c => [...c, name]);
+    setToast(true);
+    setTimeout(() => setToast(false), 2500);
   };
 
+  const current = finishes[tab];
+
+  if (!mounted) return null;
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 text-slate-800 overflow-x-hidden">
-      {/* Background */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(99,102,241,0.3) 2px, transparent 0)', backgroundSize: '48px 48px' }} />
-        <div className="absolute top-20 right-10 w-96 h-96 bg-indigo-200/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 left-10 w-96 h-96 bg-purple-200/30 rounded-full blur-3xl" />
-      </div>
+    <div className="min-h-screen bg-[#0a0a0f] text-white overflow-x-hidden selection:bg-violet-500/30">
 
-      {/* ===== HERO ===== */}
-      <section className="relative pt-20 pb-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              <div className="flex items-center gap-4">
-                <img src="/logo.png" alt="ZeniCorp" className="h-20 w-auto" />
-                <div>
-                  <span className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">ZENICORP</span>
-                  <span className="block text-sm text-indigo-500 tracking-widest uppercase">Époxy Pro & Matériel</span>
-                </div>
-              </div>
+      {/* ═══ HERO PARALLAX ═══ */}
+      <section ref={heroRef} className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* Background image with parallax */}
+        <div className="absolute inset-0">
+          <img
+            src="https://images.pexels.com/photos/2306171/pexels-photo-2306171.jpeg?auto=compress&cs=tinysrgb&w=2560"
+            alt=""
+            className="w-full h-full object-cover will-change-transform"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f]/60 via-[#0a0a0f]/40 to-[#0a0a0f]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0f]/80 via-transparent to-[#0a0a0f]/80" />
+        </div>
 
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-100 border border-indigo-200">
-                <Shield className="w-4 h-4 text-indigo-500" />
-                <span className="text-sm text-indigo-600 font-medium">Garantie 5 ans + Matériel pro disponible</span>
-              </div>
+        {/* Floating particles */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {Array.from({ length: 20 }).map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 rounded-full bg-white/20 animate-pulse"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${2 + Math.random() * 3}s`,
+              }}
+            />
+          ))}
+        </div>
 
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] text-slate-800">
-                Finitions{' '}
-                <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Métalliques</span>
-                {' '}& Flocons
-              </h1>
-
-              <p className="text-lg text-slate-600 max-w-xl">
-                Installation professionnelle + vente de matériel époxy premium. 
-                Résines 100% solides, pigments métalliques, flocons décoratifs.
-              </p>
-
-              <div className="flex flex-wrap gap-4">
-                <a href="#shop" className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-indigo-400 to-purple-500 text-white font-bold rounded-full shadow-xl shadow-indigo-400/40 hover:shadow-2xl hover:scale-105 transition-all">
-                  <ShoppingCart className="w-5 h-5" />
-                  Voir le matériel
-                </a>
-                <a href="tel:18009364267" className="inline-flex items-center gap-3 px-8 py-4 bg-white border-2 border-indigo-200 text-indigo-700 font-semibold rounded-full hover:bg-indigo-50 transition-all">
-                  <Phone className="w-5 h-5" />
-                  Soumission installation
-                </a>
-              </div>
-            </div>
-
-            <div className="relative">
-              <div className="rounded-3xl overflow-hidden shadow-2xl shadow-indigo-200/50 ring-4 ring-white">
-                <img src="https://images.pexels.com/photos/2306171/pexels-photo-2306171.jpeg?auto=compress&cs=tinysrgb&w=1920" alt="Plancher époxy métallique" className="w-full h-[700px] object-cover" />
-              </div>
-              <div className="absolute -bottom-6 left-6 right-6 p-6 rounded-2xl bg-white shadow-xl border border-indigo-100">
-                <div className="grid grid-cols-3 gap-4 text-center">
-                  <div><p className="text-2xl font-bold text-indigo-600">100%</p><p className="text-xs text-slate-500">Solide</p></div>
-                  <div><p className="text-2xl font-bold text-indigo-600">5</p><p className="text-xs text-slate-500">Ans garantie</p></div>
-                  <div><p className="text-2xl font-bold text-indigo-600">24-48h</p><p className="text-xs text-slate-500">Séchage</p></div>
-                </div>
-              </div>
-            </div>
+        {/* Content */}
+        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-md border border-white/10 mb-8">
+            <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+            <span className="text-sm text-white/70">Plancher époxy #1 au Québec</span>
           </div>
+
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-[0.9] mb-8">
+            <span className="block">Finitions</span>
+            <span className="block bg-gradient-to-r from-violet-400 via-fuchsia-400 to-amber-400 bg-clip-text text-transparent">
+              d'exception
+            </span>
+          </h1>
+
+          <p className="text-lg md:text-xl text-white/50 max-w-2xl mx-auto mb-12 leading-relaxed">
+            Installation professionnelle et vente de matériel époxy premium.
+            Métallique, flocons, naturel — on a ce qu'il vous faut.
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-4">
+            <a href="#realisations" className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-white/90 transition-all hover:scale-105">
+              Voir les réalisations
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </a>
+            <a href="#shop" className="inline-flex items-center gap-3 px-8 py-4 bg-white/5 backdrop-blur-md border border-white/10 text-white font-semibold rounded-full hover:bg-white/10 transition-all">
+              <ShoppingCart className="w-5 h-5" />
+              Boutique matériel
+            </a>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30">
+          <span className="text-xs tracking-widest uppercase">Scroll</span>
+          <div className="w-px h-12 bg-gradient-to-b from-white/30 to-transparent animate-pulse" />
         </div>
       </section>
 
-      {/* ===== FINITIONS TABS ===== */}
-      <section className="py-20">
+      {/* ═══ MARQUEE STATS ═══ */}
+      <section className="py-16 border-y border-white/5 bg-[#0a0a0f]">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Nos <span className="text-indigo-500">Finitions</span></h2>
-            <p className="text-lg text-slate-600">Choisissez le style qui vous ressemble</p>
-          </div>
-
-          {/* Tabs */}
-          <div className="flex justify-center gap-4 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { id: 'metallic' as const, label: 'Métallique', icon: Gem },
-              { id: 'flakes' as const, label: 'Flocons', icon: Sparkles },
-              { id: 'naturel' as const, label: 'Naturel', icon: Layers },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all ${
-                  activeTab === tab.id
-                    ? 'bg-gradient-to-r from-indigo-400 to-purple-500 text-white shadow-xl shadow-indigo-400/30'
-                    : 'bg-white text-slate-600 border-2 border-slate-200 hover:border-indigo-200'
-                }`}
-              >
-                <tab.icon className="w-5 h-5" />
-                {tab.label}
-              </button>
+              { val: 250, suf: '+', lab: 'Projets réalisés' },
+              { val: 5, suf: ' ans', lab: 'Garantie maximale' },
+              { val: 100, suf: '%', lab: 'Époxy solide' },
+              { val: 24, suf: 'h', lab: 'Délai soumission' },
+            ].map(s => (
+              <div key={s.lab}>
+                <p className="text-5xl md:text-6xl font-bold text-white mb-2">
+                  <CountUp end={s.val} suffix={s.suf} />
+                </p>
+                <p className="text-sm text-white/30 uppercase tracking-wider">{s.lab}</p>
+              </div>
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* Gallery Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {epoxyPhotos[activeTab].map((photo, idx) => (
-              <div key={idx} className="group relative rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all">
-                <img src={photo.url} alt={photo.title} className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/80 via-indigo-900/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                  <p className="font-bold text-lg">{photo.title}</p>
-                  <p className="text-sm text-white/80">{photo.desc}</p>
-                </div>
-                <div className="absolute top-4 right-4">
-                  <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur text-xs text-white font-semibold">
-                    {activeTab === 'metallic' ? 'Métallique' : activeTab === 'flakes' ? 'Flocons' : 'Naturel'}
+      {/* ═══ GALERIE TABS ═══ */}
+      <section id="realisations" className="py-32 bg-[#0a0a0f]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6">
+            <div>
+              <p className="text-sm text-violet-400 font-semibold tracking-widest uppercase mb-3">Galerie</p>
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tight">
+                Vraies <span className="text-white/20">réalisations</span>
+              </h2>
+            </div>
+
+            {/* Tabs */}
+            <div className="flex gap-2">
+              {(Object.keys(finishes) as Array<keyof typeof finishes>).map((k) => {
+                const active = tab === k;
+                const T = finishes[k].icon;
+                return (
+                  <button
+                    key={k}
+                    onClick={() => setTab(k)}
+                    className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all ${
+                      active
+                        ? 'bg-white text-black'
+                        : 'bg-white/5 text-white/40 hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    <T className="w-4 h-4" />
+                    {finishes[k].label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Images Grid */}
+          <div className="grid md:grid-cols-2 gap-4">
+            {current.images.map((img, i) => (
+              <div
+                key={`${tab}-${i}`}
+                className={`group relative overflow-hidden rounded-3xl cursor-pointer ${
+                  i === 0 ? 'md:col-span-2 aspect-[21/9]' : 'aspect-[4/3]'
+                }`}
+                onClick={() => setLightbox(img.src)}
+              >
+                <img
+                  src={img.src}
+                  alt={img.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity" />
+                <div className="absolute bottom-0 left-0 right-0 p-8 translate-y-4 group-hover:translate-y-0 transition-transform">
+                  <span
+                    className="inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-3"
+                    style={{ background: current.accent, color: '#000' }}
+                  >
+                    {current.label}
                   </span>
+                  <h3 className="text-2xl font-bold mb-1">{img.title}</h3>
+                  <p className="text-white/50">{img.desc}</p>
+                </div>
+                <div className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <ChevronRight className="w-5 h-5 text-white" />
                 </div>
               </div>
             ))}
@@ -251,51 +267,57 @@ export default function EpoxyShop() {
         </div>
       </section>
 
-      {/* ===== SHOP ===== */}
-      <section id="shop" className="py-20 bg-white/50">
+      {/* ═══ SHOP ═══ */}
+      <section id="shop" className="py-32 bg-gradient-to-b from-[#0a0a0f] via-[#0f0f1a] to-[#0a0a0f]">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 mb-4">
-              <ShoppingCart className="w-4 h-4 text-purple-500" />
-              <span className="text-sm text-purple-600 font-medium">Matériel Pro</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Notre <span className="text-purple-500">Boutique</span></h2>
-            <p className="text-lg text-slate-600">Résines, pigments, flocons et outils pour vos projets</p>
+          <div className="text-center mb-20">
+            <p className="text-sm text-fuchsia-400 font-semibold tracking-widest uppercase mb-3">Boutique Pro</p>
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tight mb-4">Matériel & Produits</h2>
+            <p className="text-white/30 text-lg">Tout ce qu'il faut pour réussir votre plancher époxy</p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product, idx) => (
-              <div key={idx} className="group bg-white rounded-3xl border-2 border-slate-100 hover:border-indigo-200 shadow-lg hover:shadow-2xl transition-all overflow-hidden">
-                <div className="relative">
-                  <img src={product.image} alt={product.name} className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500" />
-                  <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-gradient-to-r from-indigo-400 to-purple-500 text-white text-xs font-bold shadow-lg">
-                    {product.badge}
-                  </span>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {products.map((p, i) => (
+              <div
+                key={i}
+                className="group relative bg-white/[0.03] border border-white/5 rounded-[2rem] overflow-hidden hover:border-white/10 hover:bg-white/[0.05] transition-all duration-500"
+              >
+                {/* Image */}
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <img
+                    src={p.img}
+                    alt={p.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-transparent" />
                   <button
-                    onClick={() => addToCart(product.name)}
-                    className="absolute bottom-4 right-4 p-3 rounded-full bg-white shadow-lg text-indigo-600 hover:bg-indigo-50 transition-colors"
+                    onClick={() => addCart(p.name)}
+                    className="absolute bottom-4 right-4 p-3 rounded-2xl bg-white text-black hover:scale-110 transition-transform"
                   >
                     <ShoppingCart className="w-5 h-5" />
                   </button>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-lg font-bold text-slate-800">{product.name}</h3>
-                  <p className="text-sm text-slate-500 mb-4">{product.subtitle}</p>
-                  <div className="flex items-baseline gap-2 mb-4">
-                    <span className="text-2xl font-bold text-indigo-600">{product.price}</span>
-                    <span className="text-sm text-slate-400 line-through">{product.oldPrice}</span>
+
+                {/* Content */}
+                <div className="p-7">
+                  <div className="flex items-baseline gap-3 mb-1">
+                    <span className="text-2xl font-bold">{p.price}</span>
+                    <span className="text-sm text-white/20 line-through">{p.old}</span>
                   </div>
-                  <ul className="space-y-1 mb-6">
-                    {product.features.map((f) => (
-                      <li key={f} className="flex items-center gap-2 text-xs text-slate-600">
-                        <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
-                        {f}
-                      </li>
+                  <h3 className="text-lg font-semibold mb-1">{p.name}</h3>
+                  <p className="text-sm text-white/30 mb-5">{p.sub}</p>
+
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {p.tags.map(t => (
+                      <span key={t} className="px-3 py-1 rounded-full bg-white/5 text-white/40 text-xs font-medium border border-white/5">
+                        {t}
+                      </span>
                     ))}
-                  </ul>
+                  </div>
+
                   <button
-                    onClick={() => addToCart(product.name)}
-                    className="w-full py-3 bg-gradient-to-r from-indigo-400 to-purple-500 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all"
+                    onClick={() => addCart(p.name)}
+                    className="w-full py-3.5 bg-white text-black font-bold rounded-xl hover:bg-white/90 transition-colors"
                   >
                     Ajouter au panier
                   </button>
@@ -303,43 +325,35 @@ export default function EpoxyShop() {
               </div>
             ))}
           </div>
-
-          {/* Cart notification */}
-          {showCart && (
-            <div className="fixed bottom-8 right-8 z-50 p-4 bg-indigo-600 text-white rounded-2xl shadow-2xl animate-bounce">
-              <div className="flex items-center gap-3">
-                <ShoppingCart className="w-5 h-5" />
-                <span className="font-bold">{cart.length} article(s) dans le panier</span>
-              </div>
-            </div>
-          )}
         </div>
       </section>
 
-      {/* ===== SERVICES INSTALLATION ===== */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-800 mb-6">Installation <span className="text-indigo-500">Professionnelle</span></h2>
-            <p className="text-lg text-slate-600">On s'occupe de tout, du prep au top coat</p>
+      {/* ═══ SERVICES ═══ */}
+      <section className="py-32 bg-[#0a0a0f] relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-violet-500/5 rounded-full blur-[150px] pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-6 relative">
+          <div className="text-center mb-20">
+            <p className="text-sm text-emerald-400 font-semibold tracking-widest uppercase mb-3">Services</p>
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tight">Installation Pro</h2>
           </div>
+
           <div className="grid md:grid-cols-3 gap-6">
-            {services.map((service) => (
-              <div key={service.title} className="group p-8 rounded-3xl bg-white border-2 border-slate-100 hover:border-indigo-200 transition-all shadow-lg hover:shadow-2xl">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className={`p-4 rounded-2xl bg-gradient-to-r ${service.color} shadow-lg`}>
-                    <service.icon className="w-8 h-8 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-slate-800">{service.title}</h3>
-                    <p className="text-slate-500">{service.desc}</p>
-                  </div>
+            {[
+              { title: 'Garage Résidentiel', price: '3 900 $', desc: 'Fini lustré premium avec paillettes décoratives et antidérapant.', features: ['Préparation 5 étapes', 'Époxy 100% solide', 'Paillettes incluses', 'Antidérapant'], color: 'violet' },
+              { title: 'Commercial', price: 'Sur devis', desc: 'Showrooms, commerces, bureaux. Travail hors heures disponible.', features: ['Haute résistance', 'Entretien minimal', 'Hors heures', 'Normes QC'], color: 'fuchsia' },
+              { title: 'Industriel', price: 'Sur devis', desc: 'Usines, entrepôts, ateliers. Résistance chimique et charges lourdes.', features: ['Polyuréthane', 'Résistance chimique', 'Charges lourdes', 'Longue durée'], color: 'emerald' },
+            ].map((s) => (
+              <div key={s.title} className="relative p-8 rounded-[2rem] bg-gradient-to-b from-white/[0.05] to-transparent border border-white/5 hover:border-white/10 transition-all group">
+                <div className={`w-12 h-12 rounded-2xl bg-${s.color}-500/10 flex items-center justify-center mb-6`}>
+                  <div className={`w-3 h-3 rounded-full bg-${s.color}-400`} />
                 </div>
-                <div className="px-4 py-2 rounded-full bg-indigo-100 text-indigo-700 font-bold text-sm inline-block mb-4">{service.price}</div>
-                <ul className="space-y-2">
-                  {service.features.map((f) => (
-                    <li key={f} className="flex items-center gap-2 text-sm text-slate-600">
-                      <CheckCircle2 className="w-5 h-5 text-indigo-400 flex-shrink-0" />
+                <h3 className="text-2xl font-bold mb-2">{s.title}</h3>
+                <p className="text-lg font-semibold text-white/50 mb-4">{s.price}</p>
+                <p className="text-sm text-white/30 mb-8 leading-relaxed">{s.desc}</p>
+                <ul className="space-y-3">
+                  {s.features.map(f => (
+                    <li key={f} className="flex items-center gap-3 text-sm text-white/50">
+                      <Check className="w-4 h-4 text-emerald-400" />
                       {f}
                     </li>
                   ))}
@@ -350,23 +364,74 @@ export default function EpoxyShop() {
         </div>
       </section>
 
-      {/* ===== CTA ===== */}
-      <section className="py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100" />
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <h2 className="text-4xl md:text-6xl font-bold text-slate-800 mb-6">Prêt pour votre <span className="text-indigo-500">plancher de rêve</span> ?</h2>
+      {/* ═══ CTA ═══ */}
+      <section className="py-40 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-violet-900/20 via-fuchsia-900/10 to-[#0a0a0f]" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-violet-500/10 rounded-full blur-[150px]" />
+        </div>
+        <div className="max-w-3xl mx-auto px-6 text-center relative z-10">
+          <h2 className="text-5xl md:text-7xl font-bold tracking-tight mb-8">
+            Votre plancher<br />
+            <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">mérite l'excellence</span>
+          </h2>
+          <p className="text-lg text-white/30 mb-12">Soumission gratuite sous 24h. Matériel expédié partout au Québec.</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="tel:18009364267" className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-indigo-400 to-purple-500 text-white font-bold rounded-full shadow-xl shadow-indigo-400/40 hover:shadow-2xl transition-all">
+            <a href="tel:18009364267" className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black font-bold rounded-full hover:scale-105 transition-transform">
               <Phone className="w-5 h-5" />
-              Appeler pour soumission
+              1-800-ZENICORP
             </a>
-            <a href="#shop" className="inline-flex items-center gap-3 px-8 py-4 bg-white text-slate-700 font-bold rounded-full shadow-lg border-2 border-slate-200 hover:border-indigo-200 transition-all">
+            <a href="#shop" className="inline-flex items-center gap-3 px-10 py-5 bg-white/5 border border-white/10 text-white font-semibold rounded-full hover:bg-white/10 transition-colors">
               <ShoppingCart className="w-5 h-5" />
-              Acheter le matériel
+              Voir la boutique
             </a>
           </div>
         </div>
       </section>
+
+      {/* ═══ FOOTER ═══ */}
+      <footer className="py-12 border-t border-white/5 bg-[#0a0a0f]">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-3">
+            <img src="/logo.png" alt="ZeniCorp" className="h-8 w-auto opacity-50" />
+            <span className="text-white/20 text-sm">Époxy Pro — Québec</span>
+          </div>
+          <p className="text-white/10 text-sm">© {new Date().getFullYear()} ZeniCorp. Tous droits réservés.</p>
+        </div>
+      </footer>
+
+      {/* ═══ LIGHTBOX ═══ */}
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center p-6 animate-in fade-in duration-200"
+          onClick={() => setLightbox(null)}
+        >
+          <button className="absolute top-6 right-6 p-3 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors">
+            <X className="w-6 h-6" />
+          </button>
+          <img
+            src={lightbox}
+            alt=""
+            className="max-w-full max-h-[90vh] rounded-2xl object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
+
+      {/* ═══ TOAST ═══ */}
+      {toast && (
+        <div className="fixed bottom-8 right-8 z-50 animate-in slide-in-from-bottom-4 fade-in">
+          <div className="flex items-center gap-4 px-6 py-4 bg-white text-black rounded-2xl shadow-2xl">
+            <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center">
+              <Check className="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <p className="font-semibold text-sm">Ajouté au panier</p>
+              <p className="text-xs text-black/40">{cart.length} article(s)</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
