@@ -35,10 +35,10 @@ const finishes = {
     icon: Gem,
     accent: '#8b5cf6',
     images: [
-      { src: 'https://images.pexels.com/photos/2306171/pexels-photo-2306171.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Liquid Mercury', desc: 'Gris chrome profond, reflets miroir' },
-      { src: 'https://images.pexels.com/photos/2635038/pexels-photo-2635038.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Midnight Ocean', desc: 'Bleu nuit aux nuances violetées' },
-      { src: 'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Rose Gold Flow', desc: 'Cuivre chaud, effet marbré organique' },
-      { src: 'https://images.pexels.com/photos/209315/pexels-photo-209315.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Platinum Vein', desc: 'Argent poli avec veines dynamiques' },
+      { src: 'https://images.pexels.com/photos/9139594/pexels-photo-9139594.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Showroom Titanium', desc: 'Garage luxe, gris métallique brillant' },
+      { src: 'https://images.pexels.com/photos/17181949/pexels-photo-17181949.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Liquid Silver', desc: 'Fini miroir, reflets éclatants' },
+      { src: 'https://images.pexels.com/photos/29149440/pexels-photo-29149440.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Gunmetal Grey', desc: 'Gris anthracite métallisé' },
+      { src: 'https://images.pexels.com/photos/27639759/pexels-photo-27639759.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Chrome White', desc: 'Blanc nacré avec profondeur' },
     ]
   },
   flakes: {
@@ -46,10 +46,10 @@ const finishes = {
     icon: Sparkles,
     accent: '#f59e0b',
     images: [
-      { src: 'https://images.pexels.com/photos/584399/pexels-photo-584399.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Granite Storm', desc: 'Blends gris anthracite, texture riche' },
-      { src: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Desert Sand', desc: 'Tan chaud, fini naturel antidérapant' },
-      { src: 'https://images.pexels.com/photos/259962/pexels-photo-259962.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Glacier Blue', desc: 'Bleu arctique avec reflets blancs' },
-      { src: 'https://images.pexels.com/photos/2724749/pexels-photo-2724749.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Carbon Black', desc: 'Noir profond, particules argentées' },
+      { src: 'https://images.pexels.com/photos/36681931/pexels-photo-36681931.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Granite Basement', desc: 'Texture granitée, résistance max' },
+      { src: 'https://images.pexels.com/photos/103598/pexels-photo-103598.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Speckled Grey', desc: 'Gris moucheté, style industriel' },
+      { src: 'https://images.pexels.com/photos/31601977/pexels-photo-31601977.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Commercial Blend', desc: 'Parking antidérapant' },
+      { src: 'https://images.pexels.com/photos/12139561/pexels-photo-12139561.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Night Flake', desc: 'Noir avec particules réfléchissantes' },
     ]
   },
   naturel: {
@@ -57,10 +57,10 @@ const finishes = {
     icon: Layers,
     accent: '#10b981',
     images: [
-      { src: 'https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Raw Concrete', desc: 'Béton brut poli, esthétique loft' },
-      { src: 'https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Cement Grey', desc: 'Gris ciment lisse et minimaliste' },
-      { src: 'https://images.pexels.com/photos/1358900/pexels-photo-1358900.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Stone Washed', desc: 'Effet pierre vieillie, tons terreux' },
-      { src: 'https://images.pexels.com/photos/1648771/pexels-photo-1648771.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Warm Sand', desc: 'Sable chaud, atmosphère organique' },
+      { src: 'https://images.pexels.com/photos/20251621/pexels-photo-20251621.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Pure Concrete', desc: 'Parking commercial, fini lisse brillant' },
+      { src: 'https://images.pexels.com/photos/17580916/pexels-photo-17580916.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Slate Grey', desc: 'Gris ardoise avec reflets naturels' },
+      { src: 'https://images.pexels.com/photos/8961732/pexels-photo-8961732.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Urban Minimal', desc: 'Béton poli, style contemporain' },
+      { src: 'https://images.pexels.com/photos/14002097/pexels-photo-14002097.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Stone Polish', desc: 'Pierre naturelle polie' },
     ]
   },
 };
@@ -115,7 +115,7 @@ export default function EpoxyPremium() {
         {/* Background image with parallax */}
         <div className="absolute inset-0">
           <img
-            src="https://images.pexels.com/photos/2306171/pexels-photo-2306171.jpeg?auto=compress&cs=tinysrgb&w=2560"
+            src="https://images.pexels.com/photos/9139594/pexels-photo-9139594.jpeg?auto=compress&cs=tinysrgb&w=2560"
             alt=""
             className="w-full h-full object-cover will-change-transform"
           />
