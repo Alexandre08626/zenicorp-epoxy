@@ -37,8 +37,8 @@ const finishes = {
     images: [
       { src: 'https://images.pexels.com/photos/9139594/pexels-photo-9139594.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Showroom Titanium', desc: 'Garage luxe, gris métallique brillant' },
       { src: 'https://images.pexels.com/photos/17181949/pexels-photo-17181949.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Liquid Silver', desc: 'Fini miroir, reflets éclatants' },
-      { src: 'https://images.pexels.com/photos/29149440/pexels-photo-29149440.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Gunmetal Grey', desc: 'Gris anthracite métallisé' },
-      { src: 'https://images.pexels.com/photos/27639759/pexels-photo-27639759.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Chrome White', desc: 'Blanc nacré avec profondeur' },
+      { src: 'https://images.pexels.com/photos/20251621/pexels-photo-20251621.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Empty Commercial', desc: 'Parking vide, surface lisse brillante' },
+      { src: 'https://images.pexels.com/photos/8961732/pexels-photo-8961732.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Minimal Grey', desc: 'Béton poli, style épuré' },
     ]
   },
   flakes: {
@@ -66,12 +66,12 @@ const finishes = {
 };
 
 const products = [
-  { name: 'Époxy Clear Pro', sub: 'Kit 15 m² · 100% solide', price: '289 $', old: '349 $', img: 'https://images.pexels.com/photos/406831/pexels-photo-406831.jpeg?auto=compress&cs=tinysrgb&w=600', tags: ['15 m²', '24h', 'Inodore'] },
-  { name: 'Kit Métallique 3D', sub: '10 m² + pigments', price: '399 $', old: '459 $', img: 'https://images.pexels.com/photos/6044266/pexels-photo-6044266.jpeg?auto=compress&cs=tinysrgb&w=600', tags: ['3D', 'Pigments', 'Premium'] },
-  { name: 'Flocons Déco 5 lbs', sub: '20 coloris au choix', price: '89 $', old: '119 $', img: 'https://images.pexels.com/photos/268460/pexels-photo-268460.jpeg?auto=compress&cs=tinysrgb&w=600', tags: ['5 lbs', 'UV', 'Antidérapant'] },
-  { name: 'Primaire Pro 3.78L', sub: 'Accrochage béton/bois', price: '79 $', old: '99 $', img: 'https://images.pexels.com/photos/5797998/pexels-photo-5797998.jpeg?auto=compress&cs=tinysrgb&w=600', tags: ['3.78L', '4h', 'Sans solvant'] },
-  { name: 'Outils Époxy Pro', sub: 'Rouleau + raclette + pics', price: '129 $', old: '169 $', img: 'https://images.pexels.com/photos/221027/pexels-photo-221027.jpeg?auto=compress&cs=tinysrgb&w=600', tags: ['Complet', '18"', 'Pro'] },
-  { name: 'Vernis UV Shield', sub: 'Top coat 3.78L', price: '149 $', old: '189 $', img: 'https://images.pexels.com/photos/3062948/pexels-photo-3062948.jpeg?auto=compress&cs=tinysrgb&w=600', tags: ['UV', 'Anti-rayures', '5 ans'] },
+  { name: 'Époxy Clear Pro', sub: 'Kit 15 m² · 100% solide', price: '289 $', old: '349 $', img: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&h=400&fit=crop', tags: ['15 m²', '24h', 'Inodore'] },
+  { name: 'Kit Métallique 3D', sub: '10 m² + pigments', price: '399 $', old: '459 $', img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop', tags: ['3D', 'Pigments', 'Premium'] },
+  { name: 'Flocons Déco 5 lbs', sub: '20 coloris au choix', price: '89 $', old: '119 $', img: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=600&h=400&fit=crop', tags: ['5 lbs', 'UV', 'Antidérapant'] },
+  { name: 'Primaire Pro 3.78L', sub: 'Accrochage béton/bois', price: '79 $', old: '99 $', img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=400&fit=crop', tags: ['3.78L', '4h', 'Sans solvant'] },
+  { name: 'Outils Époxy Pro', sub: 'Rouleau + raclette + pics', price: '129 $', old: '169 $', img: 'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?w=600&h=400&fit=crop', tags: ['Complet', '18"', 'Pro'] },
+  { name: 'Vernis UV Shield', sub: 'Top coat 3.78L', price: '149 $', old: '189 $', img: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=600&h=400&fit=crop', tags: ['UV', 'Anti-rayures', '5 ans'] },
 ];
 
 /* ─── Main ─── */
@@ -115,7 +115,7 @@ export default function EpoxyPremium() {
         {/* Background image with parallax */}
         <div className="absolute inset-0">
           <img
-            src="https://images.pexels.com/photos/9139594/pexels-photo-9139594.jpeg?auto=compress&cs=tinysrgb&w=2560"
+            src="https://images.pexels.com/photos/20251621/pexels-photo-20251621.jpeg?auto=compress&cs=tinysrgb&w=2560"
             alt=""
             className="w-full h-full object-cover will-change-transform"
           />
