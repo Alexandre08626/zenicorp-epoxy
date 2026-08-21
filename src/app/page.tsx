@@ -1,9 +1,11 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Phone, Check, Gem, Sparkles, Layers, ShoppingCart,
-  ArrowRight, Star, X, ChevronRight
+  ArrowRight, Star, X, ChevronRight, Calendar, Calculator,
+  Paintbrush, Ruler, CreditCard, Clock, MapPin, Shield,
+  Package, Zap, Palette, ChevronDown, CheckCircle2
 } from 'lucide-react';
 
 /* ─── Animated Counter ─── */
@@ -28,410 +30,658 @@ const CountUp = ({ end, suffix = '' }: { end: number; suffix?: string }) => {
   return <span ref={ref}>{val}{suffix}</span>;
 };
 
-/* ─── Data ─── */
-const finishes = {
-  metallic: {
-    label: 'Métallique',
-    icon: Gem,
-    accent: '#8b5cf6',
-    images: [
-      { src: 'https://images.pexels.com/photos/9139594/pexels-photo-9139594.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Showroom Titanium', desc: 'Garage luxe, gris métallique brillant' },
-      { src: 'https://images.pexels.com/photos/17181949/pexels-photo-17181949.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Liquid Silver', desc: 'Fini miroir, reflets éclatants' },
-      { src: 'https://images.pexels.com/photos/20251621/pexels-photo-20251621.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Empty Commercial', desc: 'Parking vide, surface lisse brillante' },
-      { src: 'https://images.pexels.com/photos/8961732/pexels-photo-8961732.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Minimal Grey', desc: 'Béton poli, style épuré' },
-    ]
-  },
-  flakes: {
-    label: 'Flocons',
-    icon: Sparkles,
-    accent: '#f59e0b',
-    images: [
-      { src: 'https://images.pexels.com/photos/36681931/pexels-photo-36681931.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Granite Basement', desc: 'Texture granitée, résistance max' },
-      { src: 'https://images.pexels.com/photos/103598/pexels-photo-103598.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Speckled Grey', desc: 'Gris moucheté, style industriel' },
-      { src: 'https://images.pexels.com/photos/31601977/pexels-photo-31601977.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Commercial Blend', desc: 'Parking antidérapant' },
-      { src: 'https://images.pexels.com/photos/12139561/pexels-photo-12139561.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Night Flake', desc: 'Noir avec particules réfléchissantes' },
-    ]
-  },
-  naturel: {
-    label: 'Naturel',
-    icon: Layers,
-    accent: '#10b981',
-    images: [
-      { src: 'https://images.pexels.com/photos/20251621/pexels-photo-20251621.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Pure Concrete', desc: 'Parking commercial, fini lisse brillant' },
-      { src: 'https://images.pexels.com/photos/17580916/pexels-photo-17580916.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Slate Grey', desc: 'Gris ardoise avec reflets naturels' },
-      { src: 'https://images.pexels.com/photos/8961732/pexels-photo-8961732.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Urban Minimal', desc: 'Béton poli, style contemporain' },
-      { src: 'https://images.pexels.com/photos/14002097/pexels-photo-14002097.jpeg?auto=compress&cs=tinysrgb&w=1200', title: 'Stone Polish', desc: 'Pierre naturelle polie' },
-    ]
-  },
-};
-
-const products = [
-  { name: 'Époxy Clear Pro', sub: 'Kit 15 m² · 100% solide', price: '289 $', old: '349 $', img: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&h=400&fit=crop', tags: ['15 m²', '24h', 'Inodore'] },
-  { name: 'Kit Métallique 3D', sub: '10 m² + pigments', price: '399 $', old: '459 $', img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop', tags: ['3D', 'Pigments', 'Premium'] },
-  { name: 'Flocons Déco 5 lbs', sub: '20 coloris au choix', price: '89 $', old: '119 $', img: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=600&h=400&fit=crop', tags: ['5 lbs', 'UV', 'Antidérapant'] },
-  { name: 'Primaire Pro 3.78L', sub: 'Accrochage béton/bois', price: '79 $', old: '99 $', img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=400&fit=crop', tags: ['3.78L', '4h', 'Sans solvant'] },
-  { name: 'Outils Époxy Pro', sub: 'Rouleau + raclette + pics', price: '129 $', old: '169 $', img: 'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?w=600&h=400&fit=crop', tags: ['Complet', '18"', 'Pro'] },
-  { name: 'Vernis UV Shield', sub: 'Top coat 3.78L', price: '149 $', old: '189 $', img: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=600&h=400&fit=crop', tags: ['UV', 'Anti-rayures', '5 ans'] },
+/* ─── COLOR PALETTE ─── */
+const metallicColors = [
+  { id: 'silver', name: 'Silver Chrome', hex: '#C0C0C0', price: 0, img: '/images/epoxy-metallic-grey.jpg' },
+  { id: 'gunmetal', name: 'Gunmetal Grey', hex: '#4a4a4a', price: 25, img: '/images/epoxy-metallic-grey.jpg' },
+  { id: 'midnight', name: 'Midnight Blue', hex: '#1a237e', price: 35, img: '/images/epoxy-blue.jpg' },
+  { id: 'copper', name: 'Copper Rose', hex: '#b87333', price: 45, img: '/images/epoxy-application.jpg' },
+  { id: 'gold', name: 'Liquid Gold', hex: '#FFD700', price: 55, img: '/images/epoxy-floor-cleaning-and-maintenance.jpg' },
+  { id: 'pearl', name: 'Pearl White', hex: '#f8f8ff', price: 40, img: '/images/epoxy-floor-cleaning-and-maintenance.jpg' },
+  { id: 'charcoal', name: 'Charcoal Black', hex: '#1a1a1a', price: 30, img: '/images/epoxy-metallic-grey.jpg' },
+  { id: 'emerald', name: 'Emerald Green', hex: '#2ecc71', price: 50, img: '/images/epoxy-application.jpg' },
+  { id: 'sapphire', name: 'Sapphire Blue', hex: '#3498db', price: 45, img: '/images/epoxy-blue.jpg' },
+  { id: 'ruby', name: 'Ruby Red', hex: '#e74c3c', price: 55, img: '/images/epoxy-vs-polyurea.png' },
+  { id: 'bronze', name: 'Bronze Metallic', hex: '#cd7f32', price: 40, img: '/images/epoxy-application.jpg' },
+  { id: 'titanium', name: 'Titanium Grey', hex: '#878787', price: 35, img: '/images/epoxy-metallic-grey.jpg' },
 ];
 
-/* ─── Main ─── */
-export default function EpoxyPremium() {
-  const [tab, setTab] = useState<'metallic' | 'flakes' | 'naturel'>('metallic');
-  const [cart, setCart] = useState<string[]>([]);
-  const [toast, setToast] = useState(false);
-  const [lightbox, setLightbox] = useState<string | null>(null);
+const flakesOptions = [
+  { id: 'none', name: 'Sans flocons', price: 0 },
+  { id: 'light', name: 'Léger (25%)', price: 49, coverage: 'Antidérapant discret' },
+  { id: 'medium', name: 'Moyen (50%)', price: 89, coverage: 'Texture équilibrée' },
+  { id: 'full', name: 'Complet (100%)', price: 149, coverage: 'Maximum antidérapant' },
+];
+
+/* ─── MAIN COMPONENT ─── */
+export default function EpoxyUltra() {
   const [mounted, setMounted] = useState(false);
-  const heroRef = useRef<HTMLDivElement>(null);
+  const [activeTab, setActiveTab] = useState<'shop' | 'estimator' | 'booking'>('shop');
+  const [selectedColor, setSelectedColor] = useState(metallicColors[0]);
+  const [selectedFlake, setSelectedFlake] = useState(flakesOptions[0]);
+  const [surfaceArea, setSurfaceArea] = useState(20);
+  const [cart, setCart] = useState<any[]>([]);
+  const [showCart, setShowCart] = useState(false);
+  const [showBooking, setShowBooking] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
+  const [bookingDate, setBookingDate] = useState('');
+  const [bookingTime, setBookingTime] = useState('');
+  const [customerInfo, setCustomerInfo] = useState({ name: '', email: '', phone: '', address: '' });
+  const [paymentStep, setPaymentStep] = useState<'info' | 'review' | 'payment'>('info');
 
   useEffect(() => { setMounted(true); }, []);
 
-  /* Parallax hero */
-  useEffect(() => {
-    const onScroll = () => {
-      if (!heroRef.current) return;
-      const y = window.scrollY;
-      const img = heroRef.current.querySelector('img') as HTMLImageElement;
-      if (img) img.style.transform = `translateY(${y * 0.4}px) scale(1.1)`;
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  const addCart = (name: string) => {
-    setCart(c => [...c, name]);
-    setToast(true);
-    setTimeout(() => setToast(false), 2500);
+  /* Calculate price */
+  const calculatePrice = () => {
+    const basePrice = surfaceArea * 12; // $12/ft² base
+    const colorPrice = selectedColor.price * surfaceArea;
+    const flakePrice = selectedFlake.price;
+    const subtotal = basePrice + colorPrice + flakePrice;
+    const tax = subtotal * 0.14975; // Québec TPS/TVQ
+    const total = subtotal + tax;
+    const deposit = total * 0.3; // 30% deposit
+    return { basePrice, colorPrice, flakePrice, subtotal, tax, total, deposit };
   };
 
-  const current = finishes[tab];
+  const prices = calculatePrice();
+
+  const addToCart = () => {
+    const item = {
+      id: Date.now(),
+      color: selectedColor,
+      flake: selectedFlake,
+      area: surfaceArea,
+      prices: prices,
+    };
+    setCart([...cart, item]);
+    setShowCart(true);
+    setTimeout(() => setShowCart(false), 3000);
+  };
+
+  const submitBooking = () => {
+    setShowBooking(false);
+    setShowPayment(true);
+    setPaymentStep('review');
+  };
+
+  const processPayment = () => {
+    setPaymentStep('payment');
+    setTimeout(() => {
+      alert('✅ Paiement confirmé ! Votre installation est réservée.');
+      setShowPayment(false);
+      setPaymentStep('info');
+      setCart([]);
+    }, 2000);
+  };
 
   if (!mounted) return null;
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white overflow-x-hidden selection:bg-violet-500/30">
+    <div className="min-h-screen bg-[#0a0a0f] text-white overflow-x-hidden">
+      
+      {/* ═══ HEADER ═══ */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
+                <Gem className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <span className="font-bold text-lg">ZENI</span>
+                <span className="text-violet-400 font-bold">CORP</span>
+                <span className="text-xs text-white/40 block">Époxy Pro</span>
+              </div>
+            </div>
+            
+            <nav className="hidden md:flex items-center gap-8">
+              <button 
+                onClick={() => setActiveTab('shop')}
+                className={`text-sm font-medium transition-colors ${activeTab === 'shop' ? 'text-violet-400' : 'text-white/60 hover:text-white'}`}
+              >
+                Boutique
+              </button>
+              <button 
+                onClick={() => setActiveTab('estimator')}
+                className={`text-sm font-medium transition-colors ${activeTab === 'estimator' ? 'text-violet-400' : 'text-white/60 hover:text-white'}`}
+              >
+                Estimateur
+              </button>
+              <button 
+                onClick={() => setActiveTab('booking')}
+                className={`text-sm font-medium transition-colors ${activeTab === 'booking' ? 'text-violet-400' : 'text-white/60 hover:text-white'}`}
+              >
+                Rendez-vous
+              </button>
+            </nav>
 
-      {/* ═══ HERO PARALLAX ═══ */}
-      <section ref={heroRef} className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Background image with parallax */}
-        <div className="absolute inset-0">
-          <img
-            src="https://images.pexels.com/photos/20251621/pexels-photo-20251621.jpeg?auto=compress&cs=tinysrgb&w=2560"
-            alt=""
-            className="w-full h-full object-cover will-change-transform"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f]/60 via-[#0a0a0f]/40 to-[#0a0a0f]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0f]/80 via-transparent to-[#0a0a0f]/80" />
-        </div>
-
-        {/* Floating particles */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {Array.from({ length: 20 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-1 h-1 rounded-full bg-white/20 animate-pulse"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 3}s`,
-                animationDuration: `${2 + Math.random() * 3}s`,
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Content */}
-        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-md border border-white/10 mb-8">
-            <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-            <span className="text-sm text-white/70">Plancher époxy #1 au Québec</span>
-          </div>
-
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-[0.9] mb-8">
-            <span className="block">Finitions</span>
-            <span className="block bg-gradient-to-r from-violet-400 via-fuchsia-400 to-amber-400 bg-clip-text text-transparent">
-              d'exception
-            </span>
-          </h1>
-
-          <p className="text-lg md:text-xl text-white/50 max-w-2xl mx-auto mb-12 leading-relaxed">
-            Installation professionnelle et vente de matériel époxy premium.
-            Métallique, flocons, naturel — on a ce qu'il vous faut.
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-4">
-            <a href="#realisations" className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-white/90 transition-all hover:scale-105">
-              Voir les réalisations
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
-            <a href="#shop" className="inline-flex items-center gap-3 px-8 py-4 bg-white/5 backdrop-blur-md border border-white/10 text-white font-semibold rounded-full hover:bg-white/10 transition-all">
-              <ShoppingCart className="w-5 h-5" />
-              Boutique matériel
-            </a>
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={() => setShowCart(true)}
+                className="relative p-2 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                {cart.length > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-violet-500 rounded-full text-xs flex items-center justify-center font-bold">
+                    {cart.length}
+                  </span>
+                )}
+              </button>
+              <a href="tel:18009364267" className="hidden md:flex items-center gap-2 px-4 py-2 bg-violet-500/20 text-violet-300 rounded-xl text-sm font-medium hover:bg-violet-500/30 transition-colors">
+                <Phone className="w-4 h-4" />
+                1-800-ZENICORP
+              </a>
+            </div>
           </div>
         </div>
+      </header>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30">
-          <span className="text-xs tracking-widest uppercase">Scroll</span>
-          <div className="w-px h-12 bg-gradient-to-b from-white/30 to-transparent animate-pulse" />
+      {/* ═══ HERO ═══ */}
+      <section className="pt-32 pb-20 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-violet-500/10 rounded-full blur-[150px]" />
+          <div className="absolute bottom-1/4 left-0 w-[400px] h-[400px] bg-fuchsia-500/10 rounded-full blur-[100px]" />
         </div>
-      </section>
+        
+        <div className="max-w-7xl mx-auto px-6 relative">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-500/10 border border-violet-500/20 mb-6">
+              <Star className="w-4 h-4 text-violet-400 fill-violet-400" />
+              <span className="text-sm text-violet-300">Nouveau : Estimateur en ligne</span>
+            </div>
+            
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+              Votre plancher époxy{' '}
+              <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent">
+                en 3 clics
+              </span>
+            </h1>
+            
+            <p className="text-xl text-white/50 mb-8">
+              Choisissez votre couleur, calculez votre surface, réservez votre installation en ligne.
+            </p>
+            
+            <div className="flex flex-wrap justify-center gap-4">
+              <button 
+                onClick={() => setActiveTab('estimator')}
+                className="flex items-center gap-3 px-8 py-4 bg-violet-500 text-white font-bold rounded-2xl hover:bg-violet-600 transition-colors"
+              >
+                <Calculator className="w-5 h-5" />
+                Calculer mon prix
+              </button>
+              <button 
+                onClick={() => setActiveTab('shop')}
+                className="flex items-center gap-3 px-8 py-4 bg-white/10 border border-white/20 text-white font-medium rounded-2xl hover:bg-white/20 transition-colors"
+              >
+                <Palette className="w-5 h-5" />
+                Voir les couleurs
+              </button>
+            </div>
+          </div>
 
-      {/* ═══ MARQUEE STATS ═══ */}
-      <section className="py-16 border-y border-white/5 bg-[#0a0a0f]">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
             {[
-              { val: 250, suf: '+', lab: 'Projets réalisés' },
-              { val: 5, suf: ' ans', lab: 'Garantie maximale' },
-              { val: 100, suf: '%', lab: 'Époxy solide' },
-              { val: 24, suf: 'h', lab: 'Délai soumission' },
+              { val: 12, suf: '+', lab: 'Couleurs' },
+              { val: 250, suf: '+', lab: 'Projets' },
+              { val: 5, suf: ' ans', lab: 'Garantie' },
+              { val: 30, suf: '%', lab: 'Dépôt seulement' },
             ].map(s => (
-              <div key={s.lab}>
-                <p className="text-5xl md:text-6xl font-bold text-white mb-2">
-                  <CountUp end={s.val} suffix={s.suf} />
-                </p>
-                <p className="text-sm text-white/30 uppercase tracking-wider">{s.lab}</p>
+              <div key={s.lab} className="text-center p-6 rounded-2xl bg-white/5 border border-white/10">
+                <p className="text-3xl font-bold text-white mb-1"><CountUp end={s.val} suffix={s.suf} /></p>
+                <p className="text-sm text-white/40">{s.lab}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ═══ GALERIE TABS ═══ */}
-      <section id="realisations" className="py-32 bg-[#0a0a0f]">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6">
-            <div>
-              <p className="text-sm text-violet-400 font-semibold tracking-widest uppercase mb-3">Galerie</p>
-              <h2 className="text-4xl md:text-6xl font-bold tracking-tight">
-                Vraies <span className="text-white/20">réalisations</span>
-              </h2>
+      {/* ═══ COLOR SHOP ═══ */}
+      {activeTab === 'shop' && (
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold mb-4">Nos couleurs métalliques</h2>
+              <p className="text-white/50">12 finitions premium disponibles</p>
             </div>
 
-            {/* Tabs */}
-            <div className="flex gap-2">
-              {(Object.keys(finishes) as Array<keyof typeof finishes>).map((k) => {
-                const active = tab === k;
-                const T = finishes[k].icon;
-                return (
+            <div className="grid lg:grid-cols-2 gap-12">
+              {/* Color Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                {metallicColors.map((color) => (
                   <button
-                    key={k}
-                    onClick={() => setTab(k)}
-                    className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all ${
-                      active
-                        ? 'bg-white text-black'
-                        : 'bg-white/5 text-white/40 hover:text-white hover:bg-white/10'
+                    key={color.id}
+                    onClick={() => setSelectedColor(color)}
+                    className={`group relative aspect-square rounded-2xl overflow-hidden border-2 transition-all ${
+                      selectedColor.id === color.id 
+                        ? 'border-violet-500 ring-4 ring-violet-500/20' 
+                        : 'border-white/10 hover:border-white/30'
                     }`}
                   >
-                    <T className="w-4 h-4" />
-                    {finishes[k].label}
+                    <img src={color.img} alt={color.name} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div 
+                          className="w-6 h-6 rounded-full border-2 border-white/50 shadow-lg"
+                          style={{ backgroundColor: color.hex }}
+                        />
+                        <span className="text-sm font-medium text-white">{color.name}</span>
+                      </div>
+                      {color.price > 0 && (
+                        <span className="text-xs text-violet-300">+${color.price}/m²</span>
+                      )}
+                    </div>
+                    {selectedColor.id === color.id && (
+                      <div className="absolute top-3 right-3 w-8 h-8 bg-violet-500 rounded-full flex items-center justify-center">
+                        <Check className="w-5 h-5 text-white" />
+                      </div>
+                    )}
                   </button>
-                );
-              })}
+                ))}
+              </div>
+
+              {/* Preview Card */}
+              <div className="lg:sticky lg:top-32 lg:h-fit">
+                <div className="rounded-3xl overflow-hidden bg-white/5 border border-white/10 mb-6">
+                  <img 
+                    src={selectedColor.img} 
+                    alt={selectedColor.name}
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div>
+                        <h3 className="text-2xl font-bold">{selectedColor.name}</h3>
+                        <p className="text-white/50">Finition métallique premium</p>
+                      </div>
+                      <div 
+                        className="w-16 h-16 rounded-2xl border-4 border-white/20 shadow-2xl"
+                        style={{ backgroundColor: selectedColor.hex }}
+                      />
+                    </div>
+                    <div className="flex items-center gap-2 text-violet-400 mb-6">
+                      <Sparkles className="w-5 h-5" />
+                      <span className="text-sm">Effet 3D • Réflets miroir • UV stable</span>
+                    </div>
+                    <button 
+                      onClick={() => setActiveTab('estimator')}
+                      className="w-full py-4 bg-violet-500 text-white font-bold rounded-xl hover:bg-violet-600 transition-colors"
+                    >
+                      Calculer mon projet
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+        </section>
+      )}
 
-          {/* Images Grid */}
-          <div className="grid md:grid-cols-2 gap-4">
-            {current.images.map((img, i) => (
-              <div
-                key={`${tab}-${i}`}
-                className={`group relative overflow-hidden rounded-3xl cursor-pointer ${
-                  i === 0 ? 'md:col-span-2 aspect-[21/9]' : 'aspect-[4/3]'
-                }`}
-                onClick={() => setLightbox(img.src)}
-              >
-                <img
-                  src={img.src}
-                  alt={img.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity" />
-                <div className="absolute bottom-0 left-0 right-0 p-8 translate-y-4 group-hover:translate-y-0 transition-transform">
-                  <span
-                    className="inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-3"
-                    style={{ background: current.accent, color: '#000' }}
-                  >
-                    {current.label}
-                  </span>
-                  <h3 className="text-2xl font-bold mb-1">{img.title}</h3>
-                  <p className="text-white/50">{img.desc}</p>
-                </div>
-                <div className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <ChevronRight className="w-5 h-5 text-white" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ═══ ESTIMATOR ═══ */}
+      {activeTab === 'estimator' && (
+        <section className="py-20">
+          <div className="max-w-5xl mx-auto px-6">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold mb-4">Estimateur en ligne</h2>
+              <p className="text-white/50">Configurez votre plancher et obtenez votre prix instantanément</p>
+            </div>
 
-      {/* ═══ SHOP ═══ */}
-      <section id="shop" className="py-32 bg-gradient-to-b from-[#0a0a0f] via-[#0f0f1a] to-[#0a0a0f]">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20">
-            <p className="text-sm text-fuchsia-400 font-semibold tracking-widest uppercase mb-3">Boutique Pro</p>
-            <h2 className="text-4xl md:text-6xl font-bold tracking-tight mb-4">Matériel & Produits</h2>
-            <p className="text-white/30 text-lg">Tout ce qu'il faut pour réussir votre plancher époxy</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((p, i) => (
-              <div
-                key={i}
-                className="group relative bg-white/[0.03] border border-white/5 rounded-[2rem] overflow-hidden hover:border-white/10 hover:bg-white/[0.05] transition-all duration-500"
-              >
-                {/* Image */}
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <img
-                    src={p.img}
-                    alt={p.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-transparent" />
-                  <button
-                    onClick={() => addCart(p.name)}
-                    className="absolute bottom-4 right-4 p-3 rounded-2xl bg-white text-black hover:scale-110 transition-transform"
-                  >
-                    <ShoppingCart className="w-5 h-5" />
-                  </button>
-                </div>
-
-                {/* Content */}
-                <div className="p-7">
-                  <div className="flex items-baseline gap-3 mb-1">
-                    <span className="text-2xl font-bold">{p.price}</span>
-                    <span className="text-sm text-white/20 line-through">{p.old}</span>
+            <div className="grid lg:grid-cols-3 gap-8">
+              {/* Configuration */}
+              <div className="lg:col-span-2 space-y-8">
+                {/* Surface */}
+                <div className="p-8 rounded-3xl bg-white/5 border border-white/10">
+                  <div className="flex items-center gap-3 mb-6">
+                    <Ruler className="w-6 h-6 text-violet-400" />
+                    <h3 className="text-xl font-bold">Surface à couvrir</h3>
                   </div>
-                  <h3 className="text-lg font-semibold mb-1">{p.name}</h3>
-                  <p className="text-sm text-white/30 mb-5">{p.sub}</p>
+                  <div className="mb-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-white/60">Superficie</span>
+                      <span className="text-3xl font-bold">{surfaceArea} <span className="text-lg text-white/40">m²</span></span>
+                    </div>
+                    <input
+                      type="range"
+                      min="10"
+                      max="200"
+                      value={surfaceArea}
+                      onChange={(e) => setSurfaceArea(Number(e.target.value))}
+                      className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:bg-violet-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:appearance-none"
+                    />
+                    <div className="flex justify-between text-xs text-white/30 mt-2">
+                      <span>10 m²</span>
+                      <span>200 m²</span>
+                    </div>
+                  </div>
+                  <p className="text-sm text-white/40">Pour un garage standard : 20-30 m²</p>
+                </div>
 
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {p.tags.map(t => (
-                      <span key={t} className="px-3 py-1 rounded-full bg-white/5 text-white/40 text-xs font-medium border border-white/5">
-                        {t}
-                      </span>
+                {/* Color Selection */}
+                <div className="p-8 rounded-3xl bg-white/5 border border-white/10">
+                  <div className="flex items-center gap-3 mb-6">
+                    <Palette className="w-6 h-6 text-violet-400" />
+                    <h3 className="text-xl font-bold">Couleur métallique</h3>
+                  </div>
+                  <div className="grid grid-cols-4 sm:grid-cols-6 gap-3">
+                    {metallicColors.map((color) => (
+                      <button
+                        key={color.id}
+                        onClick={() => setSelectedColor(color)}
+                        className={`group relative aspect-square rounded-xl overflow-hidden border-2 transition-all ${
+                          selectedColor.id === color.id 
+                            ? 'border-violet-500 ring-2 ring-violet-500/30' 
+                            : 'border-white/10 hover:border-white/30'
+                        }`}
+                      >
+                        <div 
+                          className="absolute inset-0"
+                          style={{ backgroundColor: color.hex }}
+                        />
+                        {selectedColor.id === color.id && (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <Check className="w-6 h-6 text-white drop-shadow-lg" />
+                          </div>
+                        )}
+                      </button>
                     ))}
                   </div>
+                  <p className="mt-4 text-center font-medium">{selectedColor.name}</p>
+                </div>
 
-                  <button
-                    onClick={() => addCart(p.name)}
-                    className="w-full py-3.5 bg-white text-black font-bold rounded-xl hover:bg-white/90 transition-colors"
+                {/* Flakes */}
+                <div className="p-8 rounded-3xl bg-white/5 border border-white/10">
+                  <div className="flex items-center gap-3 mb-6">
+                    <Sparkles className="w-6 h-6 text-violet-400" />
+                    <h3 className="text-xl font-bold">Flocons décoratifs</h3>
+                  </div>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    {flakesOptions.map((flake) => (
+                      <button
+                        key={flake.id}
+                        onClick={() => setSelectedFlake(flake)}
+                        className={`p-4 rounded-xl border-2 text-left transition-all ${
+                          selectedFlake.id === flake.id
+                            ? 'border-violet-500 bg-violet-500/10'
+                            : 'border-white/10 hover:border-white/30'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-medium">{flake.name}</span>
+                          {selectedFlake.id === flake.id && <Check className="w-5 h-5 text-violet-400" />}
+                        </div>
+                        {flake.price > 0 && (
+                          <p className="text-sm text-violet-300">+${flake.price}</p>
+                        )}
+                        {flake.coverage && (
+                          <p className="text-xs text-white/40 mt-1">{flake.coverage}</p>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Summary */}
+              <div className="lg:sticky lg:top-32 h-fit">
+                <div className="p-8 rounded-3xl bg-gradient-to-b from-violet-500/20 to-fuchsia-500/10 border border-violet-500/30">
+                  <h3 className="text-xl font-bold mb-6">Votre devis</h3>
+                  
+                  <div className="space-y-4 mb-6">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-white/60">Base ({surfaceArea} m²)</span>
+                      <span>${prices.basePrice.toFixed(2)}</span>
+                    </div>
+                    {prices.colorPrice > 0 && (
+                      <div className="flex justify-between text-sm">
+                        <span className="text-white/60">{selectedColor.name}</span>
+                        <span>${prices.colorPrice.toFixed(2)}</span>
+                      </div>
+                    )}
+                    {prices.flakePrice > 0 && (
+                      <div className="flex justify-between text-sm">
+                        <span className="text-white/60">{selectedFlake.name}</span>
+                        <span>${prices.flakePrice.toFixed(2)}</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between text-sm">
+                      <span className="text-white/60">Taxes (14.975%)</span>
+                      <span>${prices.tax.toFixed(2)}</span>
+                    </div>
+                    <div className="pt-4 border-t border-white/10">
+                      <div className="flex justify-between items-center">
+                        <span className="text-lg font-bold">Total</span>
+                        <span className="text-3xl font-bold text-violet-400">${prices.total.toFixed(2)}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-violet-500/20 border border-violet-500/30 mb-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-white/60">Dépôt ZeniPay (30%)</p>
+                        <p className="text-2xl font-bold">${prices.deposit.toFixed(2)}</p>
+                      </div>
+                      <div className="w-12 h-12 bg-violet-500 rounded-xl flex items-center justify-center">
+                        <CreditCard className="w-6 h-6 text-white" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <button 
+                    onClick={() => {
+                      addToCart();
+                      setShowBooking(true);
+                    }}
+                    className="w-full py-4 bg-violet-500 text-white font-bold rounded-xl hover:bg-violet-600 transition-colors mb-3"
                   >
-                    Ajouter au panier
+                    Réserver maintenant
+                  </button>
+                  <p className="text-center text-xs text-white/40">Installation garantie sous 14 jours</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ═══ BOOKING MODAL ═══ */}
+      {showBooking && (
+        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl flex items-center justify-center p-6">
+          <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-[#0f0f14] rounded-3xl border border-white/10 p-8">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl font-bold">Réserver votre installation</h2>
+              <button onClick={() => setShowBooking(false)} className="p-2 hover:bg-white/10 rounded-xl">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            <div className="space-y-6">
+              {/* Date Selection */}
+              <div>
+                <label className="flex items-center gap-2 text-sm text-white/60 mb-3">
+                  <Calendar className="w-4 h-4" />
+                  Date souhaitée
+                </label>
+                <input
+                  type="date"
+                  value={bookingDate}
+                  onChange={(e) => setBookingDate(e.target.value)}
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:border-violet-500 focus:outline-none"
+                />
+              </div>
+
+              {/* Time Slots */}
+              <div>
+                <label className="flex items-center gap-2 text-sm text-white/60 mb-3">
+                  <Clock className="w-4 h-4" />
+                  Créneau horaire
+                </label>
+                <div className="grid grid-cols-3 gap-3">
+                  {['08:00 - 12:00', '13:00 - 17:00', 'Sur mesure'].map((time) => (
+                    <button
+                      key={time}
+                      onClick={() => setBookingTime(time)}
+                      className={`p-3 rounded-xl border-2 text-sm font-medium transition-all ${
+                        bookingTime === time
+                          ? 'border-violet-500 bg-violet-500/10 text-violet-300'
+                          : 'border-white/10 hover:border-white/30'
+                      }`}
+                    >
+                      {time}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Contact Info */}
+              <div className="space-y-4">
+                <label className="flex items-center gap-2 text-sm text-white/60">
+                  <MapPin className="w-4 h-4" />
+                  Vos informations
+                </label>
+                <input
+                  type="text"
+                  placeholder="Nom complet"
+                  value={customerInfo.name}
+                  onChange={(e) => setCustomerInfo({...customerInfo, name: e.target.value})}
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:border-violet-500 focus:outline-none"
+                />
+                <input
+                  type="email"
+                  placeholder="Courriel"
+                  value={customerInfo.email}
+                  onChange={(e) => setCustomerInfo({...customerInfo, email: e.target.value})}
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:border-violet-500 focus:outline-none"
+                />
+                <input
+                  type="tel"
+                  placeholder="Téléphone"
+                  value={customerInfo.phone}
+                  onChange={(e) => setCustomerInfo({...customerInfo, phone: e.target.value})}
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:border-violet-500 focus:outline-none"
+                />
+                <input
+                  type="text"
+                  placeholder="Adresse complète"
+                  value={customerInfo.address}
+                  onChange={(e) => setCustomerInfo({...customerInfo, address: e.target.value})}
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:border-violet-500 focus:outline-none"
+                />
+              </div>
+
+              <button 
+                onClick={submitBooking}
+                disabled={!bookingDate || !bookingTime || !customerInfo.name || !customerInfo.email}
+                className="w-full py-4 bg-violet-500 text-white font-bold rounded-xl hover:bg-violet-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Continuer vers le paiement
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ═══ PAYMENT MODAL ═══ */}
+      {showPayment && (
+        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl flex items-center justify-center p-6">
+          <div className="w-full max-w-lg bg-[#0f0f14] rounded-3xl border border-white/10 p-8">
+            {paymentStep === 'review' && (
+              <>
+                <div className="flex items-center justify-between mb-8">
+                  <h2 className="text-2xl font-bold">Confirmation</h2>
+                  <button onClick={() => setShowPayment(false)} className="p-2 hover:bg-white/10 rounded-xl">
+                    <X className="w-6 h-6" />
                   </button>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* ═══ SERVICES ═══ */}
-      <section className="py-32 bg-[#0a0a0f] relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-violet-500/5 rounded-full blur-[150px] pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-6 relative">
-          <div className="text-center mb-20">
-            <p className="text-sm text-emerald-400 font-semibold tracking-widest uppercase mb-3">Services</p>
-            <h2 className="text-4xl md:text-6xl font-bold tracking-tight">Installation Pro</h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { title: 'Garage Résidentiel', price: '3 900 $', desc: 'Fini lustré premium avec paillettes décoratives et antidérapant.', features: ['Préparation 5 étapes', 'Époxy 100% solide', 'Paillettes incluses', 'Antidérapant'], color: 'violet' },
-              { title: 'Commercial', price: 'Sur devis', desc: 'Showrooms, commerces, bureaux. Travail hors heures disponible.', features: ['Haute résistance', 'Entretien minimal', 'Hors heures', 'Normes QC'], color: 'fuchsia' },
-              { title: 'Industriel', price: 'Sur devis', desc: 'Usines, entrepôts, ateliers. Résistance chimique et charges lourdes.', features: ['Polyuréthane', 'Résistance chimique', 'Charges lourdes', 'Longue durée'], color: 'emerald' },
-            ].map((s) => (
-              <div key={s.title} className="relative p-8 rounded-[2rem] bg-gradient-to-b from-white/[0.05] to-transparent border border-white/5 hover:border-white/10 transition-all group">
-                <div className={`w-12 h-12 rounded-2xl bg-${s.color}-500/10 flex items-center justify-center mb-6`}>
-                  <div className={`w-3 h-3 rounded-full bg-${s.color}-400`} />
+                <div className="p-6 rounded-2xl bg-white/5 border border-white/10 mb-6">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div 
+                      className="w-16 h-16 rounded-xl border-2 border-white/20"
+                      style={{ backgroundColor: selectedColor.hex }}
+                    />
+                    <div>
+                      <h3 className="font-bold">{selectedColor.name}</h3>
+                      <p className="text-sm text-white/50">{surfaceArea} m² • {selectedFlake.name}</p>
+                    </div>
+                  </div>
+                  <div className="border-t border-white/10 pt-4 space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-white/60">Sous-total</span>
+                      <span>${prices.subtotal.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-white/60">Taxes</span>
+                      <span>${prices.tax.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between text-lg font-bold pt-2 border-t border-white/10">
+                      <span>Dépôt (30%)</span>
+                      <span className="text-violet-400">${prices.deposit.toFixed(2)}</span>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold mb-2">{s.title}</h3>
-                <p className="text-lg font-semibold text-white/50 mb-4">{s.price}</p>
-                <p className="text-sm text-white/30 mb-8 leading-relaxed">{s.desc}</p>
-                <ul className="space-y-3">
-                  {s.features.map(f => (
-                    <li key={f} className="flex items-center gap-3 text-sm text-white/50">
-                      <Check className="w-4 h-4 text-emerald-400" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* ═══ CTA ═══ */}
-      <section className="py-40 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-violet-900/20 via-fuchsia-900/10 to-[#0a0a0f]" />
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-violet-500/10 rounded-full blur-[150px]" />
-        </div>
-        <div className="max-w-3xl mx-auto px-6 text-center relative z-10">
-          <h2 className="text-5xl md:text-7xl font-bold tracking-tight mb-8">
-            Votre plancher<br />
-            <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">mérite l'excellence</span>
-          </h2>
-          <p className="text-lg text-white/30 mb-12">Soumission gratuite sous 24h. Matériel expédié partout au Québec.</p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <a href="tel:18009364267" className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black font-bold rounded-full hover:scale-105 transition-transform">
-              <Phone className="w-5 h-5" />
-              1-800-ZENICORP
-            </a>
-            <a href="#shop" className="inline-flex items-center gap-3 px-10 py-5 bg-white/5 border border-white/10 text-white font-semibold rounded-full hover:bg-white/10 transition-colors">
-              <ShoppingCart className="w-5 h-5" />
-              Voir la boutique
-            </a>
+                <div className="flex items-center gap-3 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 mb-6">
+                  <Shield className="w-6 h-6 text-emerald-400" />
+                  <div>
+                    <p className="font-medium text-emerald-300">Garantie 5 ans incluse</p>
+                    <p className="text-sm text-emerald-400/60">Satisfaction garantie ou remboursée</p>
+                  </div>
+                </div>
+
+                <button 
+                  onClick={() => setPaymentStep('payment')}
+                  className="w-full py-4 bg-violet-500 text-white font-bold rounded-xl hover:bg-violet-600 transition-colors"
+                >
+                  Payer avec ZeniPay
+                </button>
+              </>
+            )}
+
+            {paymentStep === 'payment' && (
+              <div className="text-center py-12">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-violet-500/20 flex items-center justify-center">
+                  <CreditCard className="w-10 h-10 text-violet-400" />
+                </div>
+                <h2 className="text-2xl font-bold mb-2">Traitement du paiement...</h2>
+                <p className="text-white/50">Ne quittez pas cette page</p>
+                <div className="mt-8 w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                  <div className="h-full bg-violet-500 animate-[loading_2s_ease-in-out]" />
+                </div>
+              </div>
+            )}
           </div>
         </div>
-      </section>
+      )}
 
       {/* ═══ FOOTER ═══ */}
-      <footer className="py-12 border-t border-white/5 bg-[#0a0a0f]">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="ZeniCorp" className="h-8 w-auto opacity-50" />
-            <span className="text-white/20 text-sm">Époxy Pro — Québec</span>
+      <footer className="py-12 border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
+                <Gem className="w-5 h-5 text-white" />
+              </div>
+              <span className="font-bold">ZENICORP Époxy</span>
+            </div>
+            <div className="flex items-center gap-8 text-sm text-white/40">
+              <a href="tel:18009364267" className="hover:text-white transition-colors">1-800-ZENICORP</a>
+              <span>|</span>
+              <span>info@zenicorp.ca</span>
+            </div>
+            <p className="text-sm text-white/20">© 2024 ZeniCorp. Tous droits réservés.</p>
           </div>
-          <p className="text-white/10 text-sm">© {new Date().getFullYear()} ZeniCorp. Tous droits réservés.</p>
         </div>
       </footer>
 
-      {/* ═══ LIGHTBOX ═══ */}
-      {lightbox && (
-        <div
-          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center p-6 animate-in fade-in duration-200"
-          onClick={() => setLightbox(null)}
-        >
-          <button className="absolute top-6 right-6 p-3 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors">
-            <X className="w-6 h-6" />
-          </button>
-          <img
-            src={lightbox}
-            alt=""
-            className="max-w-full max-h-[90vh] rounded-2xl object-contain"
-            onClick={(e) => e.stopPropagation()}
-          />
-        </div>
-      )}
-
-      {/* ═══ TOAST ═══ */}
-      {toast && (
-        <div className="fixed bottom-8 right-8 z-50 animate-in slide-in-from-bottom-4 fade-in">
-          <div className="flex items-center gap-4 px-6 py-4 bg-white text-black rounded-2xl shadow-2xl">
-            <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center">
-              <Check className="w-4 h-4 text-white" />
-            </div>
-            <div>
-              <p className="font-semibold text-sm">Ajouté au panier</p>
-              <p className="text-xs text-black/40">{cart.length} article(s)</p>
-            </div>
-          </div>
-        </div>
-      )}
+      <style jsx global>{`
+        @keyframes loading {
+          0% { width: 0%; }
+          50% { width: 70%; }
+          100% { width: 100%; }
+        }
+      `}</style>
     </div>
   );
 }
