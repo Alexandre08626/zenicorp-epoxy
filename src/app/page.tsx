@@ -309,10 +309,14 @@ export default function EpoxyBigHero() {
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-black text-center mb-4">Nos <span className="text-cyan-400">Couleurs Metalliques</span></h2>
           <p className="text-white/60 text-center mb-12 max-w-2xl mx-auto">
-            6 choix de couleurs premium pour personnaliser ton plancher epoxy.
+            7 choix de couleurs premium pour personnaliser ton plancher epoxy.
           </p>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-4">
+            <div className="group cursor-pointer">
+              <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/epoxy-metallic-grey.jpg" alt="Chrome Mirror" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
+              <p className="font-bold text-center text-sm">Chrome Mirror</p>
+            </div>
             <div className="group cursor-pointer">
               <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-copper.jpg" alt="Copper Bronze" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
               <p className="font-bold text-center text-sm">Copper Bronze</p>
@@ -347,21 +351,7 @@ export default function EpoxyBigHero() {
           <h2 className="text-4xl font-black text-center mb-12">Nos <span className="text-cyan-400">Realisations</span></h2>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-            {/* Photo 1 - Grande */}
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group sm:col-span-2">
-              <img 
-                src="/images/hero-powder.jpg" 
-                alt="Chrome Mirror"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
-                <p className="text-3xl sm:text-4xl font-black text-white">Chrome Mirror</p>
-                <p className="text-cyan-400 text-lg sm:text-xl">Notre best-seller</p>
-              </div>
-            </div>
-
-            {/* Photo 2 */}
+            {/* Photo 1 */}
             <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
               <img 
                 src="/images/epoxy-blue.jpg" 
@@ -375,7 +365,7 @@ export default function EpoxyBigHero() {
               </div>
             </div>
 
-            {/* Photo 3 */}
+            {/* Photo 2 */}
             <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
               <img 
                 src="/images/realisation-1.jpg" 
@@ -389,7 +379,7 @@ export default function EpoxyBigHero() {
               </div>
             </div>
 
-            {/* Photo 4 */}
+            {/* Photo 3 */}
             <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
               <img 
                 src="/images/realisation-4.jpg" 
