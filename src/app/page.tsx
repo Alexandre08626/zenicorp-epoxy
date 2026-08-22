@@ -26,44 +26,153 @@ export default function EpoxyBigHero() {
     const [clientName, setClientName] = useState('');
     const [clientPhone, setClientPhone] = useState('');
     const [clientEmail, setClientEmail] = useState('');
+    
+    // Lightbox state
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const [lightboxImage, setLightboxImage] = useState({ src: '', alt: '' });
+    
+    const openLightbox = (src: string, alt: string) => {
+      setLightboxImage({ src, alt });
+      setLightboxOpen(true);
+    };
+    
+    const closeLightbox = () => {
+      setLightboxOpen(false);
+      setLightboxImage({ src: '', alt: '' });
+    };
 
-    const downloadQuotePdf = () => {
+    const submitLeadToDashboard = async () => {
+      const surface = Number.parseFloat(sqft || '0');
+      const total = surface * pricePerSqft;
+      const finishLabel = finishType === 'flakes' ? 'Flocons decoratifs' : 'Metallique';
+      
+      const leadData = {
+        name: clientName,
+        phone: clientPhone,
+        email: clientEmail,
+        service: 'epoxy',
+        surface: surface,
+        finishType: finishLabel,
+        estimatedTotal: total,
+        source: 'website-calculator',
+        date: new Date().toISOString()
+      };
+      
+      try {
+        await fetch('https://zeniva-dev-dashboard.vercel.app/api/leads/epoxy', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(leadData)
+        });
+      } catch (e) {
+        console.error('Lead submission error:', e);
+      }
+    };
+
+    const downloadQuotePdf = async () => {
       const surface = Number.parseFloat(sqft || '0');
       const total = surface * pricePerSqft;
       const finishLabel = finishType === 'flakes' ? 'Flocons decoratifs' : 'Metallique';
       const now = new Date();
+      const dateStr = now.toLocaleDateString('fr-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+
+      // Send lead to dashboard
+      await submitLeadToDashboard();
 
       const doc = new jsPDF();
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const centerX = pageWidth / 2;
+      
+      // Header background
+      doc.setFillColor(0, 0, 0);
+      doc.rect(0, 0, pageWidth, 50, 'F');
+      
+      // Header border (cyan accent)
+      doc.setDrawColor(6, 182, 212);
+      doc.setLineWidth(2);
+      doc.line(0, 50, pageWidth, 50);
+      
+      // Company name
+      doc.setTextColor(6, 182, 212);
       doc.setFont('helvetica', 'bold');
-      doc.setFontSize(20);
-      doc.text('ZENICORP EPOXY - DEVIS', 20, 20);
+      doc.setFontSize(28);
+      doc.text('ZENICORP', centerX, 25, { align: 'center' });
+      
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(16);
+      doc.text('EPOXY PRO', centerX, 38, { align: 'center' });
+      
+      // Devis title
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(24);
+      doc.text('DEVIS ESTIMATIF', centerX, 70, { align: 'center' });
+      
+      // Date and phone
       doc.setFontSize(11);
       doc.setFont('helvetica', 'normal');
-      doc.text(`Date: ${now.toLocaleDateString('fr-CA')}`, 20, 30);
-      doc.text('Telephone: 581-748-7017', 20, 37);
-
+      doc.setTextColor(100, 100, 100);
+      doc.text(`Date: ${dateStr}`, 20, 82);
+      doc.text('Tel: 581-748-7017', pageWidth - 20, 82, { align: 'right' });
+      
+      // Client section
+      doc.setFillColor(248, 250, 252);
+      doc.roundedRect(15, 95, pageWidth - 30, 35, 3, 3, 'F');
+      doc.setTextColor(0, 0, 0);
       doc.setFont('helvetica', 'bold');
-      doc.text('Client', 20, 50);
-      doc.setFont('helvetica', 'normal');
-      doc.text(`Nom: ${clientName || 'N/A'}`, 20, 58);
-      doc.text(`Telephone: ${clientPhone || 'N/A'}`, 20, 65);
-      doc.text(`Email: ${clientEmail || 'N/A'}`, 20, 72);
-
-      doc.setFont('helvetica', 'bold');
-      doc.text('Details du projet', 20, 86);
-      doc.setFont('helvetica', 'normal');
-      doc.text(`Type de finition: ${finishLabel}`, 20, 94);
-      doc.text(`Surface: ${surface.toFixed(2)} pieds carres`, 20, 101);
-      doc.text(`Prix unitaire: $${pricePerSqft.toFixed(2)} / pied carre`, 20, 108);
-
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(16);
-      doc.text(`Total estime: $${total.toFixed(2)}`, 20, 122);
-
+      doc.setFontSize(12);
+      doc.text('CLIENT', 20, 105);
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(10);
-      doc.text('Ce devis est une estimation preliminaire. Une visite sur place peut ajuster le prix final.', 20, 135);
-      doc.text('Garantie: 10 ans | Execution rapide 24-48h', 20, 142);
+      doc.setTextColor(60, 60, 60);
+      doc.text(`Nom: ${clientName || '_______________________________'}`, 20, 115);
+      doc.text(`Telephone: ${clientPhone || '_______________________________'}`, 20, 123);
+      doc.text(`Courriel: ${clientEmail || '_______________________________'}`, pageWidth - 20, 123, { align: 'right' });
+      
+      // Project details section
+      doc.setFillColor(248, 250, 252);
+      doc.roundedRect(15, 140, pageWidth - 30, 45, 3, 3, 'F');
+      doc.setTextColor(0, 0, 0);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      doc.text('DETAILS DU PROJET', 20, 150);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(60, 60, 60);
+      doc.text(`Type de finition: ${finishLabel}`, 20, 162);
+      doc.text(`Surface totale: ${surface.toFixed(2)} pieds carres`, 20, 170);
+      doc.text(`Taux unitaire: $${pricePerSqft.toFixed(2)} / pied carre`, 20, 178);
+      
+      // Total section with accent
+      doc.setFillColor(6, 182, 212);
+      doc.roundedRect(15, 200, pageWidth - 30, 30, 5, 5, 'F');
+      doc.setTextColor(0, 0, 0);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(14);
+      doc.text('TOTAL ESTIME:', 25, 215);
+      doc.setFontSize(22);
+      doc.text(`$${total.toFixed(2)}`, pageWidth - 25, 218, { align: 'right' });
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'normal');
+      doc.text(' taxes incluses', pageWidth - 25, 225, { align: 'right' });
+      
+      // Features
+      doc.setTextColor(60, 60, 60);
+      doc.setFontSize(10);
+      doc.text('✓ Garantie 10 ans', 20, 250);
+      doc.text('✓ Execution rapide 24-48h', 20, 258);
+      doc.text('✓ Service professionnel garanti', 20, 266);
+      
+      // Footer note
+      doc.setTextColor(120, 120, 120);
+      doc.setFontSize(9);
+      doc.text('Ce devis est une estimation preliminaire basee sur les informations fournies.', centerX, 285, { align: 'center' });
+      doc.text('Une visite sur place sera necessaire pour confirmer le prix final.', centerX, 292, { align: 'center' });
+      
+      // Footer border
+      doc.setDrawColor(6, 182, 212);
+      doc.setLineWidth(1);
+      doc.line(20, 300, pageWidth - 20, 300);
+      doc.text('zenicorp-epoxy.vercel.app  |  581-748-7017', centerX, 310, { align: 'center' });
 
       doc.save(`devis-zenicorp-epoxy-${now.getTime()}.pdf`);
     };
@@ -313,27 +422,27 @@ export default function EpoxyBigHero() {
           </p>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-            <div className="group cursor-pointer">
+            <div className="group cursor-pointer" onClick={() => openLightbox('/images/metallic-copper.jpg', 'Copper Bronze')}>
               <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-copper.jpg" alt="Copper Bronze" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
               <p className="font-bold text-center text-sm">Copper Bronze</p>
             </div>
-            <div className="group cursor-pointer">
+            <div className="group cursor-pointer" onClick={() => openLightbox('/images/metallic-red.jpg', 'Ruby Red')}>
               <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-red.jpg" alt="Ruby Red" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
               <p className="font-bold text-center text-sm">Ruby Red</p>
             </div>
-            <div className="group cursor-pointer">
+            <div className="group cursor-pointer" onClick={() => openLightbox('/images/metallic-silver.jpg', 'Silver Steel')}>
               <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-silver.jpg" alt="Silver Steel" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
               <p className="font-bold text-center text-sm">Silver Steel</p>
             </div>
-            <div className="group cursor-pointer">
+            <div className="group cursor-pointer" onClick={() => openLightbox('/images/metallic-forest.jpg', 'Forest Green')}>
               <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-forest.jpg" alt="Forest Green" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
               <p className="font-bold text-center text-sm">Forest Green</p>
             </div>
-            <div className="group cursor-pointer">
+            <div className="group cursor-pointer" onClick={() => openLightbox('/images/metallic-rose.jpg', 'Rose Gold')}>
               <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-rose.jpg" alt="Rose Gold" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
               <p className="font-bold text-center text-sm">Rose Gold</p>
             </div>
-            <div className="group cursor-pointer">
+            <div className="group cursor-pointer" onClick={() => openLightbox('/images/metallic-emerald.webp', 'Emerald')}>
               <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-emerald.webp" alt="Emerald" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
               <p className="font-bold text-center text-sm">Emerald</p>
             </div>
@@ -348,7 +457,7 @@ export default function EpoxyBigHero() {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             {/* Photo 1 */}
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group cursor-pointer" onClick={() => openLightbox('/images/epoxy-metallic-grey.jpg', 'Chrome Mirror')}>
               <img 
                 src="/images/epoxy-metallic-grey.jpg" 
                 alt="Chrome Mirror"
@@ -362,7 +471,7 @@ export default function EpoxyBigHero() {
             </div>
 
             {/* Photo 2 */}
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group cursor-pointer" onClick={() => openLightbox('/images/realisation-1.jpg', 'Plancher Residentiel')}>
               <img 
                 src="/images/realisation-1.jpg" 
                 alt="Plancher Residentiel"
@@ -376,7 +485,7 @@ export default function EpoxyBigHero() {
             </div>
 
             {/* Photo 3 */}
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group cursor-pointer" onClick={() => openLightbox('/images/realisation-4.jpg', 'Local Commercial')}>
               <img 
                 src="/images/realisation-4.jpg" 
                 alt="Local Commercial"
@@ -390,7 +499,7 @@ export default function EpoxyBigHero() {
             </div>
 
             {/* Photo 4 - Application */}
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group cursor-pointer" onClick={() => openLightbox('/images/realisation-application.jpg', 'Application Professionnelle')}>
               <img 
                 src="/images/realisation-application.jpg" 
                 alt="Application Professionnelle"
@@ -418,7 +527,7 @@ export default function EpoxyBigHero() {
           
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
             {/* Flake Option 1 */}
-            <div className="relative aspect-square rounded-3xl overflow-hidden group">
+            <div className="relative aspect-square rounded-3xl overflow-hidden group cursor-pointer" onClick={() => openLightbox('/images/flakes-options.jpg', 'Flocons Mixtes')}>
               <img 
                 src="/images/flakes-options.jpg" 
                 alt="Flocons option 1"
@@ -432,7 +541,7 @@ export default function EpoxyBigHero() {
             </div>
 
             {/* Flake Option 2 */}
-            <div className="relative aspect-square rounded-3xl overflow-hidden group">
+            <div className="relative aspect-square rounded-3xl overflow-hidden group cursor-pointer" onClick={() => openLightbox('/images/flakes-11.jpg', 'Flocons 11')}>
               <img 
                 src="/images/flakes-11.jpg" 
                 alt="Flocons option 2"
@@ -446,7 +555,7 @@ export default function EpoxyBigHero() {
             </div>
 
             {/* Flake Option 3 */}
-            <div className="relative aspect-square rounded-3xl overflow-hidden group">
+            <div className="relative aspect-square rounded-3xl overflow-hidden group cursor-pointer" onClick={() => openLightbox('/images/e4e-flakes.jpg', 'E4E Flakes')}>
               <img 
                 src="/images/e4e-flakes.jpg" 
                 alt="Flocons option 3"
@@ -716,6 +825,27 @@ export default function EpoxyBigHero() {
           <p className="text-white/40">Garantie 10 ans - Prix: $7.50 - $12.00/pied carre</p>
         </div>
       </footer>
+      {/* LIGHTBOX MODAL */}
+      {lightboxOpen && (
+        <div 
+          className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4"
+          onClick={closeLightbox}
+        >
+          <button 
+            onClick={closeLightbox}
+            className="absolute top-4 right-4 p-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors z-10"
+          >
+            <X className="w-8 h-8" />
+          </button>
+          <img 
+            src={lightboxImage.src} 
+            alt={lightboxImage.alt}
+            className="max-w-full max-h-[90vh] object-contain rounded-lg"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
+
     </div>
   );
 }
