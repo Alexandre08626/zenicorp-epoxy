@@ -113,7 +113,7 @@ export default function EpoxyBigHero() {
       <section className="relative h-screen flex flex-col justify-end pb-20">
         <div className="absolute inset-0">
           <img
-            src="/images/realisation-7.jpg"
+            src="/images/epoxy-metallic-grey.jpg"
             alt="Plancher epoxy premium"
             className="w-full h-full object-cover"
           />
@@ -306,59 +306,44 @@ export default function EpoxyBigHero() {
 
       {/* COULEURS METALLIQUES */}
       <section className="py-20 px-4 sm:px-6 bg-zinc-950">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-4xl font-black text-center mb-4">Nos <span className="text-cyan-400">Couleurs Metalliques</span></h2>
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-black text-center mb-4">Nos <span className="text-cyan-400">Couleurs Metalliques</span></h2>
           <p className="text-white/60 text-center mb-12 max-w-2xl mx-auto">
-            Selection mise a jour avec tes nouvelles photos. Aucun doublon dans cette section.
+            8 choix de couleurs premium pour personnaliser ton plancher epoxy.
           </p>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="group cursor-pointer">
-              <div className="aspect-square rounded-2xl overflow-hidden mb-3">
-                <img src="/images/metallic-copper.jpg" alt="Copper" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-              </div>
+              <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/epoxy-metallic-grey.jpg" alt="Chrome Mirror" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
+              <p className="font-bold text-center text-sm">Chrome Mirror</p>
+            </div>
+            <div className="group cursor-pointer">
+              <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/epoxy-blue.jpg" alt="Midnight Blue" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
+              <p className="font-bold text-center text-sm">Midnight Blue</p>
+            </div>
+            <div className="group cursor-pointer">
+              <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-copper.jpg" alt="Copper Bronze" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
               <p className="font-bold text-center text-sm">Copper Bronze</p>
-              <p className="text-cyan-400 text-center text-xs">$9.50/pied carre</p>
             </div>
-
             <div className="group cursor-pointer">
-              <div className="aspect-square rounded-2xl overflow-hidden mb-3">
-                <img src="/images/metallic-red.jpg" alt="Red" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-              </div>
+              <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-red.jpg" alt="Ruby Red" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
               <p className="font-bold text-center text-sm">Ruby Red</p>
-              <p className="text-cyan-400 text-center text-xs">$9.50/pied carre</p>
             </div>
-
             <div className="group cursor-pointer">
-              <div className="aspect-square rounded-2xl overflow-hidden mb-3">
-                <img src="/images/metallic-gold.png" alt="Gold" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-              </div>
+              <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-gold.png" alt="Liquid Gold" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
               <p className="font-bold text-center text-sm">Liquid Gold</p>
-              <p className="text-cyan-400 text-center text-xs">$12.00/pied carre</p>
             </div>
-
             <div className="group cursor-pointer">
-              <div className="aspect-square rounded-2xl overflow-hidden mb-3">
-                <img src="/images/metallic-bronze.png" alt="Bronze" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-              </div>
+              <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-bronze.png" alt="Ancient Bronze" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
               <p className="font-bold text-center text-sm">Ancient Bronze</p>
-              <p className="text-cyan-400 text-center text-xs">$9.50/pied carre</p>
             </div>
-
             <div className="group cursor-pointer">
-              <div className="aspect-square rounded-2xl overflow-hidden mb-3">
-                <img src="/images/metallic-violet.png" alt="Violet" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-              </div>
+              <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-violet.png" alt="Royal Violet" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
               <p className="font-bold text-center text-sm">Royal Violet</p>
-              <p className="text-cyan-400 text-center text-xs">$10.50/pied carre</p>
             </div>
-
             <div className="group cursor-pointer">
-              <div className="aspect-square rounded-2xl overflow-hidden mb-3">
-                <img src="/images/metallic-silver.jpg" alt="Silver" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-              </div>
+              <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-silver.jpg" alt="Silver Steel" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
               <p className="font-bold text-center text-sm">Silver Steel</p>
-              <p className="text-cyan-400 text-center text-xs">$9.00/pied carre</p>
             </div>
           </div>
         </div>
@@ -401,50 +386,8 @@ export default function EpoxyBigHero() {
             {/* Photo 3 */}
             <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
               <img 
-                src="/images/epoxy-application.jpg" 
-                alt="Application"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
-                <p className="text-2xl sm:text-3xl font-black text-white">Application Pro</p>
-                <p className="text-cyan-400">Travail de precision</p>
-              </div>
-            </div>
-
-            {/* Photo 4 */}
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
-              <img 
-                src="/images/epoxy-floor-cleaning-and-maintenance.jpg" 
-                alt="Entretien"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
-                <p className="text-2xl sm:text-3xl font-black text-white">Fini Impeccable</p>
-                <p className="text-cyan-400">Facile a entretenir</p>
-              </div>
-            </div>
-
-            {/* Photo 5 */}
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
-              <img 
-                src="/images/epoxy-vs-polyurea.png" 
-                alt="Comparaison"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
-                <p className="text-2xl sm:text-3xl font-black text-white">Qualite Premium</p>
-                <p className="text-cyan-400">Superieur a la concurrence</p>
-              </div>
-            </div>
-
-            {/* Nouvelle Realisation 1 */}
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
-              <img 
                 src="/images/realisation-1.jpg" 
-                alt="Realisation 1"
+                alt="Plancher Residentiel"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
@@ -454,11 +397,11 @@ export default function EpoxyBigHero() {
               </div>
             </div>
 
-            {/* Nouvelle Realisation 2 */}
+            {/* Photo 4 */}
             <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
               <img 
-                src="/images/metallic-silver.jpg" 
-                alt="Realisation 2"
+                src="/images/realisation-4.jpg" 
+                alt="Espace Commercial"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
@@ -468,45 +411,31 @@ export default function EpoxyBigHero() {
               </div>
             </div>
 
-            {/* Nouvelle Realisation 3 */}
+            {/* Photo 5 */}
             <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
               <img 
-                src="/images/metallic-onyx.webp" 
-                alt="Realisation 3"
+                src="/images/realisation-6.jpg" 
+                alt="Design Contemporain"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
-                <p className="text-2xl sm:text-3xl font-black text-white">Bleu Profond</p>
-                <p className="text-cyan-400">Design moderne</p>
+                <p className="text-2xl sm:text-3xl font-black text-white">Design Contemporain</p>
+                <p className="text-cyan-400">Effet miroir moderne</p>
               </div>
             </div>
 
-            {/* Nouvelle Realisation 4 */}
+            {/* Photo 6 */}
             <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
               <img 
-                src="/images/realisation-4.jpg" 
-                alt="Realisation 4"
+                src="/images/realisation-7.jpg" 
+                alt="Finition Miroir"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
-                <p className="text-2xl sm:text-3xl font-black text-white">Job Austin</p>
-                <p className="text-cyan-400">Metallique premium</p>
-              </div>
-            </div>
-
-            {/* Nouvelle Realisation 5 */}
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
-              <img 
-                src="/images/metallic-graphite.webp" 
-                alt="Realisation 5"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
-                <p className="text-2xl sm:text-3xl font-black text-white">Application Pro</p>
-                <p className="text-cyan-400">Nettoyage facile</p>
+                <p className="text-2xl sm:text-3xl font-black text-white">Finition Miroir</p>
+                <p className="text-cyan-400">Eclat haut de gamme</p>
               </div>
             </div>
 
@@ -601,7 +530,7 @@ export default function EpoxyBigHero() {
               <div className="p-4 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <img src="/images/color-swatches-1.png" alt="Chrome" className="w-full h-full object-cover" />
+                    <img src="/images/epoxy-metallic-grey.jpg" alt="Chrome" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <p className="font-bold text-lg">Chrome Mirror</p>
@@ -621,7 +550,7 @@ export default function EpoxyBigHero() {
               <div className="p-4 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <img src="/images/color-swatches-2.png" alt="Blue" className="w-full h-full object-cover" />
+                    <img src="/images/epoxy-blue.jpg" alt="Blue" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <p className="font-bold text-lg">Midnight Blue</p>
@@ -641,7 +570,7 @@ export default function EpoxyBigHero() {
               <div className="p-4 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <img src="/images/color-swatches-3.png" alt="Gold" className="w-full h-full object-cover" />
+                    <img src="/images/metallic-gold.png" alt="Gold" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <p className="font-bold text-lg">Liquid Gold</p>
@@ -665,7 +594,7 @@ export default function EpoxyBigHero() {
               <div className="p-4 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <img src="/images/flakes-chart.webp" alt="Flocons Mixtes" className="w-full h-full object-cover" />
+                    <img src="/images/flakes-options.jpg" alt="Flocons Mixtes" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <p className="font-bold text-lg">Flocons Mixtes</p>
@@ -685,7 +614,7 @@ export default function EpoxyBigHero() {
               <div className="p-4 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <img src="/images/flakes-mix-a.png" alt="Flocons 11" className="w-full h-full object-cover" />
+                    <img src="/images/flakes-11.jpg" alt="Flocons 11" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <p className="font-bold text-lg">Flocons 11</p>
@@ -705,7 +634,7 @@ export default function EpoxyBigHero() {
               <div className="p-4 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <img src="/images/flakes-mix-b.png" alt="E4E Flakes" className="w-full h-full object-cover" />
+                    <img src="/images/e4e-flakes.jpg" alt="E4E Flakes" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <p className="font-bold text-lg">E4E Flakes</p>
