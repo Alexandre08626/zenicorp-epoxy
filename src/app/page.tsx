@@ -5,6 +5,7 @@ import {
   Phone, Check, ArrowRight, Calculator, MapPin, Clock, Shield,
   X, Plus, Package
 } from 'lucide-react';
+import { jsPDF } from 'jspdf';
 
 export default function EpoxyBigHero() {
   const [mounted, setMounted] = useState(false);
@@ -22,6 +23,50 @@ export default function EpoxyBigHero() {
     const [finishType, setFinishType] = useState<'flakes' | 'metallic'>('flakes');
     const pricePerSqft = finishType === 'flakes' ? 7.50 : 8.50;
     const estimatedTotal = sqft ? parseFloat(sqft) * pricePerSqft : 0;
+    const [clientName, setClientName] = useState('');
+    const [clientPhone, setClientPhone] = useState('');
+    const [clientEmail, setClientEmail] = useState('');
+
+    const downloadQuotePdf = () => {
+      const surface = Number.parseFloat(sqft || '0');
+      const total = surface * pricePerSqft;
+      const finishLabel = finishType === 'flakes' ? 'Flocons decoratifs' : 'Metallique';
+      const now = new Date();
+
+      const doc = new jsPDF();
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(20);
+      doc.text('ZENICORP EPOXY - DEVIS', 20, 20);
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'normal');
+      doc.text(`Date: ${now.toLocaleDateString('fr-CA')}`, 20, 30);
+      doc.text('Telephone: 581-748-7017', 20, 37);
+
+      doc.setFont('helvetica', 'bold');
+      doc.text('Client', 20, 50);
+      doc.setFont('helvetica', 'normal');
+      doc.text(`Nom: ${clientName || 'N/A'}`, 20, 58);
+      doc.text(`Telephone: ${clientPhone || 'N/A'}`, 20, 65);
+      doc.text(`Email: ${clientEmail || 'N/A'}`, 20, 72);
+
+      doc.setFont('helvetica', 'bold');
+      doc.text('Details du projet', 20, 86);
+      doc.setFont('helvetica', 'normal');
+      doc.text(`Type de finition: ${finishLabel}`, 20, 94);
+      doc.text(`Surface: ${surface.toFixed(2)} pieds carres`, 20, 101);
+      doc.text(`Prix unitaire: $${pricePerSqft.toFixed(2)} / pied carre`, 20, 108);
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(16);
+      doc.text(`Total estime: $${total.toFixed(2)}`, 20, 122);
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.text('Ce devis est une estimation preliminaire. Une visite sur place peut ajuster le prix final.', 20, 135);
+      doc.text('Garantie: 10 ans | Execution rapide 24-48h', 20, 142);
+
+      doc.save(`devis-zenicorp-epoxy-${now.getTime()}.pdf`);
+    };
 
     if (!mounted) return null;
 
@@ -200,6 +245,30 @@ export default function EpoxyBigHero() {
               />
             </div>
 
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+              <input
+                type="text"
+                value={clientName}
+                onChange={(e) => setClientName(e.target.value)}
+                placeholder="Nom complet"
+                className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+              />
+              <input
+                type="tel"
+                value={clientPhone}
+                onChange={(e) => setClientPhone(e.target.value)}
+                placeholder="Telephone"
+                className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+              />
+              <input
+                type="email"
+                value={clientEmail}
+                onChange={(e) => setClientEmail(e.target.value)}
+                placeholder="Email"
+                className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+              />
+            </div>
+
             {/* Total */}
             <div className="p-8 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 rounded-2xl mb-8">
               <div className="flex items-center justify-between">
@@ -217,11 +286,11 @@ export default function EpoxyBigHero() {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <button 
-                onClick={() => setShowQuote(true)}
+                onClick={downloadQuotePdf}
                 className="flex-1 py-5 bg-cyan-500 hover:bg-cyan-400 text-black font-black text-xl rounded-2xl transition-all hover:scale-105 flex items-center justify-center gap-3"
               >
-                <Phone className="w-6 h-6" />
-                DEMANDER UN DEVIS
+                <Calculator className="w-6 h-6" />
+                TELECHARGER DEVIS PDF
               </button>
               <a 
                 href="tel:5817487017"
@@ -237,8 +306,8 @@ export default function EpoxyBigHero() {
 
       {/* COULEURS METALLIQUES */}
       <section className="py-20 px-4 sm:px-6 bg-zinc-950">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-black text-center mb-4">Nos <span className="text-cyan-400">Couleurs Metalliques</span></h2>
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-4xl font-black text-center mb-4">Nos <span className="text-cyan-400">Couleurs Metalliques</span></h2>
           <p className="text-white/60 text-center mb-12 max-w-2xl mx-auto">
             Selection mise a jour avec tes nouvelles photos. Aucun doublon dans cette section.
           </p>
@@ -278,18 +347,18 @@ export default function EpoxyBigHero() {
 
             <div className="group cursor-pointer">
               <div className="aspect-square rounded-2xl overflow-hidden mb-3">
-                <img src="/images/color-swatches-1.png" alt="Swatches 1" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <img src="/images/metallic-violet.png" alt="Violet" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
               </div>
-              <p className="font-bold text-center text-sm">Metal Mix 1</p>
-              <p className="text-cyan-400 text-center text-xs">$10.00/pied carre</p>
+              <p className="font-bold text-center text-sm">Royal Violet</p>
+              <p className="text-cyan-400 text-center text-xs">$10.50/pied carre</p>
             </div>
 
             <div className="group cursor-pointer">
               <div className="aspect-square rounded-2xl overflow-hidden mb-3">
-                <img src="/images/color-swatches-2.png" alt="Swatches 2" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <img src="/images/metallic-silver.jpg" alt="Silver" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
               </div>
-              <p className="font-bold text-center text-sm">Metal Mix 2</p>
-              <p className="text-cyan-400 text-center text-xs">$10.00/pied carre</p>
+              <p className="font-bold text-center text-sm">Silver Steel</p>
+              <p className="text-cyan-400 text-center text-xs">$9.00/pied carre</p>
             </div>
           </div>
         </div>
@@ -532,7 +601,7 @@ export default function EpoxyBigHero() {
               <div className="p-4 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <img src="/images/metallic-violet.png" alt="Chrome" className="w-full h-full object-cover" />
+                    <img src="/images/color-swatches-1.png" alt="Chrome" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <p className="font-bold text-lg">Chrome Mirror</p>
@@ -552,7 +621,7 @@ export default function EpoxyBigHero() {
               <div className="p-4 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <img src="/images/color-swatches-3.png" alt="Blue" className="w-full h-full object-cover" />
+                    <img src="/images/color-swatches-2.png" alt="Blue" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <p className="font-bold text-lg">Midnight Blue</p>
@@ -572,7 +641,7 @@ export default function EpoxyBigHero() {
               <div className="p-4 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <img src="/images/realisation-6.jpg" alt="Gold" className="w-full h-full object-cover" />
+                    <img src="/images/color-swatches-3.png" alt="Gold" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <p className="font-bold text-lg">Liquid Gold</p>
@@ -700,14 +769,40 @@ export default function EpoxyBigHero() {
           <div className="w-full max-w-lg bg-zinc-900 rounded-3xl p-6 sm:p-8 border border-white/10" onClick={(e) => e.stopPropagation()}>
             <h2 className="text-2xl font-black mb-6 text-center">Devis Rapide</h2>
             <form className="space-y-4">
-              <input type="number" placeholder="Superficie (pieds carres)" className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white text-lg focus:border-cyan-500 focus:outline-none" />
-              <input type="tel" placeholder="Telephone" className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white text-lg focus:border-cyan-500 focus:outline-none" />
+              <input
+                type="text"
+                value={clientName}
+                onChange={(e) => setClientName(e.target.value)}
+                placeholder="Nom complet"
+                className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white text-lg focus:border-cyan-500 focus:outline-none"
+              />
+              <input
+                type="number"
+                value={sqft}
+                onChange={(e) => setSqft(e.target.value)}
+                placeholder="Superficie (pieds carres)"
+                className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white text-lg focus:border-cyan-500 focus:outline-none"
+              />
+              <input
+                type="tel"
+                value={clientPhone}
+                onChange={(e) => setClientPhone(e.target.value)}
+                placeholder="Telephone"
+                className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white text-lg focus:border-cyan-500 focus:outline-none"
+              />
+              <input
+                type="email"
+                value={clientEmail}
+                onChange={(e) => setClientEmail(e.target.value)}
+                placeholder="Email"
+                className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white text-lg focus:border-cyan-500 focus:outline-none"
+              />
               <button 
                 type="button"
-                onClick={() => { alert('Demande envoyee ! On vous rappelle dans 24h.'); setShowQuote(false); }}
+                onClick={() => { downloadQuotePdf(); setShowQuote(false); }}
                 className="w-full py-5 bg-cyan-500 text-black font-black text-xl rounded-xl"
               >
-                RECEVOIR MON DEVIS
+                TELECHARGER LE DEVIS PDF
               </button>
             </form>
             <p className="text-center text-white/40 text-sm mt-4">
