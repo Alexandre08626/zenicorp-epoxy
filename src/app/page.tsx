@@ -23,21 +23,21 @@ export default function EpoxyBigHero() {
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden">
       
-      {/* HEADER */}
-      <header className="fixed top-0 left-0 right-0 z-50 px-4 py-3 backdrop-blur-xl bg-black/50 border-b border-white/10">
+      {/* HEADER - MOBILE FIX */}
+      <header className="fixed top-0 left-0 right-0 z-50 px-2 sm:px-4 py-2 sm:py-3 backdrop-blur-xl bg-black/50 border-b border-white/10">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src="/logo.png" alt="ZeniCorp" className="w-8 h-8 object-contain flex-shrink-0" />
+            <img src="/logo.png" alt="ZeniCorp" className="w-7 h-7 sm:w-8 sm:h-8 object-contain flex-shrink-0" />
             <div className="leading-none">
-              <div className="font-bold text-base tracking-tight">ZENI<span className="text-cyan-400">CORP</span></div>
-              <div className="text-[9px] text-white/40 tracking-widest uppercase">Époxy Pro</div>
+              <div className="font-bold text-sm sm:text-base tracking-tight">ZENI<span className="text-cyan-400">CORP</span></div>
+              <div className="text-[8px] sm:text-[9px] text-white/40 tracking-widest uppercase">Epoxy Pro</div>
             </div>
           </div>
           
-          <div className="flex items-center gap-2 sm:gap-4">
+          <div className="flex items-center gap-1 sm:gap-2 md:gap-4">
             <button 
               onClick={() => setShowShop(true)}
-              className="relative flex items-center gap-2 px-3 py-2 bg-white/10 border border-white/20 rounded-xl hover:bg-white/20 transition-colors"
+              className="relative flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 bg-white/10 border border-white/20 rounded-xl hover:bg-white/20 transition-colors"
             >
               <Package className="w-4 h-4" />
               <span className="hidden sm:inline text-sm">Boutique</span>
@@ -50,7 +50,7 @@ export default function EpoxyBigHero() {
 
             <a 
               href="tel:5817487017"
-              className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl text-sm font-bold hover:scale-105 transition-transform"
+              className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl text-xs sm:text-sm font-bold hover:scale-105 transition-transform"
             >
               <Phone className="w-4 h-4" />
               <span className="hidden md:inline">581-748-7017</span>
@@ -59,73 +59,74 @@ export default function EpoxyBigHero() {
         </div>
       </header>
 
-      {/* ═══ GIGA HERO ═══ */}
+      {/* GIGA HERO */}
       <section className="relative h-screen flex flex-col justify-end pb-20">
         <div className="absolute inset-0">
           <img
             src="/images/epoxy-metallic-grey.jpg"
-            alt="Plancher époxy premium"
+            alt="Plancher epoxy premium"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-transparent" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-6">
               <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-              <span className="text-sm font-medium">Experts en planchers époxy</span>
+              <span className="text-sm font-medium">Experts en planchers epoxy</span>
             </div>
 
-            <h1 className="text-7xl md:text-9xl font-black leading-[0.85] tracking-tighter mb-6">
+            <h1 className="text-6xl sm:text-7xl md:text-9xl font-black leading-[0.85] tracking-tighter mb-6">
               <span className="block text-white">
                 ZENICORP
               </span>
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400">
-                ÉPOXY
+                EPOXY
               </span>
             </h1>
 
-            <p className="text-xl md:text-2xl text-white/70 mb-8 max-w-xl leading-relaxed">
-              Installation de planchers métalliques haut de gamme. 
+            <p className="text-lg sm:text-xl md:text-2xl text-white/70 mb-8 max-w-xl leading-relaxed">
+              Installation de planchers metalliques haut de gamme. 
               <span className="text-cyan-400 font-semibold"> Garantie 10 ans.</span>
             </p>
 
-            <div className="flex flex-wrap gap-4 mb-12">
+            <div className="flex flex-wrap gap-3 sm:gap-4 mb-12">
               <button 
                 onClick={() => setShowQuote(true)}
-                className="group flex items-center gap-3 px-10 py-5 bg-cyan-500 hover:bg-cyan-400 text-black font-black text-lg rounded-full transition-all hover:scale-105 shadow-2xl shadow-cyan-500/50"
+                className="group flex items-center gap-2 sm:gap-3 px-6 sm:px-10 py-4 sm:py-5 bg-cyan-500 hover:bg-cyan-400 text-black font-black text-base sm:text-lg rounded-full transition-all hover:scale-105 shadow-2xl shadow-cyan-500/50"
               >
                 DEVIS GRATUIT
-                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
               </button>
               
               <button 
                 onClick={() => setShowShop(true)}
-                className="flex items-center gap-3 px-8 py-5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white font-bold text-lg rounded-full transition-all"
+                className="flex items-center gap-2 sm:gap-3 px-5 sm:px-8 py-4 sm:py-5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white font-bold text-base sm:text-lg rounded-full transition-all"
               >
-                <Package className="w-6 h-6" />
+                <Package className="w-5 h-5 sm:w-6 sm:h-6" />
                 Boutique
               </button>
 
               <a 
                 href="tel:5817487017"
-                className="flex items-center gap-3 px-8 py-5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white font-bold text-lg rounded-full transition-all"
+                className="flex items-center gap-2 sm:gap-3 px-5 sm:px-8 py-4 sm:py-5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white font-bold text-base sm:text-lg rounded-full transition-all"
               >
-                <Phone className="w-6 h-6" />
-                581-748-7017
+                <Phone className="w-5 h-5 sm:w-6 sm:h-6" />
+                <span className="sm:hidden">Appeler</span>
+                <span className="hidden sm:inline">581-748-7017</span>
               </a>
             </div>
 
-            <div className="flex flex-wrap items-center gap-8 text-sm">
+            <div className="flex flex-wrap items-center gap-6 sm:gap-8 text-sm">
               <div className="flex items-center gap-2 text-white/60">
                 <Shield className="w-5 h-5 text-cyan-400" />
                 <span>Garantie 10 ans</span>
               </div>
               <div className="flex items-center gap-2 text-white/60">
                 <MapPin className="w-5 h-5 text-cyan-400" />
-                <span>Québec & Environs</span>
+                <span>Quebec & Environs</span>
               </div>
               <div className="flex items-center gap-2 text-white/60">
                 <Clock className="w-5 h-5 text-cyan-400" />
@@ -138,35 +139,35 @@ export default function EpoxyBigHero() {
         <div className="absolute top-1/3 right-10 md:right-20 hidden md:block">
           <div className="p-6 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 text-right">
             <p className="text-5xl font-black text-cyan-400">250+</p>
-            <p className="text-white/60">Projets réalisés</p>
+            <p className="text-white/60">Projets realises</p>
           </div>
         </div>
 
         <div className="absolute top-1/2 right-10 md:right-20 hidden md:block transform translate-y-20">
           <div className="p-6 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 backdrop-blur-xl rounded-2xl border border-cyan-500/30">
             <p className="text-4xl font-black text-white">$7.50</p>
-            <p className="text-white/60">À partir de /pied²</p>
+            <p className="text-white/60">A partir de /pied carre</p>
           </div>
         </div>
       </section>
 
-      {/* ═══ GALLERY - TES 5 VRAIES PHOTOS ═══ */}
-      <section className="py-20 px-6 bg-black">
+      {/* REALISATIONS - TOUTES LES PHOTOS */}
+      <section className="py-20 px-4 sm:px-6 bg-black">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-black text-center mb-12">Nos <span className="text-cyan-400">Réalisations</span></h2>
+          <h2 className="text-4xl font-black text-center mb-12">Nos <span className="text-cyan-400">Realisations</span></h2>
           
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             {/* Photo 1 - Grande */}
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group md:col-span-2">
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group sm:col-span-2">
               <img 
                 src="/images/epoxy-metallic-grey.jpg" 
                 alt="Chrome Mirror"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute bottom-8 left-8">
-                <p className="text-4xl font-black text-white">Chrome Mirror</p>
-                <p className="text-cyan-400 text-xl">Notre best-seller</p>
+              <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
+                <p className="text-3xl sm:text-4xl font-black text-white">Chrome Mirror</p>
+                <p className="text-cyan-400 text-lg sm:text-xl">Notre best-seller</p>
               </div>
             </div>
 
@@ -178,9 +179,9 @@ export default function EpoxyBigHero() {
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute bottom-8 left-8">
-                <p className="text-3xl font-black text-white">Midnight Blue</p>
-                <p className="text-cyan-400">Élégance profonde</p>
+              <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
+                <p className="text-2xl sm:text-3xl font-black text-white">Midnight Blue</p>
+                <p className="text-cyan-400">Elegance profonde</p>
               </div>
             </div>
 
@@ -192,9 +193,9 @@ export default function EpoxyBigHero() {
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute bottom-8 left-8">
-                <p className="text-3xl font-black text-white">Application Pro</p>
-                <p className="text-cyan-400">Travail de précision</p>
+              <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
+                <p className="text-2xl sm:text-3xl font-black text-white">Application Pro</p>
+                <p className="text-cyan-400">Travail de precision</p>
               </div>
             </div>
 
@@ -206,9 +207,9 @@ export default function EpoxyBigHero() {
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute bottom-8 left-8">
-                <p className="text-3xl font-black text-white">Fini Impeccable</p>
-                <p className="text-cyan-400">Facile à entretenir</p>
+              <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
+                <p className="text-2xl sm:text-3xl font-black text-white">Fini Impeccable</p>
+                <p className="text-cyan-400">Facile a entretenir</p>
               </div>
             </div>
 
@@ -220,29 +221,182 @@ export default function EpoxyBigHero() {
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute bottom-8 left-8">
-                <p className="text-3xl font-black text-white">Qualité Premium</p>
-                <p className="text-cyan-400">Supérieur à la concurrence</p>
+              <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
+                <p className="text-2xl sm:text-3xl font-black text-white">Qualite Premium</p>
+                <p className="text-cyan-400">Superieur a la concurrence</p>
+              </div>
+            </div>
+
+            {/* Nouvelle Realisation 1 */}
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
+              <img 
+                src="/images/realisation-1.jpg" 
+                alt="Realisation 1"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+              <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
+                <p className="text-2xl sm:text-3xl font-black text-white">Plancher Residentiel</p>
+                <p className="text-cyan-400">Finition metallique</p>
+              </div>
+            </div>
+
+            {/* Nouvelle Realisation 2 */}
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
+              <img 
+                src="/images/realisation-2.jpg" 
+                alt="Realisation 2"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+              <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
+                <p className="text-2xl sm:text-3xl font-black text-white">Espace Commercial</p>
+                <p className="text-cyan-400">Haute resistance</p>
+              </div>
+            </div>
+
+            {/* Nouvelle Realisation 3 */}
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
+              <img 
+                src="/images/realisation-3.jpg" 
+                alt="Realisation 3"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+              <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
+                <p className="text-2xl sm:text-3xl font-black text-white">Bleu Profond</p>
+                <p className="text-cyan-400">Design moderne</p>
+              </div>
+            </div>
+
+            {/* Nouvelle Realisation 4 */}
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
+              <img 
+                src="/images/realisation-4.jpg" 
+                alt="Realisation 4"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+              <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
+                <p className="text-2xl sm:text-3xl font-black text-white">Job Austin</p>
+                <p className="text-cyan-400">Metallique premium</p>
+              </div>
+            </div>
+
+            {/* Nouvelle Realisation 5 */}
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
+              <img 
+                src="/images/realisation-5.jpg" 
+                alt="Realisation 5"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+              <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
+                <p className="text-2xl sm:text-3xl font-black text-white">Application Pro</p>
+                <p className="text-cyan-400">Nettoyage facile</p>
+              </div>
+            </div>
+
+            {/* Nouvelle Realisation 6 */}
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
+              <img 
+                src="/images/realisation-6.jpg" 
+                alt="Realisation 6"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+              <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
+                <p className="text-2xl sm:text-3xl font-black text-white">Garage Premium</p>
+                <p className="text-cyan-400">Finition epaisse</p>
+              </div>
+            </div>
+
+            {/* Nouvelle Realisation 7 */}
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
+              <img 
+                src="/images/realisation-7.jpg" 
+                alt="Realisation 7"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+              <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
+                <p className="text-2xl sm:text-3xl font-black text-white">Showroom</p>
+                <p className="text-cyan-400">Eclat miroir</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ═══ BOUTIQUE MODAL ═══ */}
+      {/* FLOCONS / FLAKES */}
+      <section className="py-20 px-4 sm:px-6 bg-zinc-950">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-black text-center mb-4">Options de <span className="text-cyan-400">Flocons</span></h2>
+          <p className="text-white/60 text-center mb-12 max-w-2xl mx-auto">
+            Personnalisez votre plancher avec nos melanges de flocons decoratifs. 
+            Disponibles en plusieurs tailles et couleurs.
+          </p>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+            {/* Flake Option 1 */}
+            <div className="relative aspect-square rounded-3xl overflow-hidden group">
+              <img 
+                src="/images/flakes-options.jpg" 
+                alt="Flocons option 1"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+              <div className="absolute bottom-6 left-6">
+                <p className="text-2xl font-black text-white">Flocons Mixtes</p>
+                <p className="text-cyan-400">Options variées</p>
+              </div>
+            </div>
+
+            {/* Flake Option 2 */}
+            <div className="relative aspect-square rounded-3xl overflow-hidden group">
+              <img 
+                src="/images/flakes-11.jpg" 
+                alt="Flocons option 2"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+              <div className="absolute bottom-6 left-6">
+                <p className="text-2xl font-black text-white">Flocons 11</p>
+                <p className="text-cyan-400">Tres discret</p>
+              </div>
+            </div>
+
+            {/* Flake Option 3 */}
+            <div className="relative aspect-square rounded-3xl overflow-hidden group">
+              <img 
+                src="/images/e4e-flakes.jpg" 
+                alt="Flocons option 3"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+              <div className="absolute bottom-6 left-6">
+                <p className="text-2xl font-black text-white">E4E Flakes</p>
+                <p className="text-cyan-400">Haute qualite</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* BOUTIQUE MODAL */}
       {showShop && (
         <div 
-          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center p-6"
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 sm:p-6"
           onClick={() => setShowShop(false)}
         >
           <div 
-            className="w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-zinc-900 rounded-3xl border border-white/10 p-8"
+            className="w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-zinc-900 rounded-3xl border border-white/10 p-6 sm:p-8"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-8">
               <div>
-                <h2 className="text-3xl font-black">Boutique Pro</h2>
-                <p className="text-white/60">Finitions disponibles • $7.50 - $12/pied²</p>
+                <h2 className="text-2xl sm:text-3xl font-black">Boutique Pro</h2>
+                <p className="text-white/60 text-sm sm:text-base">Finitions disponibles - $7.50 - $12/pied carre</p>
               </div>
               <div className="flex items-center gap-4">
                 {cart.length > 0 && (
@@ -256,65 +410,65 @@ export default function EpoxyBigHero() {
               </div>
             </div>
 
-            {/* Produits avec tes photos */}
+            {/* Produits */}
             <div className="space-y-4 mb-8">
               <div className="p-4 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-gray-700 rounded-lg flex items-center justify-center text-2xl overflow-hidden">
+                  <div className="w-16 h-16 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
                     <img src="/images/epoxy-metallic-grey.jpg" alt="Chrome" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <p className="font-bold text-lg">Chrome Mirror</p>
-                    <p className="text-sm text-white/60">Métallique</p>
-                    <p className="text-cyan-400 font-bold">$7.50/pied²</p>
+                    <p className="text-sm text-white/60">Metallique</p>
+                    <p className="text-cyan-400 font-bold">$7.50/pied carre</p>
                   </div>
                 </div>
                 <button 
                   onClick={() => addToCart({ id: 'm1', name: 'Chrome Mirror', price: 7.50 })}
-                  className="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 rounded-lg font-bold flex items-center gap-2"
+                  className="px-4 sm:px-6 py-3 bg-cyan-600 hover:bg-cyan-500 rounded-lg font-bold flex items-center gap-2 text-sm"
                 >
                   <Plus className="w-4 h-4" />
-                  Ajouter
+                  <span className="hidden sm:inline">Ajouter</span>
                 </button>
               </div>
 
               <div className="p-4 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-blue-900 rounded-lg flex items-center justify-center text-2xl overflow-hidden">
+                  <div className="w-16 h-16 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
                     <img src="/images/epoxy-blue.jpg" alt="Blue" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <p className="font-bold text-lg">Midnight Blue</p>
-                    <p className="text-sm text-white/60">Métallique</p>
-                    <p className="text-cyan-400 font-bold">$8.00/pied²</p>
+                    <p className="text-sm text-white/60">Metallique</p>
+                    <p className="text-cyan-400 font-bold">$8.00/pied carre</p>
                   </div>
                 </div>
                 <button 
                   onClick={() => addToCart({ id: 'm2', name: 'Midnight Blue', price: 8.00 })}
-                  className="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 rounded-lg font-bold flex items-center gap-2"
+                  className="px-4 sm:px-6 py-3 bg-cyan-600 hover:bg-cyan-500 rounded-lg font-bold flex items-center gap-2 text-sm"
                 >
                   <Plus className="w-4 h-4" />
-                  Ajouter
+                  <span className="hidden sm:inline">Ajouter</span>
                 </button>
               </div>
 
               <div className="p-4 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-yellow-700 rounded-lg flex items-center justify-center text-2xl overflow-hidden">
+                  <div className="w-16 h-16 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
                     <img src="/images/epoxy-floor-cleaning-and-maintenance.jpg" alt="Gold" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <p className="font-bold text-lg">Liquid Gold</p>
-                    <p className="text-sm text-white/60">Métallique Premium</p>
-                    <p className="text-cyan-400 font-bold">$12.00/pied²</p>
+                    <p className="text-sm text-white/60">Metallique Premium</p>
+                    <p className="text-cyan-400 font-bold">$12.00/pied carre</p>
                   </div>
                 </div>
                 <button 
                   onClick={() => addToCart({ id: 'm3', name: 'Liquid Gold', price: 12.00 })}
-                  className="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 rounded-lg font-bold flex items-center gap-2"
+                  className="px-4 sm:px-6 py-3 bg-cyan-600 hover:bg-cyan-500 rounded-lg font-bold flex items-center gap-2 text-sm"
                 >
                   <Plus className="w-4 h-4" />
-                  Ajouter
+                  <span className="hidden sm:inline">Ajouter</span>
                 </button>
               </div>
             </div>
@@ -332,7 +486,7 @@ export default function EpoxyBigHero() {
                     <div key={idx} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
                       <span>{item.name}</span>
                       <div className="flex items-center gap-4">
-                        <span className="text-cyan-400">${item.price.toFixed(2)}/p²</span>
+                        <span className="text-cyan-400">${item.price.toFixed(2)}/pied carre</span>
                         <button onClick={() => removeFromCart(item.id)} className="text-red-400 hover:text-red-300">
                           <X className="w-4 h-4" />
                         </button>
@@ -361,15 +515,15 @@ export default function EpoxyBigHero() {
 
       {/* DEVIS MODAL */}
       {showQuote && (
-        <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-6" onClick={() => setShowQuote(false)}>
-          <div className="w-full max-w-lg bg-zinc-900 rounded-3xl p-8 border border-white/10" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 sm:p-6" onClick={() => setShowQuote(false)}>
+          <div className="w-full max-w-lg bg-zinc-900 rounded-3xl p-6 sm:p-8 border border-white/10" onClick={(e) => e.stopPropagation()}>
             <h2 className="text-2xl font-black mb-6 text-center">Devis Rapide</h2>
             <form className="space-y-4">
-              <input type="number" placeholder="Superficie (pieds²)" className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white text-lg focus:border-cyan-500 focus:outline-none" />
-              <input type="tel" placeholder="Téléphone" className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white text-lg focus:border-cyan-500 focus:outline-none" />
+              <input type="number" placeholder="Superficie (pieds carres)" className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white text-lg focus:border-cyan-500 focus:outline-none" />
+              <input type="tel" placeholder="Telephone" className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white text-lg focus:border-cyan-500 focus:outline-none" />
               <button 
                 type="button"
-                onClick={() => { alert('Demande envoyée ! On vous rappelle dans 24h.'); setShowQuote(false); }}
+                onClick={() => { alert('Demande envoyee ! On vous rappelle dans 24h.'); setShowQuote(false); }}
                 className="w-full py-5 bg-cyan-500 text-black font-black text-xl rounded-xl"
               >
                 RECEVOIR MON DEVIS
@@ -383,14 +537,14 @@ export default function EpoxyBigHero() {
       )}
 
       {/* FOOTER */}
-      <footer className="py-8 px-6 border-t border-white/10 bg-black">
+      <footer className="py-8 px-4 sm:px-6 border-t border-white/10 bg-black">
         <div className="max-w-7xl mx-auto text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
             <img src="/logo.png" alt="ZeniCorp" className="w-8 h-8 object-contain" />
-            <span className="font-bold text-xl">ZENICORP ÉPOXY</span>
+            <span className="font-bold text-xl">ZENICORP EPOXY</span>
           </div>
           <p className="text-2xl font-black text-cyan-400 mb-2">581-748-7017</p>
-          <p className="text-white/40">Garantie 10 ans • Prix: $7.50 - $12.00/pied²</p>
+          <p className="text-white/40">Garantie 10 ans - Prix: $7.50 - $12.00/pied carre</p>
         </div>
       </footer>
     </div>
