@@ -347,8 +347,8 @@ export default function EpoxyBigHero() {
           <h2 className="text-4xl font-black text-center mb-12">Nos <span className="text-cyan-400">Realisations</span></h2>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-            {/* Photo 1 - Grande */}
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group sm:col-span-2">
+            {/* Photo 1 */}
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
               <img 
                 src="/images/epoxy-metallic-grey.jpg" 
                 alt="Chrome Mirror"
@@ -356,8 +356,8 @@ export default function EpoxyBigHero() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
-                <p className="text-3xl sm:text-4xl font-black text-white">Chrome Mirror</p>
-                <p className="text-cyan-400 text-lg sm:text-xl">Notre best-seller</p>
+                <p className="text-2xl sm:text-3xl font-black text-white">Chrome Mirror</p>
+                <p className="text-cyan-400">Notre best-seller</p>
               </div>
             </div>
 
