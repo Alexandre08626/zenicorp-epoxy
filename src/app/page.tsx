@@ -41,11 +41,11 @@ export default function EpoxyBigHero() {
 
             {/* BIG TITLE */}
             <h1 className="text-7xl md:text-9xl font-black leading-[0.85] tracking-tighter mb-6">
+              <span className="block text-white">
+                ZENICORP
+              </span>
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400">
                 ÉPOXY
-              </span>
-              <span className="block text-white">
-                PRO
               </span>
             </h1>
 
