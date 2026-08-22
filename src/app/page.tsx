@@ -71,15 +71,6 @@ export default function EpoxyBigHero() {
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-transparent" />
         </div>
 
-        {/* LOGO SUR LA PHOTO */}
-        <div className="absolute top-24 left-6 z-20 flex items-center gap-3">
-          <img src="/logo.png" alt="ZeniCorp" className="w-16 h-16 object-contain drop-shadow-2xl" />
-          <div>
-            <div className="text-2xl font-black text-white drop-shadow-lg">ZENICORP</div>
-            <div className="text-sm text-cyan-400 font-bold tracking-widest">ÉPOXY PRO</div>
-          </div>
-        </div>
-
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-6">
@@ -88,11 +79,11 @@ export default function EpoxyBigHero() {
             </div>
 
             <h1 className="text-7xl md:text-9xl font-black leading-[0.85] tracking-tighter mb-6">
+              <span className="block text-white">
+                ZENICORP
+              </span>
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400">
                 ÉPOXY
-              </span>
-              <span className="block text-white">
-                PRO
               </span>
             </h1>
 
