@@ -309,18 +309,10 @@ export default function EpoxyBigHero() {
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-black text-center mb-4">Nos <span className="text-cyan-400">Couleurs Metalliques</span></h2>
           <p className="text-white/60 text-center mb-12 max-w-2xl mx-auto">
-            12 choix de couleurs premium pour personnaliser ton plancher epoxy.
+            6 choix de couleurs premium pour personnaliser ton plancher epoxy.
           </p>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
-            <div className="group cursor-pointer">
-              <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/epoxy-metallic-grey.jpg" alt="Chrome Mirror" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
-              <p className="font-bold text-center text-sm">Chrome Mirror</p>
-            </div>
-            <div className="group cursor-pointer">
-              <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/epoxy-blue.jpg" alt="Midnight Blue" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
-              <p className="font-bold text-center text-sm">Midnight Blue</p>
-            </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             <div className="group cursor-pointer">
               <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-copper.jpg" alt="Copper Bronze" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
               <p className="font-bold text-center text-sm">Copper Bronze</p>
@@ -330,28 +322,12 @@ export default function EpoxyBigHero() {
               <p className="font-bold text-center text-sm">Ruby Red</p>
             </div>
             <div className="group cursor-pointer">
-              <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-gold.png" alt="Liquid Gold" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
-              <p className="font-bold text-center text-sm">Liquid Gold</p>
-            </div>
-            <div className="group cursor-pointer">
-              <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-bronze.png" alt="Ancient Bronze" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
-              <p className="font-bold text-center text-sm">Ancient Bronze</p>
-            </div>
-            <div className="group cursor-pointer">
-              <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-violet.png" alt="Royal Violet" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
-              <p className="font-bold text-center text-sm">Royal Violet</p>
-            </div>
-            <div className="group cursor-pointer">
               <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-silver.jpg" alt="Silver Steel" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
               <p className="font-bold text-center text-sm">Silver Steel</p>
             </div>
             <div className="group cursor-pointer">
               <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-forest.jpg" alt="Forest Green" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
               <p className="font-bold text-center text-sm">Forest Green</p>
-            </div>
-            <div className="group cursor-pointer">
-              <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-ocean.jpg" alt="Ocean Blue" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
-              <p className="font-bold text-center text-sm">Ocean Blue</p>
             </div>
             <div className="group cursor-pointer">
               <div className="aspect-square rounded-2xl overflow-hidden mb-3"><img src="/images/metallic-rose.jpg" alt="Rose Gold" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
@@ -374,7 +350,7 @@ export default function EpoxyBigHero() {
             {/* Photo 1 - Grande */}
             <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group sm:col-span-2">
               <img 
-                src="/images/epoxy-metallic-grey.jpg" 
+                src="/images/hero-powder.jpg" 
                 alt="Chrome Mirror"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
@@ -414,34 +390,6 @@ export default function EpoxyBigHero() {
             </div>
 
             {/* Photo 4 */}
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
-              <img 
-                src="/images/realisation-4.jpg" 
-                alt="Espace Commercial"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
-                <p className="text-2xl sm:text-3xl font-black text-white">Espace Commercial</p>
-                <p className="text-cyan-400">Haute resistance</p>
-              </div>
-            </div>
-
-            {/* Photo 5 */}
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
-              <img 
-                src="/images/realisation-6.jpg" 
-                alt="Design Contemporain"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
-                <p className="text-2xl sm:text-3xl font-black text-white">Design Contemporain</p>
-                <p className="text-cyan-400">Effet miroir moderne</p>
-              </div>
-            </div>
-
-            {/* Photo 6 */}
             <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
               <img 
                 src="/images/realisation-7.jpg" 
