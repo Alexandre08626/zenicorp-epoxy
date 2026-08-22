@@ -240,63 +240,117 @@ export default function EpoxyBigHero() {
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-black text-center mb-4">Nos <span className="text-cyan-400">Couleurs Metalliques</span></h2>
           <p className="text-white/60 text-center mb-12 max-w-2xl mx-auto">
-            Choisissez parmi notre gamme de finitions metalliques haut de gamme. 
+            Choisissez parmi notre gamme de 12 finitions metalliques haut de gamme. 
             Chaque couleur est realisee avec des pigments industriels pour un resultat eclatant.
           </p>
           
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {/* Couleur 1 - Chrome */}
             <div className="group cursor-pointer">
               <div className="aspect-square rounded-2xl overflow-hidden mb-3">
                 <img src="/images/epoxy-metallic-grey.jpg" alt="Chrome" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
               </div>
               <p className="font-bold text-center text-sm">Chrome Mirror</p>
-              <p className="text-cyan-400 text-center text-xs">$7.50/pied carre</p>
+              <p className="text-cyan-400 text-center text-xs">$8.50/pied carre</p>
             </div>
 
-            {/* Couleur 2 - Blue */}
+            {/* Couleur 2 - Midnight Blue */}
             <div className="group cursor-pointer">
               <div className="aspect-square rounded-2xl overflow-hidden mb-3">
                 <img src="/images/epoxy-blue.jpg" alt="Blue" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
               </div>
               <p className="font-bold text-center text-sm">Midnight Blue</p>
-              <p className="text-cyan-400 text-center text-xs">$8.00/pied carre</p>
-            </div>
-
-            {/* Couleur 3 - Red/Burgundy */}
-            <div className="group cursor-pointer">
-              <div className="aspect-square rounded-2xl overflow-hidden mb-3">
-                <img src="/images/realisation-1.jpg" alt="Rouge" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-              </div>
-              <p className="font-bold text-center text-sm">Ruby Red</p>
               <p className="text-cyan-400 text-center text-xs">$8.50/pied carre</p>
             </div>
 
-            {/* Couleur 4 - Bleu profond */}
+            {/* Couleur 3 - Gold */}
             <div className="group cursor-pointer">
               <div className="aspect-square rounded-2xl overflow-hidden mb-3">
-                <img src="/images/realisation-3.jpg" alt="Bleu Profond" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-              </div>
-              <p className="font-bold text-center text-sm">Ocean Blue</p>
-              <p className="text-cyan-400 text-center text-xs">$8.00/pied carre</p>
-            </div>
-
-            {/* Couleur 5 - Gold */}
-            <div className="group cursor-pointer">
-              <div className="aspect-square rounded-2xl overflow-hidden mb-3">
-                <img src="/images/epoxy-floor-cleaning-and-maintenance.jpg" alt="Gold" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <img src="/images/metallic-gold.png" alt="Gold" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
               </div>
               <p className="font-bold text-center text-sm">Liquid Gold</p>
               <p className="text-cyan-400 text-center text-xs">$12.00/pied carre</p>
             </div>
 
-            {/* Couleur 6 - Metallique premium */}
+            {/* Couleur 4 - Copper */}
             <div className="group cursor-pointer">
               <div className="aspect-square rounded-2xl overflow-hidden mb-3">
-                <img src="/images/realisation-4.jpg" alt="Premium" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <img src="/images/metallic-copper.jpg" alt="Copper" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              </div>
+              <p className="font-bold text-center text-sm">Copper Bronze</p>
+              <p className="text-cyan-400 text-center text-xs">$9.50/pied carre</p>
+            </div>
+
+            {/* Couleur 5 - Red */}
+            <div className="group cursor-pointer">
+              <div className="aspect-square rounded-2xl overflow-hidden mb-3">
+                <img src="/images/metallic-red.jpg" alt="Red" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              </div>
+              <p className="font-bold text-center text-sm">Ruby Red</p>
+              <p className="text-cyan-400 text-center text-xs">$9.50/pied carre</p>
+            </div>
+
+            {/* Couleur 6 - Bronze */}
+            <div className="group cursor-pointer">
+              <div className="aspect-square rounded-2xl overflow-hidden mb-3">
+                <img src="/images/metallic-bronze.png" alt="Bronze" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              </div>
+              <p className="font-bold text-center text-sm">Ancient Bronze</p>
+              <p className="text-cyan-400 text-center text-xs">$9.50/pied carre</p>
+            </div>
+
+            {/* Couleur 7 - Ocean Blue */}
+            <div className="group cursor-pointer">
+              <div className="aspect-square rounded-2xl overflow-hidden mb-3">
+                <img src="/images/metallic-blue-ocean.jpg" alt="Ocean" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              </div>
+              <p className="font-bold text-center text-sm">Ocean Blue</p>
+              <p className="text-cyan-400 text-center text-xs">$8.50/pied carre</p>
+            </div>
+
+            {/* Couleur 8 - Swatches 1 */}
+            <div className="group cursor-pointer">
+              <div className="aspect-square rounded-2xl overflow-hidden mb-3">
+                <img src="/images/color-swatches-1.png" alt="Palette 1" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              </div>
+              <p className="font-bold text-center text-sm">Multi-Tone Set 1</p>
+              <p className="text-cyan-400 text-center text-xs">$10.00/pied carre</p>
+            </div>
+
+            {/* Couleur 9 - Swatches 2 */}
+            <div className="group cursor-pointer">
+              <div className="aspect-square rounded-2xl overflow-hidden mb-3">
+                <img src="/images/color-swatches-2.png" alt="Palette 2" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              </div>
+              <p className="font-bold text-center text-sm">Multi-Tone Set 2</p>
+              <p className="text-cyan-400 text-center text-xs">$10.00/pied carre</p>
+            </div>
+
+            {/* Couleur 10 - Swatches 3 */}
+            <div className="group cursor-pointer">
+              <div className="aspect-square rounded-2xl overflow-hidden mb-3">
+                <img src="/images/color-swatches-3.png" alt="Palette 3" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              </div>
+              <p className="font-bold text-center text-sm">Multi-Tone Set 3</p>
+              <p className="text-cyan-400 text-center text-xs">$10.00/pied carre</p>
+            </div>
+
+            {/* Couleur 11 - Platinum */}
+            <div className="group cursor-pointer">
+              <div className="aspect-square rounded-2xl overflow-hidden mb-3">
+                <img src="/images/realisation-4.jpg" alt="Platinum" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
               </div>
               <p className="font-bold text-center text-sm">Platinum</p>
               <p className="text-cyan-400 text-center text-xs">$10.00/pied carre</p>
+            </div>
+
+            {/* Couleur 12 - Pearl White */}
+            <div className="group cursor-pointer">
+              <div className="aspect-square rounded-2xl overflow-hidden mb-3">
+                <img src="/images/epoxy-floor-cleaning-and-maintenance.jpg" alt="Pearl" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              </div>
+              <p className="font-bold text-center text-sm">Pearl White</p>
+              <p className="text-cyan-400 text-center text-xs">$8.50/pied carre</p>
             </div>
           </div>
         </div>
