@@ -392,14 +392,14 @@ export default function EpoxyBigHero() {
             {/* Photo 4 */}
             <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
               <img 
-                src="/images/realisation-7.jpg" 
-                alt="Finition Miroir"
+                src="/images/realisation-4.jpg" 
+                alt="Local Commercial"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
-                <p className="text-2xl sm:text-3xl font-black text-white">Finition Miroir</p>
-                <p className="text-cyan-400">Eclat haut de gamme</p>
+                <p className="text-2xl sm:text-3xl font-black text-white">Local Commercial</p>
+                <p className="text-cyan-400">Haute resistance</p>
               </div>
             </div>
 
