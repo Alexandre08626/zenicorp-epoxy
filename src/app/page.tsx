@@ -40,6 +40,55 @@ export default function EpoxyBigHero() {
       setLightboxOpen(false);
       setLightboxImage({ src: '', alt: '' });
     };
+    
+    // Shop Configurator State
+    const [shopStep, setShopStep] = useState(1);
+    const [projectSqft, setProjectSqft] = useState('');
+    const [projectFinish, setProjectFinish] = useState<'metallic' | 'flakes' | null>(null);
+    const [projectOption, setProjectOption] = useState('');
+    const [installDate, setInstallDate] = useState('');
+    const [paymentProcessing, setPaymentProcessing] = useState(false);
+    
+    const resetShop = () => {
+      setShopStep(1);
+      setProjectSqft('');
+      setProjectFinish(null);
+      setProjectOption('');
+      setInstallDate('');
+      setPaymentProcessing(false);
+    };
+    
+    const getPricePerSqft = () => {
+      if (projectFinish === 'flakes') return 7.50;
+      if (projectOption === 'Liquid Gold') return 12.00;
+      return 8.50;
+    };
+    
+    const getProjectTotal = () => {
+      const sqftNum = parseFloat(projectSqft) || 0;
+      return sqftNum * getPricePerSqft();
+    };
+    
+    const getDepositAmount = () => {
+      return getProjectTotal() * 0.30;
+    };
+    
+    const metallicColors = [
+      { name: 'Chrome Mirror', image: '/images/epoxy-metallic-grey.jpg', price: 8.50 },
+      { name: 'Copper Bronze', image: '/images/metallic-copper.jpg', price: 8.50 },
+      { name: 'Ruby Red', image: '/images/metallic-red.jpg', price: 8.50 },
+      { name: 'Silver Steel', image: '/images/metallic-silver.jpg', price: 8.50 },
+      { name: 'Forest Green', image: '/images/metallic-forest.jpg', price: 8.50 },
+      { name: 'Rose Gold', image: '/images/metallic-rose.jpg', price: 8.50 },
+      { name: 'Emerald', image: '/images/metallic-emerald.webp', price: 8.50 },
+      { name: 'Liquid Gold', image: '/images/metallic-gold.png', price: 12.00 },
+    ];
+    
+    const flakeOptions = [
+      { name: 'Flocons Mixtes', image: '/images/flakes-options.jpg', price: 7.50 },
+      { name: 'Flocons 11', image: '/images/flakes-11.jpg', price: 7.50 },
+      { name: 'E4E Flakes', image: '/images/e4e-flakes.jpg', price: 7.50 },
+    ];
 
     const submitLeadToDashboard = async () => {
       const surface = Number.parseFloat(sqft || '0');
@@ -571,196 +620,241 @@ export default function EpoxyBigHero() {
         </div>
       </section>
 
-      {/* BOUTIQUE MODAL */}
+      {/* BOUTIQUE MODAL - CONFIGURATEUR DE PROJET */}
       {showShop && (
         <div 
           className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 sm:p-6"
-          onClick={() => setShowShop(false)}
+          onClick={() => { setShowShop(false); resetShop(); }}
         >
           <div 
-            className="w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-zinc-900 rounded-3xl border border-white/10 p-6 sm:p-8"
+            className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-zinc-900 rounded-3xl border border-white/10 p-6 sm:p-8"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h2 className="text-2xl sm:text-3xl font-black">Boutique Pro</h2>
-                <p className="text-white/60 text-sm sm:text-base">Finitions disponibles - $7.50 - $12/pied carre</p>
-              </div>
-              <div className="flex items-center gap-4">
-                {cart.length > 0 && (
-                  <div className="px-4 py-2 bg-cyan-500/20 rounded-full border border-cyan-500/30">
-                    <span className="font-bold text-cyan-400">{cart.length} items</span>
-                  </div>
-                )}
-                <button onClick={() => setShowShop(false)} className="p-2 hover:bg-white/10 rounded-full">
+            {/* Header avec progression */}
+            <div className="mb-8">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-2xl sm:text-3xl font-black">Configurer votre projet</h2>
+                <button onClick={() => { setShowShop(false); resetShop(); }} className="p-2 hover:bg-white/10 rounded-full">
                   <X className="w-6 h-6" />
                 </button>
               </div>
-            </div>
-
-            {/* Produits */}
-            <div className="space-y-4 mb-8">
-              <div className="p-4 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <img src="/images/epoxy-metallic-grey.jpg" alt="Chrome" className="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <p className="font-bold text-lg">Chrome Mirror</p>
-                    <p className="text-sm text-white/60">Metallique</p>
-                    <p className="text-cyan-400 font-bold">$8.50/pied carre</p>
-                  </div>
-                </div>
-                <button 
-                  onClick={() => addToCart({ id: 'm1', name: 'Chrome Mirror', price: 8.50 })}
-                  className="px-4 sm:px-6 py-3 bg-cyan-600 hover:bg-cyan-500 rounded-lg font-bold flex items-center gap-2 text-sm"
-                >
-                  <Plus className="w-4 h-4" />
-                  <span className="hidden sm:inline">Ajouter</span>
-                </button>
-              </div>
-
-              <div className="p-4 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <img src="/images/epoxy-blue.jpg" alt="Blue" className="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <p className="font-bold text-lg">Midnight Blue</p>
-                    <p className="text-sm text-white/60">Metallique</p>
-                    <p className="text-cyan-400 font-bold">$8.50/pied carre</p>
-                  </div>
-                </div>
-                <button 
-                  onClick={() => addToCart({ id: 'm2', name: 'Midnight Blue', price: 8.50 })}
-                  className="px-4 sm:px-6 py-3 bg-cyan-600 hover:bg-cyan-500 rounded-lg font-bold flex items-center gap-2 text-sm"
-                >
-                  <Plus className="w-4 h-4" />
-                  <span className="hidden sm:inline">Ajouter</span>
-                </button>
-              </div>
-
-              <div className="p-4 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <img src="/images/metallic-gold.png" alt="Gold" className="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <p className="font-bold text-lg">Liquid Gold</p>
-                    <p className="text-sm text-white/60">Metallique Premium</p>
-                    <p className="text-cyan-400 font-bold">$12.00/pied carre</p>
-                  </div>
-                </div>
-                <button 
-                  onClick={() => addToCart({ id: 'm3', name: 'Liquid Gold', price: 12.00 })}
-                  className="px-4 sm:px-6 py-3 bg-cyan-600 hover:bg-cyan-500 rounded-lg font-bold flex items-center gap-2 text-sm"
-                >
-                  <Plus className="w-4 h-4" />
-                  <span className="hidden sm:inline">Ajouter</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Flocons */}
-            <h3 className="text-lg font-bold mb-4 text-white/80 border-t border-white/10 pt-6">Options de Flocons</h3>
-            <div className="space-y-4 mb-8">
-              <div className="p-4 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <img src="/images/flakes-options.jpg" alt="Flocons Mixtes" className="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <p className="font-bold text-lg">Flocons Mixtes</p>
-                    <p className="text-sm text-white/60">Decoration multicolore</p>
-                    <p className="text-cyan-400 font-bold">$7.50/pied carre</p>
-                  </div>
-                </div>
-                <button 
-                  onClick={() => addToCart({ id: 'f1', name: 'Flocons Mixtes', price: 7.50 })}
-                  className="px-4 sm:px-6 py-3 bg-cyan-600 hover:bg-cyan-500 rounded-lg font-bold flex items-center gap-2 text-sm"
-                >
-                  <Plus className="w-4 h-4" />
-                  <span className="hidden sm:inline">Ajouter</span>
-                </button>
-              </div>
-
-              <div className="p-4 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <img src="/images/flakes-11.jpg" alt="Flocons 11" className="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <p className="font-bold text-lg">Flocons 11</p>
-                    <p className="text-sm text-white/60">Tres discret</p>
-                    <p className="text-cyan-400 font-bold">$7.50/pied carre</p>
-                  </div>
-                </div>
-                <button 
-                  onClick={() => addToCart({ id: 'f2', name: 'Flocons 11', price: 7.50 })}
-                  className="px-4 sm:px-6 py-3 bg-cyan-600 hover:bg-cyan-500 rounded-lg font-bold flex items-center gap-2 text-sm"
-                >
-                  <Plus className="w-4 h-4" />
-                  <span className="hidden sm:inline">Ajouter</span>
-                </button>
-              </div>
-
-              <div className="p-4 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <img src="/images/e4e-flakes.jpg" alt="E4E Flakes" className="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <p className="font-bold text-lg">E4E Flakes</p>
-                    <p className="text-sm text-white/60">Haute qualite</p>
-                    <p className="text-cyan-400 font-bold">$7.50/pied carre</p>
-                  </div>
-                </div>
-                <button 
-                  onClick={() => addToCart({ id: 'f3', name: 'E4E Flakes', price: 7.50 })}
-                  className="px-4 sm:px-6 py-3 bg-cyan-600 hover:bg-cyan-500 rounded-lg font-bold flex items-center gap-2 text-sm"
-                >
-                  <Plus className="w-4 h-4" />
-                  <span className="hidden sm:inline">Ajouter</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Panier */}
-            <div className="border-t border-white/10 pt-6">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xl font-bold">Panier</span>
-                <span className="text-2xl font-black text-cyan-400">${cartTotal.toFixed(2)}</span>
-              </div>
               
-              {cart.length > 0 ? (
-                <div className="space-y-2 mb-6">
-                  {cart.map((item, idx) => (
-                    <div key={idx} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
-                      <span>{item.name}</span>
-                      <div className="flex items-center gap-4">
-                        <span className="text-cyan-400">${item.price.toFixed(2)}/pied carre</span>
-                        <button onClick={() => removeFromCart(item.id)} className="text-red-400 hover:text-red-300">
-                          <X className="w-4 h-4" />
-                        </button>
+              {/* Barre de progression */}
+              <div className="flex items-center gap-2">
+                {[1, 2, 3, 4, 5].map((step) => (
+                  <div key={step} className="flex-1 h-2 rounded-full bg-white/10 overflow-hidden">
+                    <div className={`h-full rounded-full transition-all duration-300 ${shopStep >= step ? 'bg-cyan-400' : 'bg-transparent'}`} />
+                  </div>
+                ))}
+              </div>
+              <p className="text-white/60 text-sm mt-2">Etape {shopStep} sur 5</p>
+            </div>
+
+            {/* ETAPE 1: Surface */}
+            {shopStep === 1 && (
+              <div className="space-y-6">
+                <h3 className="text-xl font-bold text-center">Quelle est la surface a couvrir?</h3>
+                <div className="space-y-4">
+                  <input 
+                    type="number"
+                    value={projectSqft}
+                    onChange={(e) => setProjectSqft(e.target.value)}
+                    placeholder="Nombre de pieds carres (ex: 500)"
+                    className="w-full px-6 py-5 bg-white/5 border-2 border-white/20 rounded-2xl text-white text-2xl font-bold text-center focus:border-cyan-500 focus:outline-none"
+                  />
+                  <p className="text-white/40 text-center text-sm">
+                    Prix: $7.50 - $12.00 / pied carre selon la finition choisie
+                  </p>
+                </div>
+                <button 
+                  onClick={() => projectSqft && parseFloat(projectSqft) > 0 && setShopStep(2)}
+                  disabled={!projectSqft || parseFloat(projectSqft) <= 0}
+                  className="w-full py-5 bg-cyan-500 hover:bg-cyan-400 disabled:opacity-50 text-black font-black text-xl rounded-2xl transition-all"
+                >
+                  CONTINUER
+                </button>
+              </div>
+            )}
+
+            {/* ETAPE 2: Type de finition */}
+            {shopStep === 2 && (
+              <div className="space-y-6">
+                <h3 className="text-xl font-bold text-center">Choisissez votre type de finition</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <button 
+                    onClick={() => { setProjectFinish('metallic'); setShopStep(3); }}
+                    className={`p-6 rounded-2xl border-2 transition-all text-left ${projectFinish === 'metallic' ? 'border-cyan-500 bg-cyan-500/10' : 'border-white/10 bg-white/5 hover:border-white/30'}`}
+                  >
+                    <div className="font-bold text-xl mb-2">Metallique</div>
+                    <div className="text-3xl font-black text-cyan-400">$8.50<span className="text-base text-white/60 font-normal">/pied²</span></div>
+                    <p className="text-sm text-white/40 mt-2">Finition miroir premium, 7+ couleurs disponibles</p>
+                  </button>
+                  
+                  <button 
+                    onClick={() => { setProjectFinish('flakes'); setShopStep(3); }}
+                    className={`p-6 rounded-2xl border-2 transition-all text-left ${projectFinish === 'flakes' ? 'border-cyan-500 bg-cyan-500/10' : 'border-white/10 bg-white/5 hover:border-white/30'}`}
+                  >
+                    <div className="font-bold text-xl mb-2">Flocons</div>
+                    <div className="text-3xl font-black text-cyan-400">$7.50<span className="text-base text-white/60 font-normal">/pied²</span></div>
+                    <p className="text-sm text-white/40 mt-2">Finition antiderapante decorative</p>
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* ETAPE 3: Option specifique */}
+            {shopStep === 3 && projectFinish && (
+              <div className="space-y-6">
+                <h3 className="text-xl font-bold text-center">
+                  {projectFinish === 'metallic' ? 'Choisissez votre couleur metallique' : 'Choisissez votre melange de flocons'}
+                </h3>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[300px] overflow-y-auto">
+                  {(projectFinish === 'metallic' ? metallicColors : flakeOptions).map((option) => (
+                    <button
+                      key={option.name}
+                      onClick={() => { setProjectOption(option.name); setShopStep(4); }}
+                      className={`p-3 rounded-xl border-2 transition-all ${projectOption === option.name ? 'border-cyan-500 bg-cyan-500/10' : 'border-white/10 bg-white/5 hover:border-white/30'}`}
+                    >
+                      <div className="aspect-square rounded-lg overflow-hidden mb-2">
+                        <img src={option.image} alt={option.name} className="w-full h-full object-cover" />
                       </div>
-                    </div>
+                      <p className="font-bold text-sm">{option.name}</p>
+                      <p className="text-cyan-400 text-xs">${option.price.toFixed(2)}/pied²</p>
+                    </button>
                   ))}
                 </div>
-              ) : (
-                <p className="text-white/40 mb-6">Panier vide</p>
-              )}
+              </div>
+            )}
 
+            {/* ETAPE 4: Date d'installation */}
+            {shopStep === 4 && (
+              <div className="space-y-6">
+                <h3 className="text-xl font-bold text-center">Quand souhaitez-vous l'installation?</h3>
+                <div className="space-y-4">
+                  <input 
+                    type="date"
+                    value={installDate}
+                    onChange={(e) => setInstallDate(e.target.value)}
+                    min={new Date().toISOString().split('T')[0]}
+                    className="w-full px-6 py-5 bg-white/5 border-2 border-white/20 rounded-2xl text-white text-xl font-bold text-center focus:border-cyan-500 focus:outline-none"
+                  />
+                  <p className="text-white/40 text-center text-sm">
+                    Installation rapide sous 24-48h apres confirmation
+                  </p>
+                </div>
+                <button 
+                  onClick={() => installDate && setShopStep(5)}
+                  disabled={!installDate}
+                  className="w-full py-5 bg-cyan-500 hover:bg-cyan-400 disabled:opacity-50 text-black font-black text-xl rounded-2xl transition-all"
+                >
+                  VOIR LE RECAPITULATIF
+                </button>
+              </div>
+            )}
+
+            {/* ETAPE 5: Recapitulatif et paiement */}
+            {shopStep === 5 && (
+              <div className="space-y-6">
+                <h3 className="text-xl font-bold text-center">Recapitulatif de votre projet</h3>
+                
+                <div className="bg-white/5 rounded-2xl p-6 space-y-4">
+                  <div className="flex justify-between">
+                    <span className="text-white/60">Surface</span>
+                    <span className="font-bold">{projectSqft} pieds carres</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-white/60">Finition</span>
+                    <span className="font-bold">{projectFinish === 'metallic' ? 'Metallique' : 'Flocons'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-white/60">Option choisie</span>
+                    <span className="font-bold">{projectOption}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-white/60">Date souhaitee</span>
+                    <span className="font-bold">{installDate ? new Date(installDate).toLocaleDateString('fr-CA') : '-'}</span>
+                  </div>
+                  <div className="border-t border-white/10 pt-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-white/60">Total projet</span>
+                      <span className="text-2xl font-black text-cyan-400">${getProjectTotal().toFixed(2)}</span>
+                    </div>
+                  </div>
+                  <div className="bg-cyan-500/10 rounded-xl p-4 border border-cyan-500/30">
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <span className="text-white font-bold">Acompte a payer (30%)</span>
+                        <p className="text-xs text-white/60">Solde payable apres installation</p>
+                      </div>
+                      <span className="text-3xl font-black text-cyan-400">${getDepositAmount().toFixed(2)}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Paiement Zenipay */}
+                <div className="space-y-4">
+                  <h4 className="text-lg font-bold text-center">Payer avec Zenipay</h4>
+                  
+                  {paymentProcessing ? (
+                    <div className="text-center py-8">
+                      <div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                      <p className="text-white/60">Redirection vers Zenipay...</p>
+                    </div>
+                  ) : (
+                    <>
+                      <button 
+                        onClick={() => {
+                          setPaymentProcessing(true);
+                          // Redirection vers Zenipay avec les parametres du projet
+                          const projectData = {
+                            amount: getDepositAmount(),
+                            description: `Projet Epoxy - ${projectSqft}p² - ${projectOption}`,
+                            projectDetails: {
+                              surface: projectSqft,
+                              finish: projectFinish,
+                              option: projectOption,
+                              installDate: installDate,
+                              total: getProjectTotal(),
+                              deposit: getDepositAmount()
+                            },
+                            returnUrl: 'https://zenicorp-epoxy.vercel.app/confirmation',
+                            cancelUrl: 'https://zenicorp-epoxy.vercel.app'
+                          };
+                          // Encoder les donnees pour l'URL
+                          const encodedData = encodeURIComponent(JSON.stringify(projectData));
+                          window.open(`https://zeniva-dev-dashboard.vercel.app/zenipay/pay?data=${encodedData}`, '_blank');
+                          setTimeout(() => {
+                            setPaymentProcessing(false);
+                            setShowShop(false);
+                            resetShop();
+                          }, 2000);
+                        }}
+                        className="w-full py-5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-black text-xl rounded-2xl transition-all flex items-center justify-center gap-3"
+                      >
+                        <span>PAYER L'ACOMPTE ${getDepositAmount().toFixed(2)}$</span>
+                      </button>
+                      
+                      <button 
+                        onClick={() => setShopStep(1)}
+                        className="w-full py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-2xl transition-all"
+                      >
+                        MODIFIER LE PROJET
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Navigation retour */}
+            {shopStep > 1 && shopStep < 5 && (
               <button 
-                onClick={() => {
-                  setShowShop(false);
-                  setShowQuote(true);
-                }}
-                disabled={cart.length === 0}
-                className="w-full py-4 bg-cyan-500 hover:bg-cyan-400 disabled:opacity-50 text-black font-black text-xl rounded-xl"
+                onClick={() => setShopStep(shopStep - 1)}
+                className="mt-6 w-full py-3 text-white/60 hover:text-white font-medium text-sm"
               >
-                DEMANDER UN DEVIS
+                ← Retour a l'etape precedente
               </button>
-            </div>
+            )}
           </div>
         </div>
       )}
