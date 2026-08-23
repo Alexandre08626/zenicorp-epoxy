@@ -798,41 +798,65 @@ export default function EpoxyBigHero() {
                   {paymentProcessing ? (
                     <div className="text-center py-8">
                       <div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                      <p className="text-white/60">Redirection vers Zenipay...</p>
+                      <p className="text-white/60">Connexion a Zenipay...</p>
                     </div>
                   ) : (
                     <>
                       <button 
-                        onClick={() => {
+                        onClick={async () => {
                           setPaymentProcessing(true);
-                          // Redirection vers Zenipay avec les parametres du projet
-                          const projectData = {
+                          
+                          // Prepare payment data for Zenipay
+                          const paymentData = {
                             amount: getDepositAmount(),
-                            description: `Projet Epoxy - ${projectSqft}p² - ${projectOption}`,
-                            projectDetails: {
-                              surface: projectSqft,
-                              finish: projectFinish,
-                              option: projectOption,
-                              installDate: installDate,
-                              total: getProjectTotal(),
-                              deposit: getDepositAmount()
+                            currency: 'CAD',
+                            description: `Acompte Projet Epoxy - ${projectOption} (${projectSqft} p²)`,
+                            metadata: {
+                              project_surface: projectSqft,
+                              project_finish: projectFinish,
+                              project_option: projectOption,
+                              install_date: installDate,
+                              total_amount: getProjectTotal(),
+                              deposit_amount: getDepositAmount()
                             },
-                            returnUrl: 'https://zenicorp-epoxy.vercel.app/confirmation',
-                            cancelUrl: 'https://zenicorp-epoxy.vercel.app'
+                            success_url: 'https://zenicorp-epoxy.vercel.app/paiement/success',
+                            cancel_url: 'https://zenicorp-epoxy.vercel.app/paiement/annule'
                           };
-                          // Encoder les donnees pour l'URL
-                          const encodedData = encodeURIComponent(JSON.stringify(projectData));
-                          window.open(`https://zeniva-dev-dashboard.vercel.app/zenipay/pay?data=${encodedData}`, '_blank');
-                          setTimeout(() => {
+                          
+                          try {
+                            // Call Zenipay API
+                            const response = await fetch('https://api.zenipay.ca/v1/checkout/sessions', {
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${process.env.NEXT_PUBLIC_ZENIPAY_PUBLIC_KEY}`
+                              },
+                              body: JSON.stringify(paymentData)
+                            });
+                            
+                            const result = await response.json();
+                            
+                            if (result.url) {
+                              // Redirect to Zenipay checkout
+                              window.location.href = result.url;
+                            } else {
+                              alert('Erreur de connexion a Zenipay. Veuillez reessayer.');
+                              setPaymentProcessing(false);
+                            }
+                          } catch (error) {
+                            console.error('Zenipay error:', error);
+                            alert('Erreur de paiement. Contactez-nous au 581-748-7017');
                             setPaymentProcessing(false);
-                            setShowShop(false);
-                            resetShop();
-                          }, 2000);
+                          }
                         }}
                         className="w-full py-5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-black text-xl rounded-2xl transition-all flex items-center justify-center gap-3"
                       >
-                        <span>PAYER L'ACOMPTE ${getDepositAmount().toFixed(2)}$</span>
+                        <span>PAYER L'ACOMPTE ${getDepositAmount().toFixed(2)}$ CAD</span>
                       </button>
+                      
+                      <p className="text-center text-white/40 text-xs">
+                        Paiement securise par Zenipay
+                      </p>
                       
                       <button 
                         onClick={() => setShopStep(1)}
