@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import {
@@ -21,7 +21,7 @@ export default function EpoxyBigHero() {
 
     const [sqft, setSqft] = useState('');
     const [finishType, setFinishType] = useState<'flakes' | 'metallic'>('flakes');
-    const pricePerSqft = finishType === 'flakes' ? 7.50 : 8.50;
+    const pricePerSqft = finishType === 'flakes' ? 8.00 : 9.00;
     const estimatedTotal = sqft ? parseFloat(sqft) * pricePerSqft : 0;
     const [clientName, setClientName] = useState('');
     const [clientPhone, setClientPhone] = useState('');
@@ -59,9 +59,9 @@ export default function EpoxyBigHero() {
     };
     
     const getPricePerSqft = () => {
-      if (projectFinish === 'flakes') return 7.50;
-      if (projectOption === 'Liquid Gold') return 12.00;
-      return 8.50;
+      if (projectFinish === 'flakes') return 8.00;
+      if (projectOption === 'Liquid Gold') return 13.00;
+      return 9.00;
     };
     
     const getProjectTotal = () => {
@@ -74,20 +74,20 @@ export default function EpoxyBigHero() {
     };
     
     const metallicColors = [
-      { name: 'Chrome Mirror', image: '/images/epoxy-metallic-grey.jpg', price: 8.50 },
-      { name: 'Copper Bronze', image: '/images/metallic-copper.jpg', price: 8.50 },
-      { name: 'Ruby Red', image: '/images/metallic-red.jpg', price: 8.50 },
-      { name: 'Silver Steel', image: '/images/metallic-silver.jpg', price: 8.50 },
-      { name: 'Forest Green', image: '/images/metallic-forest.jpg', price: 8.50 },
-      { name: 'Rose Gold', image: '/images/metallic-rose.jpg', price: 8.50 },
-      { name: 'Emerald', image: '/images/metallic-emerald.webp', price: 8.50 },
-      { name: 'Liquid Gold', image: '/images/metallic-gold.png', price: 12.00 },
+      { name: 'Chrome Mirror', image: '/images/epoxy-metallic-grey.jpg', price: 9.00 },
+      { name: 'Copper Bronze', image: '/images/metallic-copper.jpg', price: 9.00 },
+      { name: 'Ruby Red', image: '/images/metallic-red.jpg', price: 9.00 },
+      { name: 'Silver Steel', image: '/images/metallic-silver.jpg', price: 9.00 },
+      { name: 'Forest Green', image: '/images/metallic-forest.jpg', price: 9.00 },
+      { name: 'Rose Gold', image: '/images/metallic-rose.jpg', price: 9.00 },
+      { name: 'Emerald', image: '/images/metallic-emerald.webp', price: 9.00 },
+      { name: 'Liquid Gold', image: '/images/metallic-gold.png', price: 13.00 },
     ];
     
     const flakeOptions = [
-      { name: 'Flocons Mixtes', image: '/images/flakes-options.jpg', price: 7.50 },
-      { name: 'Flocons 11', image: '/images/flakes-11.jpg', price: 7.50 },
-      { name: 'E4E Flakes', image: '/images/e4e-flakes.jpg', price: 7.50 },
+      { name: 'Flocons Mixtes', image: '/images/flakes-options.jpg', price: 8.00 },
+      { name: 'Flocons 11', image: '/images/flakes-11.jpg', price: 8.00 },
+      { name: 'E4E Flakes', image: '/images/e4e-flakes.jpg', price: 8.00 },
     ];
 
     const submitLeadToDashboard = async () => {
@@ -207,9 +207,9 @@ export default function EpoxyBigHero() {
       // Features
       doc.setTextColor(60, 60, 60);
       doc.setFontSize(10);
-      doc.text('✓ Garantie 10 ans', 20, 250);
-      doc.text('✓ Execution rapide 24-48h', 20, 258);
-      doc.text('✓ Service professionnel garanti', 20, 266);
+      doc.text('âœ“ Garantie 10 ans', 20, 250);
+      doc.text('âœ“ Execution rapide 24-48h', 20, 258);
+      doc.text('âœ“ Service professionnel garanti', 20, 266);
       
       // Footer note
       doc.setTextColor(120, 120, 120);
@@ -333,7 +333,7 @@ export default function EpoxyBigHero() {
               </div>
               <div className="flex items-center gap-2 text-white/60">
                 <MapPin className="w-5 h-5 text-cyan-400" />
-                <span>Quebec & Environs</span>
+                <span>Partout au Québec</span>
               </div>
               <div className="flex items-center gap-2 text-white/60">
                 <Clock className="w-5 h-5 text-cyan-400" />
@@ -352,7 +352,7 @@ export default function EpoxyBigHero() {
 
         <div className="absolute top-1/2 right-10 md:right-20 hidden md:block transform translate-y-20">
           <div className="p-6 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 backdrop-blur-xl rounded-2xl border border-cyan-500/30">
-            <p className="text-4xl font-black text-white">$7.50</p>
+            <p className="text-4xl font-black text-white">$8.00</p>
             <p className="text-white/60">A partir de /pied carre</p>
           </div>
         </div>
@@ -374,7 +374,7 @@ export default function EpoxyBigHero() {
                   className={`p-6 rounded-2xl border-2 transition-all text-left ${finishType === 'flakes' ? 'border-cyan-500 bg-cyan-500/10' : 'border-white/10 bg-white/5 hover:border-white/20'}`}
                 >
                   <div className="font-bold text-xl mb-2">Flocons Decoratifs</div>
-                  <div className="text-3xl font-black text-cyan-400">$7.50<span className="text-base text-white/60 font-normal">/pied²</span></div>
+                  <div className="text-3xl font-black text-cyan-400">$8.00<span className="text-base text-white/60 font-normal">/piedÂ²</span></div>
                   <p className="text-sm text-white/40 mt-2">Finition antiderapante avec flocons</p>
                 </button>
 
@@ -383,7 +383,7 @@ export default function EpoxyBigHero() {
                   className={`p-6 rounded-2xl border-2 transition-all text-left ${finishType === 'metallic' ? 'border-cyan-500 bg-cyan-500/10' : 'border-white/10 bg-white/5 hover:border-white/20'}`}
                 >
                   <div className="font-bold text-xl mb-2">Metallique</div>
-                  <div className="text-3xl font-black text-cyan-400">$8.50<span className="text-base text-white/60 font-normal">/pied²</span></div>
+                  <div className="text-3xl font-black text-cyan-400">$9.00<span className="text-base text-white/60 font-normal">/piedÂ²</span></div>
                   <p className="text-sm text-white/40 mt-2">Finition miroir haut de gamme</p>
                 </button>
               </div>
@@ -585,7 +585,7 @@ export default function EpoxyBigHero() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-6 left-6">
                 <p className="text-2xl font-black text-white">Flocons Mixtes</p>
-                <p className="text-cyan-400">Options variées</p>
+                <p className="text-cyan-400">Options variÃ©es</p>
               </div>
             </div>
 
@@ -663,7 +663,7 @@ export default function EpoxyBigHero() {
                     className="w-full px-6 py-5 bg-white/5 border-2 border-white/20 rounded-2xl text-white text-2xl font-bold text-center focus:border-cyan-500 focus:outline-none"
                   />
                   <p className="text-white/40 text-center text-sm">
-                    Prix: $7.50 - $12.00 / pied carre selon la finition choisie
+                    Prix: $8.00 - $13.00 / pied carre selon la finition choisie
                   </p>
                 </div>
                 <button 
@@ -686,7 +686,7 @@ export default function EpoxyBigHero() {
                     className={`p-6 rounded-2xl border-2 transition-all text-left ${projectFinish === 'metallic' ? 'border-cyan-500 bg-cyan-500/10' : 'border-white/10 bg-white/5 hover:border-white/30'}`}
                   >
                     <div className="font-bold text-xl mb-2">Metallique</div>
-                    <div className="text-3xl font-black text-cyan-400">$8.50<span className="text-base text-white/60 font-normal">/pied²</span></div>
+                    <div className="text-3xl font-black text-cyan-400">$9.00<span className="text-base text-white/60 font-normal">/piedÂ²</span></div>
                     <p className="text-sm text-white/40 mt-2">Finition miroir premium, 7+ couleurs disponibles</p>
                   </button>
                   
@@ -695,7 +695,7 @@ export default function EpoxyBigHero() {
                     className={`p-6 rounded-2xl border-2 transition-all text-left ${projectFinish === 'flakes' ? 'border-cyan-500 bg-cyan-500/10' : 'border-white/10 bg-white/5 hover:border-white/30'}`}
                   >
                     <div className="font-bold text-xl mb-2">Flocons</div>
-                    <div className="text-3xl font-black text-cyan-400">$7.50<span className="text-base text-white/60 font-normal">/pied²</span></div>
+                    <div className="text-3xl font-black text-cyan-400">$8.00<span className="text-base text-white/60 font-normal">/piedÂ²</span></div>
                     <p className="text-sm text-white/40 mt-2">Finition antiderapante decorative</p>
                   </button>
                 </div>
@@ -719,7 +719,7 @@ export default function EpoxyBigHero() {
                         <img src={option.image} alt={option.name} className="w-full h-full object-cover" />
                       </div>
                       <p className="font-bold text-sm">{option.name}</p>
-                      <p className="text-cyan-400 text-xs">${option.price.toFixed(2)}/pied²</p>
+                      <p className="text-cyan-400 text-xs">${option.price.toFixed(2)}/piedÂ²</p>
                     </button>
                   ))}
                 </div>
@@ -810,7 +810,7 @@ export default function EpoxyBigHero() {
                           const paymentData = {
                             amount: getDepositAmount(),
                             currency: 'CAD',
-                            description: `Acompte Projet Epoxy - ${projectOption} (${projectSqft} p²)`,
+                            description: `Acompte Projet Epoxy - ${projectOption} (${projectSqft} pÂ²)`,
                             metadata: {
                               project_surface: projectSqft,
                               project_finish: projectFinish,
@@ -876,7 +876,7 @@ export default function EpoxyBigHero() {
                 onClick={() => setShopStep(shopStep - 1)}
                 className="mt-6 w-full py-3 text-white/60 hover:text-white font-medium text-sm"
               >
-                ← Retour a l'etape precedente
+                â† Retour a l'etape precedente
               </button>
             )}
           </div>
@@ -940,7 +940,7 @@ export default function EpoxyBigHero() {
             <span className="font-bold text-xl">ZENICORP EPOXY</span>
           </div>
           <p className="text-2xl font-black text-cyan-400 mb-2">581-748-7017</p>
-          <p className="text-white/40">Garantie 10 ans - Prix: $7.50 - $12.00/pied carre</p>
+          <p className="text-white/40">Garantie 10 ans - Prix: $8.00 - $13.00/pied carre</p>
         </div>
       </footer>
       {/* LIGHTBOX MODAL */}
