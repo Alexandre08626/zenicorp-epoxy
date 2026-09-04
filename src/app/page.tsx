@@ -74,13 +74,13 @@ export default function EpoxyBigHero() {
     };
     
     const metallicColors = [
-      { name: 'Chrome Mirror', image: '/images/epoxy-metallic-grey.jpg', price: 9.00 },
-      { name: 'Copper Bronze', image: '/images/metallic-copper.jpg', price: 9.00 },
-      { name: 'Ruby Red', image: '/images/metallic-red.jpg', price: 9.00 },
-      { name: 'Silver Steel', image: '/images/metallic-silver.jpg', price: 9.00 },
-      { name: 'Forest Green', image: '/images/metallic-forest.jpg', price: 9.00 },
-      { name: 'Rose Gold', image: '/images/metallic-rose.jpg', price: 9.00 },
-      { name: 'Emerald', image: '/images/metallic-emerald.webp', price: 9.00 },
+      { name: 'Chrome Mirror', image: '/images/epoxy-metallic-grey.jpg', price: 12.00 },
+      { name: 'Copper Bronze', image: '/images/metallic-copper.jpg', price: 12.00 },
+      { name: 'Ruby Red', image: '/images/metallic-red.jpg', price: 12.00 },
+      { name: 'Silver Steel', image: '/images/metallic-silver.jpg', price: 12.00 },
+      { name: 'Forest Green', image: '/images/metallic-forest.jpg', price: 12.00 },
+      { name: 'Rose Gold', image: '/images/metallic-rose.jpg', price: 12.00 },
+      { name: 'Emerald', image: '/images/metallic-emerald.webp', price: 12.00 },
       { name: 'Liquid Gold', image: '/images/metallic-gold.png', price: 13.00 },
     ];
     
@@ -383,7 +383,7 @@ export default function EpoxyBigHero() {
                   className={`p-6 rounded-2xl border-2 transition-all text-left ${finishType === 'metallic' ? 'border-cyan-500 bg-cyan-500/10' : 'border-white/10 bg-white/5 hover:border-white/20'}`}
                 >
                   <div className="font-bold text-xl mb-2">Metallique</div>
-                  <div className="text-3xl font-black text-cyan-400">$9.00<span className="text-base text-white/60 font-normal">/piedÂ²</span></div>
+                  <div className="text-3xl font-black text-cyan-400">$12.00<span className="text-base text-white/60 font-normal">/piedÂ²</span></div>
                   <p className="text-sm text-white/40 mt-2">Finition miroir haut de gamme</p>
                 </button>
               </div>
@@ -686,7 +686,7 @@ export default function EpoxyBigHero() {
                     className={`p-6 rounded-2xl border-2 transition-all text-left ${projectFinish === 'metallic' ? 'border-cyan-500 bg-cyan-500/10' : 'border-white/10 bg-white/5 hover:border-white/30'}`}
                   >
                     <div className="font-bold text-xl mb-2">Metallique</div>
-                    <div className="text-3xl font-black text-cyan-400">$9.00<span className="text-base text-white/60 font-normal">/piedÂ²</span></div>
+                    <div className="text-3xl font-black text-cyan-400">$12.00<span className="text-base text-white/60 font-normal">/piedÂ²</span></div>
                     <p className="text-sm text-white/40 mt-2">Finition miroir premium, 7+ couleurs disponibles</p>
                   </button>
                   
