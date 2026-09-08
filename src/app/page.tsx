@@ -21,7 +21,7 @@ export default function EpoxyBigHero() {
 
     const [sqft, setSqft] = useState('');
     const [finishType, setFinishType] = useState<'flakes' | 'metallic'>('flakes');
-    const pricePerSqft = finishType === 'flakes' ? 8.00 : 9.00;
+    const pricePerSqft = finishType === 'flakes' ? 7.50 : 12.00;
     const estimatedTotal = sqft ? parseFloat(sqft) * pricePerSqft : 0;
     const [clientName, setClientName] = useState('');
     const [clientPhone, setClientPhone] = useState('');
@@ -59,9 +59,9 @@ export default function EpoxyBigHero() {
     };
     
     const getPricePerSqft = () => {
-      if (projectFinish === 'flakes') return 8.00;
-      if (projectOption === 'Liquid Gold') return 13.00;
-      return 9.00;
+      if (projectFinish === 'flakes') return 7.50;
+      if (projectOption === 'Liquid Gold') return 12.00;
+      return 12.00;
     };
     
     const getProjectTotal = () => {
@@ -81,13 +81,13 @@ export default function EpoxyBigHero() {
       { name: 'Forest Green', image: '/images/metallic-forest.jpg', price: 12.00 },
       { name: 'Rose Gold', image: '/images/metallic-rose.jpg', price: 12.00 },
       { name: 'Emerald', image: '/images/metallic-emerald.webp', price: 12.00 },
-      { name: 'Liquid Gold', image: '/images/metallic-gold.png', price: 13.00 },
+      { name: 'Liquid Gold', image: '/images/metallic-gold.png', price: 12.00 },
     ];
     
     const flakeOptions = [
-      { name: 'Flocons Mixtes', image: '/images/flakes-options.jpg', price: 8.00 },
-      { name: 'Flocons 11', image: '/images/flakes-11.jpg', price: 8.00 },
-      { name: 'E4E Flakes', image: '/images/e4e-flakes.jpg', price: 8.00 },
+      { name: 'Flocons Mixtes', image: '/images/flakes-options.jpg', price: 7.50 },
+      { name: 'Flocons 11', image: '/images/flakes-11.jpg', price: 7.50 },
+      { name: 'E4E Flakes', image: '/images/e4e-flakes.jpg', price: 7.50 },
     ];
 
     const submitLeadToDashboard = async () => {
@@ -352,7 +352,7 @@ export default function EpoxyBigHero() {
 
         <div className="absolute top-1/2 right-10 md:right-20 hidden md:block transform translate-y-20">
           <div className="p-6 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 backdrop-blur-xl rounded-2xl border border-cyan-500/30">
-            <p className="text-4xl font-black text-white">$8.00</p>
+            <p className="text-4xl font-black text-white">$7.50</p>
             <p className="text-white/60">A partir de /pied carre</p>
           </div>
         </div>
@@ -374,7 +374,7 @@ export default function EpoxyBigHero() {
                   className={`p-6 rounded-2xl border-2 transition-all text-left ${finishType === 'flakes' ? 'border-cyan-500 bg-cyan-500/10' : 'border-white/10 bg-white/5 hover:border-white/20'}`}
                 >
                   <div className="font-bold text-xl mb-2">Flocons Decoratifs</div>
-                  <div className="text-3xl font-black text-cyan-400">$8.00<span className="text-base text-white/60 font-normal">/piedÂ²</span></div>
+                  <div className="text-3xl font-black text-cyan-400">$7.50<span className="text-base text-white/60 font-normal">/piedÂ²</span></div>
                   <p className="text-sm text-white/40 mt-2">Finition antiderapante avec flocons</p>
                 </button>
 
@@ -663,7 +663,7 @@ export default function EpoxyBigHero() {
                     className="w-full px-6 py-5 bg-white/5 border-2 border-white/20 rounded-2xl text-white text-2xl font-bold text-center focus:border-cyan-500 focus:outline-none"
                   />
                   <p className="text-white/40 text-center text-sm">
-                    Prix: $8.00 - $13.00 / pied carre selon la finition choisie
+                    Prix: $7.50 - $12.00 / pied carre selon la finition choisie
                   </p>
                 </div>
                 <button 
@@ -695,7 +695,7 @@ export default function EpoxyBigHero() {
                     className={`p-6 rounded-2xl border-2 transition-all text-left ${projectFinish === 'flakes' ? 'border-cyan-500 bg-cyan-500/10' : 'border-white/10 bg-white/5 hover:border-white/30'}`}
                   >
                     <div className="font-bold text-xl mb-2">Flocons</div>
-                    <div className="text-3xl font-black text-cyan-400">$8.00<span className="text-base text-white/60 font-normal">/piedÂ²</span></div>
+                    <div className="text-3xl font-black text-cyan-400">$7.50<span className="text-base text-white/60 font-normal">/piedÂ²</span></div>
                     <p className="text-sm text-white/40 mt-2">Finition antiderapante decorative</p>
                   </button>
                 </div>
@@ -940,7 +940,7 @@ export default function EpoxyBigHero() {
             <span className="font-bold text-xl">ZENIVA EPOXY</span>
           </div>
           <p className="text-2xl font-black text-cyan-400 mb-2">581-748-7017</p>
-          <p className="text-white/40">Garantie 10 ans - Prix: $8.00 - $13.00/pied carre</p>
+          <p className="text-white/40">Garantie 10 ans - Prix: $7.50 - $12.00/pied carre</p>
         </div>
       </footer>
       {/* LIGHTBOX MODAL */}
