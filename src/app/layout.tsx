@@ -1,11 +1,11 @@
-import type { Metadata, Viewport } from 'next';
+﻿import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'ZeniCorp Époxy | Finitions métalliques, flocons & naturel',
+  title: 'Zeniva Époxy | Finitions métalliques, flocons & naturel',
   description: 'Installation professionnelle et vente de matériel époxy premium. Métallique, flocons, naturel. Québec.',
 };
 

@@ -108,7 +108,7 @@ export default function EpoxyBigHero() {
       };
       
       try {
-        await fetch('https://zeniva-dev-dashboard.vercel.app/api/leads/epoxy', {
+        await fetch('https://zenitech.dev/api/leads/epoxy', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(leadData)
@@ -145,7 +145,7 @@ export default function EpoxyBigHero() {
       doc.setTextColor(6, 182, 212);
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(28);
-      doc.text('ZENICORP', centerX, 25, { align: 'center' });
+      doc.text('ZENIVA', centerX, 25, { align: 'center' });
       
       doc.setTextColor(255, 255, 255);
       doc.setFontSize(16);
@@ -223,7 +223,7 @@ export default function EpoxyBigHero() {
       doc.line(20, 300, pageWidth - 20, 300);
       doc.text('zenicorp-epoxy.vercel.app  |  581-748-7017', centerX, 310, { align: 'center' });
 
-      doc.save(`devis-zenicorp-epoxy-${now.getTime()}.pdf`);
+      doc.save(`devis-zeniva-epoxy-${now.getTime()}.pdf`);
     };
 
     if (!mounted) return null;
@@ -235,9 +235,9 @@ export default function EpoxyBigHero() {
       <header className="fixed top-0 left-0 right-0 z-50 px-2 sm:px-4 py-2 sm:py-3 backdrop-blur-xl bg-black/50 border-b border-white/10">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src="/logo.png" alt="ZeniCorp" className="w-7 h-7 sm:w-8 sm:h-8 object-contain flex-shrink-0" />
+            <img src="/logo.png" alt="Zeniva" className="w-7 h-7 sm:w-8 sm:h-8 object-contain flex-shrink-0" />
             <div className="leading-none">
-              <div className="font-bold text-sm sm:text-base tracking-tight">ZENI<span className="text-cyan-400">CORP</span></div>
+              <div className="font-bold text-sm sm:text-base tracking-tight">ZENI<span className="text-cyan-400">VA</span></div>
               <div className="text-[8px] sm:text-[9px] text-white/40 tracking-widest uppercase">Epoxy Pro</div>
             </div>
           </div>
@@ -287,7 +287,7 @@ export default function EpoxyBigHero() {
 
             <h1 className="text-6xl sm:text-7xl md:text-9xl font-black leading-[0.85] tracking-tighter mb-6">
               <span className="block text-white">
-                ZENICORP
+                ZENIVA
               </span>
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400">
                 EPOXY
@@ -936,8 +936,8 @@ export default function EpoxyBigHero() {
       <footer className="py-8 px-4 sm:px-6 border-t border-white/10 bg-black">
         <div className="max-w-7xl mx-auto text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <img src="/logo.png" alt="ZeniCorp" className="w-8 h-8 object-contain" />
-            <span className="font-bold text-xl">ZENICORP EPOXY</span>
+            <img src="/logo.png" alt="Zeniva" className="w-8 h-8 object-contain" />
+            <span className="font-bold text-xl">ZENIVA EPOXY</span>
           </div>
           <p className="text-2xl font-black text-cyan-400 mb-2">581-748-7017</p>
           <p className="text-white/40">Garantie 10 ans - Prix: $8.00 - $13.00/pied carre</p>
