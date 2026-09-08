@@ -145,7 +145,7 @@ export default function EpoxyBigHero() {
       doc.setTextColor(6, 182, 212);
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(28);
-      doc.text('ZENIVA', centerX, 25, { align: 'center' });
+      doc.text('ZENICORP', centerX, 25, { align: 'center' });
       
       doc.setTextColor(255, 255, 255);
       doc.setFontSize(16);
@@ -221,7 +221,7 @@ export default function EpoxyBigHero() {
       doc.setDrawColor(6, 182, 212);
       doc.setLineWidth(1);
       doc.line(20, 300, pageWidth - 20, 300);
-      doc.text('zenicorp-epoxy.vercel.app  |  581-748-7017', centerX, 310, { align: 'center' });
+      doc.text('zenicorpepoxy.zeniva.ca  |  581-748-7017', centerX, 310, { align: 'center' });
 
       doc.save(`devis-zeniva-epoxy-${now.getTime()}.pdf`);
     };
@@ -287,7 +287,7 @@ export default function EpoxyBigHero() {
 
             <h1 className="text-6xl sm:text-7xl md:text-9xl font-black leading-[0.85] tracking-tighter mb-6">
               <span className="block text-white">
-                ZENIVA
+                ZENICORP
               </span>
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400">
                 EPOXY
@@ -819,8 +819,8 @@ export default function EpoxyBigHero() {
                               total_amount: getProjectTotal(),
                               deposit_amount: getDepositAmount()
                             },
-                            success_url: 'https://zenicorp-epoxy.vercel.app/paiement/success',
-                            cancel_url: 'https://zenicorp-epoxy.vercel.app/paiement/annule'
+                            success_url: 'https://zenicorpepoxy.zeniva.ca/paiement/success',
+                            cancel_url: 'https://zenicorpepoxy.zeniva.ca/paiement/annule'
                           };
                           
                           try {
