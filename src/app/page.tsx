@@ -48,6 +48,8 @@ export default function EpoxyBigHero() {
     const [projectOption, setProjectOption] = useState('');
     const [installDate, setInstallDate] = useState('');
     const [paymentProcessing, setPaymentProcessing] = useState(false);
+    const [depositSent, setDepositSent] = useState(false);
+    const [depositError, setDepositError] = useState('');
     
     const resetShop = () => {
       setShopStep(1);
@@ -221,7 +223,7 @@ export default function EpoxyBigHero() {
       doc.setDrawColor(6, 182, 212);
       doc.setLineWidth(1);
       doc.line(20, 300, pageWidth - 20, 300);
-      doc.text('zenicorpepoxy.zeniva.ca  |  581-748-7017', centerX, 310, { align: 'center' });
+      doc.text('epoxy.zeniva.ca  |  581-748-7017', centerX, 310, { align: 'center' });
 
       doc.save(`devis-zeniva-epoxy-${now.getTime()}.pdf`);
     };
@@ -791,74 +793,95 @@ export default function EpoxyBigHero() {
                   </div>
                 </div>
 
-                {/* Paiement Zenipay */}
+                {/* Réservation + paiement ZeniPay : la demande arrive au CRM (projet zenicorp-epoxy),
+                    l'équipe confirme la date et envoie le lien de paiement ZeniPay sécurisé de l'acompte. */}
                 <div className="space-y-4">
-                  <h4 className="text-lg font-bold text-center">Payer avec Zenipay</h4>
-                  
-                  {paymentProcessing ? (
-                    <div className="text-center py-8">
-                      <div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                      <p className="text-white/60">Connexion a Zenipay...</p>
+                  {depositSent ? (
+                    <div className="text-center py-6 space-y-3">
+                      <h4 className="text-lg font-bold">Demande de réservation reçue</h4>
+                      <p className="text-white/70 text-sm">
+                        Merci {clientName || ''}! Notre équipe confirme votre date d'installation et vous envoie votre lien de paiement sécurisé ZeniPay pour l'acompte de {getDepositAmount().toFixed(2)} $ CAD.
+                      </p>
+                      <p className="text-white/40 text-xs">Une question? <a href="tel:5817487017" className="text-cyan-400 font-bold">581-748-7017</a></p>
                     </div>
                   ) : (
                     <>
-                      <button 
+                      <h4 className="text-lg font-bold text-center">Vos coordonnées</h4>
+                      <input
+                        type="text"
+                        value={clientName}
+                        onChange={(e) => setClientName(e.target.value)}
+                        placeholder="Nom complet"
+                        autoComplete="name"
+                        className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white text-lg focus:border-cyan-500 focus:outline-none"
+                      />
+                      <input
+                        type="tel"
+                        value={clientPhone}
+                        onChange={(e) => setClientPhone(e.target.value)}
+                        placeholder="Téléphone"
+                        autoComplete="tel"
+                        inputMode="tel"
+                        className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white text-lg focus:border-cyan-500 focus:outline-none"
+                      />
+                      <input
+                        type="email"
+                        value={clientEmail}
+                        onChange={(e) => setClientEmail(e.target.value)}
+                        placeholder="Courriel"
+                        autoComplete="email"
+                        inputMode="email"
+                        className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white text-lg focus:border-cyan-500 focus:outline-none"
+                      />
+                      {depositError && <p className="text-red-400 text-sm text-center">{depositError}</p>}
+                      <button
+                        disabled={paymentProcessing}
                         onClick={async () => {
+                          const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(clientEmail.trim());
+                          const phoneOk = clientPhone.replace(/\D/g, '').length >= 10;
+                          if (!emailOk && !phoneOk) {
+                            setDepositError('Entrez un courriel valide ou un numéro de téléphone (10 chiffres).');
+                            return;
+                          }
+                          setDepositError('');
                           setPaymentProcessing(true);
-                          
-                          // Prepare payment data for Zenipay
-                          const paymentData = {
-                            amount: getDepositAmount(),
-                            currency: 'CAD',
-                            description: `Acompte Projet Epoxy - ${projectOption} (${projectSqft} pÂ²)`,
-                            metadata: {
-                              project_surface: projectSqft,
-                              project_finish: projectFinish,
-                              project_option: projectOption,
-                              install_date: installDate,
-                              total_amount: getProjectTotal(),
-                              deposit_amount: getDepositAmount()
-                            },
-                            success_url: 'https://zenicorpepoxy.zeniva.ca/paiement/success',
-                            cancel_url: 'https://zenicorpepoxy.zeniva.ca/paiement/annule'
-                          };
-                          
                           try {
-                            // Call Zenipay API
-                            const response = await fetch('https://api.zenipay.ca/v1/checkout/sessions', {
+                            const res = await fetch('https://zenitech.dev/api/leads/epoxy', {
                               method: 'POST',
-                              headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${process.env.NEXT_PUBLIC_ZENIPAY_PUBLIC_KEY}`
-                              },
-                              body: JSON.stringify(paymentData)
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({
+                                name: clientName,
+                                phone: clientPhone,
+                                email: clientEmail,
+                                source: 'website-reservation',
+                                surface: projectSqft,
+                                finishType: `${projectFinish === 'metallic' ? 'Metallique' : 'Flocons'} - ${projectOption}`,
+                                estimatedTotal: getProjectTotal().toFixed(2),
+                                notes: `Réservation en ligne : date souhaitée ${installDate || '-'} · acompte 30 % à facturer par ZeniPay : ${getDepositAmount().toFixed(2)} $ CAD`,
+                              }),
                             });
-                            
-                            const result = await response.json();
-                            
-                            if (result.url) {
-                              // Redirect to Zenipay checkout
-                              window.location.href = result.url;
+                            const data = await res.json().catch(() => ({}));
+                            if (res.ok && data.success) {
+                              setDepositSent(true);
                             } else {
-                              alert('Erreur de connexion a Zenipay. Veuillez reessayer.');
-                              setPaymentProcessing(false);
+                              setDepositError(data.error || 'Erreur lors de l\'envoi. Appelez-nous au 581-748-7017.');
                             }
                           } catch (error) {
-                            console.error('Zenipay error:', error);
-                            alert('Erreur de paiement. Contactez-nous au 581-748-7017');
+                            setDepositError('Problème de connexion. Appelez-nous au 581-748-7017.');
+                          } finally {
                             setPaymentProcessing(false);
                           }
                         }}
-                        className="w-full py-5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-black text-xl rounded-2xl transition-all flex items-center justify-center gap-3"
+                        className="w-full py-5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 disabled:opacity-50 text-black font-black text-xl rounded-2xl transition-all flex items-center justify-center gap-3"
                       >
-                        <span>PAYER L'ACOMPTE ${getDepositAmount().toFixed(2)}$ CAD</span>
+                        <span>{paymentProcessing ? 'ENVOI...' : 'RÉSERVER MA DATE'}</span>
                       </button>
-                      
+
                       <p className="text-center text-white/40 text-xs">
-                        Paiement securise par Zenipay
+                        Vous recevez ensuite votre lien de paiement sécurisé ZeniPay pour l'acompte de {getDepositAmount().toFixed(2)} $ CAD
                       </p>
-                      
-                      <button 
+
+                      <button
                         onClick={() => setShopStep(1)}
                         className="w-full py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-2xl transition-all"
                       >
