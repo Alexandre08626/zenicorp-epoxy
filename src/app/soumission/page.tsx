@@ -114,8 +114,8 @@ export default function SoumissionPage() {
     <div className="container-zenicorp py-12 max-w-2xl">
       <div className="text-center mb-10">
         <p className="text-zenicorp-gold font-semibold uppercase tracking-[0.2em] text-xs mb-3">Division Époxy</p>
-        <h1 className="heading-1">Soumission gratuite</h1>
-        <p className="body-base mt-3">10 étapes · 2 minutes · Réponse sous 24h</p>
+        <h1 className="heading-1">Soumission gratuite pour votre plancher époxy</h1>
+        <p className="body-base mt-3">Garage, sous-sol ou commercial · Québec, Lévis et environs · 2 minutes, sans engagement</p>
       </div>
 
       <div className="flex items-center justify-between mb-10 overflow-x-auto">
@@ -139,7 +139,7 @@ export default function SoumissionPage() {
             {['Garage résidentiel', 'Commercial', 'Industriel'].map((o) => (
               <label key={o} className={`border-2 p-4 cursor-pointer flex items-center gap-2 transition-colors ${field('projet') === o ? 'border-zenicorp-gold bg-zenicorp-gold/5' : 'border-zenicorp-border hover:border-zenicorp-gold'}`}>
                 <input type="radio" name="projet" value={o} checked={field('projet') === o} onChange={set('projet')} className="accent-zenicorp-gold" />
-                <span className="text-sm font-medium">{o}</span>
+                <span className="text-sm font-medium text-zenicorp-black">{o}</span>
               </label>
             ))}
           </div>
@@ -199,8 +199,8 @@ export default function SoumissionPage() {
           </h2>
           <label className="border-2 border-dashed border-zenicorp-border p-8 flex flex-col items-center justify-center cursor-pointer hover:border-zenicorp-gold transition-colors">
             <Camera className="w-10 h-10 text-zenicorp-silver mb-2" />
-            <span className="text-sm font-medium">Glissez vos photos ici (1-10)</span>
-            <span className="text-xs text-zenicorp-mediumGray mt-1">JPG, PNG - max 10 photos ou 1 vidéo. Vous pourrez les ajouter lors de l&apos;appel de confirmation.</span>
+            <span className="text-sm font-medium">Photos : à envoyer lors de l&apos;appel de confirmation</span>
+            <span className="text-xs text-zenicorp-mediumGray mt-1">Préparez 1 à 10 photos du plancher (vue d&apos;ensemble, fissures, taches) : l&apos;équipe vous dira où les envoyer.</span>
           </label>
         </div>
 
